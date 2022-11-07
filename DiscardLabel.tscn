@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Sprites/card-back.png" type="Texture" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+font_data = ExtResource( 1 )
+
+[sub_resource type="CSharpScript" id=2]
+resource_name = "DiscardLabel"
+script/source = "using Godot;
+using System;
+
+public class DiscardLabel : Label
+{
+    // Declare member variables here. Examples:
+    // private int a = 2;
+    // private string b = \"text\";
+
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+    {
+        
+    }
+
+//  // Called every frame. 'delta' is the elapsed time since the previous frame.
+//  public override void _Process(float delta)
+//  {
+//      
+//  }
+}
+"
+
+[node name="Tree" type="Tree"]
+margin_left = 124.0
+margin_top = 33.0
+margin_right = 895.0
+margin_bottom = 429.0
+
+[node name="DiscardLabel" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 21.0
+margin_right = 475.0
+margin_bottom = 87.0
+custom_fonts/font = SubResource( 1 )
+text = "You must discard"
+script = SubResource( 2 )
+
+[node name="Card-back" type="Sprite" parent="."]
+position = Vector2( 67, 247 )
+scale = Vector2( 0.307273, 0.302151 )
+texture = ExtResource( 2 )

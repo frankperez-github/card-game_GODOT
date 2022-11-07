@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Sprites/card-back.png" type="Texture" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="AnimatedTexture" id=1]
+
+[sub_resource type="DynamicFont" id=2]
+size = 53
+font_data = ExtResource( 3 )
+
+[node name="Relic" type="Sprite"]
+position = Vector2( 375, 308 )
+scale = Vector2( 0.401818, 0.375269 )
+texture = ExtResource( 1 )
+normal_map = SubResource( 1 )
+
+[node name="Icon" type="Sprite" parent="."]
+position = Vector2( -0.000149727, -131.245 )
+scale = Vector2( 3.2664, 2.01956 )
+texture = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -112.0
+margin_top = -45.0
+margin_right = 105.0
+margin_bottom = 99.0
+custom_fonts/font = SubResource( 2 )
+text = "Name"
