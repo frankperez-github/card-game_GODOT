@@ -7,7 +7,10 @@ namespace card_gameEngine
    
     public class Main : Node2D
     {
-        
+        public override void _Process(float delta)
+        {
+            
+        }
     }
- 
+    
 }

@@ -5,7 +5,6 @@ namespace card_gameEngine
     public class board : Godot.Node2D
     {   
 
-
         const int maxinHand = 6;
         static Sprite Relic = new Sprite();
 
