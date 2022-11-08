@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "t2Nu2JmiuvBRsDJddm0gGXKVzmcSRamXRVfNIYhBYT1ZDEPe73bIGhwnf1WeNobZxgO43bPQV7utUMOwrrwfmQ==",
+  "success": true,
+  "projectFilePath": "/home/frankperez/Documents/card-game/card-game.csproj",
+  "expectedPackageFiles": [
+    "/home/frankperez/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.2/microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "/home/frankperez/.nuget/packages/microsoft.netframework.referenceassemblies.net472/1.0.2/microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

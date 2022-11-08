@@ -1,0 +1,9 @@
+/home/frankperez/Documents/card-game/.mono/temp/bin/Debug/card-game.dll
+/home/frankperez/Documents/card-game/.mono/temp/bin/Debug/card-game.pdb
+/home/frankperez/Documents/card-game/.mono/temp/obj/Debug/card-game.csproj.AssemblyReference.cache
+/home/frankperez/Documents/card-game/.mono/temp/obj/Debug/card-game.GeneratedMSBuildEditorConfig.editorconfig
+/home/frankperez/Documents/card-game/.mono/temp/obj/Debug/card-game.AssemblyInfoInputs.cache
+/home/frankperez/Documents/card-game/.mono/temp/obj/Debug/card-game.AssemblyInfo.cs
+/home/frankperez/Documents/card-game/.mono/temp/obj/Debug/card-game.csproj.CoreCompileInputs.cache
+/home/frankperez/Documents/card-game/.mono/temp/obj/Debug/card-game.dll
+/home/frankperez/Documents/card-game/.mono/temp/obj/Debug/card-game.pdb
