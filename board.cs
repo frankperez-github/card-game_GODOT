@@ -10,7 +10,6 @@ namespace card_gameEngine
         public static Dictionary<int, Character> CharactersInventary = new Dictionary<int, Character>();
         public static List<int> GraveYard = new List<int>();
         public static int turn = 1;
-
         const int maxinHand = 6;
         static Sprite Relic = new Sprite();
 
@@ -79,14 +78,12 @@ namespace card_gameEngine
             player1.TakeFromDeck(player1, player2, 5, new List<int>());
             player2.TakeFromDeck(player2, player1, 5, new List<int>());
 
-            // AddToHand(player1);
-            // AddToEnemyHand(player2);
+            RefreshBoard();
 
         }
 
         public override void _Process(float delta)
         {
-            GetTree().Paused = false;
             Player player1 = PlayersInventary[0];
             Player player2 = PlayersInventary[1];
 
@@ -120,11 +117,15 @@ namespace card_gameEngine
             {
                 if (player1.life <= 0)
                 {
+                    player1.life = 0;
+                    Attack.Disabled = true;
                     Turnlabel.Text = player2.nick + " wins";
                 }
 
                 if (player2.life <= 0)
                 {
+                    player2.life = 0;
+                    Attack.Disabled = true;
                     Turnlabel.Text = player1.nick + " wins";
                 }
             }
@@ -153,19 +154,23 @@ namespace card_gameEngine
 
                 if (turn % 2 == 0)
                 {
-                    // Next Player takes a card
-                    player2.TakeFromDeck(player2, player1, 1, new List<int>());
-                    AddToEnemyHand(player2);
-                    
+                    if (player2.hand.Count <= 6)
+                    {
+                        // Next Player takes a card
+                        player2.TakeFromDeck(player1, player1, 1, new List<int>());
+                    }
+                    CheckAndDiscard(player2);
                 }
                 else
                 {
-                    // Next Player takes a card
-                    player1.TakeFromDeck(player1, player2, 1, new List<int>()); 
-                    // CheckAndDiscard(player1); 
-                    AddToHand(player1);
+                    if (player1.hand.Count <= 6)
+                    {
+                        // Next Player takes a card
+                        player1.TakeFromDeck(player2, player1, 1, new List<int>());
+                    }
+                    CheckAndDiscard(player1);
                 }
-
+                RefreshBoard();
                 turn++;
                 Turnlabel.Text = "Turno: " + turn;
                 endButton.Disabled = true; // Disbling button, increment turn just one time
@@ -173,61 +178,76 @@ namespace card_gameEngine
             endButton.Disabled = false;
         }
   
-        public void AddToHand(Player player)
+        public void RefreshBoard()
         {
-
+            Player player1 = PlayersInventary[0];
+            Player player2 = PlayersInventary[1];
 
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
             
-            Vector2 PlayerHandPosition = new Vector2(175 - (player.hand.Count * 10), 532);
+            Vector2 PlayerHandPosition = new Vector2(175 - (player1.hand.Count * 10), 532);
+            Vector2 EnemyHandPosition = new Vector2(175 - (player1.hand.Count * 10), 12);
+
+            foreach (Node node in GetTree().GetNodesInGroup("VisibleCards"))
+            {
+                node.QueueFree();
+            } 
 
             int index = 1;
-            foreach (var card in player.hand)
+            foreach (var card in player1.hand)
             {
-                // Max Cards in hand is 6
-                if (index <= maxinHand)
+                Relic = InstanciateRelic();
+                Relic.AddToGroup("VisibleCards");
+                Relic.Position = new Vector2(PlayerHandPosition.x + 115*index, PlayerHandPosition.y);
+                AddChild(Relic);
+                Label name = (Label)Relic.GetChild(1);
+                name.Text = card.name;
+                index++; 
+
+                if (index > maxinHand)
                 {
-                    Relic = InstanciateRelic();
-                    Relic.Position = new Vector2(PlayerHandPosition.x + 115*index, PlayerHandPosition.y);
-                    AddChild(Relic);
-                    Label name = (Label)Relic.GetChild(1);
-                    name.Text = card.name;
-                    index++; 
+                    CheckAndDiscard(player1);
                 }
             }
-        }
-        public void AddToEnemyHand(Player player)
-        {
-            
-            Vector2 PlayerHandPosition = new Vector2(175 - (player.hand.Count * 10), 12);
 
-            int index = 1;
-            foreach (var card in player.hand)
+            int enemyIndex = 1;
+            foreach (var card in player2.hand)
             {
-                // Max Cards in hand is 6
-                if (index <= maxinHand)
+                Relic = InstanciateRelic();
+                Relic.AddToGroup("VisibleCards");
+                Relic.Position = new Vector2(EnemyHandPosition.x + 115*enemyIndex, EnemyHandPosition.y);
+                AddChild(Relic);
+                Label name = (Label)Relic.GetChild(1);
+                name.Text = card.name;
+                enemyIndex++; 
+
+                if (enemyIndex > maxinHand)
                 {
-                    Relic = InstanciateRelic();
-                    Relic.Position = new Vector2(PlayerHandPosition.x + 115*index, PlayerHandPosition.y);
-                    AddChild(Relic);
-                    Label name = (Label)Relic.GetChild(1);
-                    Label nickPlay = (Label)Relic.GetChild(1);
-                    name.Text = card.name;
-                    nickPlay.Text = player.nick;
-                    index++; 
+                    CheckAndDiscard(player2);
                 }
             }
         }
         public void CheckAndDiscard(Player player)
         {
             PackedScene DiscardScene = (PackedScene)GD.Load("res://DiscardLabel.tscn");
+            Vector2 FirstPosition = new Vector2(0, 247);
 
             if (player.hand.Count > 6)
             {
                 Tree DiscardTscn = (Tree)DiscardScene.Instance();
                 Label label = DiscardTscn.GetNode<Label>("DiscardLabel");
-                label.Text = "Select "+(player.hand.Count - 6).ToString()+" to discard:";
+                label.Text = player.nick+" must discard:  "+(player.hand.Count - 6).ToString();
                 AddChild(DiscardTscn);
+
+                int index = 1;
+                foreach (var card in player.hand)
+                {
+                    Sprite relic = board.InstanciateRelic();
+                    relic.Scale = new Vector2((float)0.3,(float)0.3);
+                    AddChild(relic);
+                    relic.Position = new Vector2( 90 * index, FirstPosition.y); 
+                    index++;
+                }
             }
         }
         public static Sprite InstanciateRelic()
