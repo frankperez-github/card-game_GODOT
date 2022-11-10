@@ -12,8 +12,8 @@ namespace card_gameEngine
                 for (int i = 0; i < cards; i++)
                 {
                     Random rnd = new Random();
-                    int random = rnd.Next(1, MainNode.CardsInventary.Count);
-                    Relics relic = MainNode.CardsInventary[random];
+                    int random = rnd.Next(1, board.CardsInventary.Count);
+                    Relics relic = board.CardsInventary[random];
                     
                     Owner.hand.Add( new Relics(relic.Owner, Enemy, relic.id, relic.name, relic.passiveDuration, relic.activeDuration, 
                                     relic.imgAddress, relic.isTrap, relic.Condition, relic.EffectsOrder));
@@ -23,7 +23,7 @@ namespace card_gameEngine
             {
                 foreach (var card in Ids)
                 {
-                    Relics relic = MainNode.CardsInventary[card];
+                    Relics relic = board.CardsInventary[card];
                     Owner.hand.Add( new Relics(Owner, Enemy, relic.id, relic.name, relic.passiveDuration, relic.activeDuration, 
                                     relic.imgAddress,relic.isTrap, relic.Condition, relic.EffectsOrder));
                 }
@@ -40,7 +40,7 @@ namespace card_gameEngine
                     int random = rnd.Next(0, Owner.hand.Count - 1);
                     int cardId = Owner.hand[random].id;
                     Owner.hand.RemoveAt(random);
-                    Relics relic = MainNode.CardsInventary[random];
+                    Relics relic = board.CardsInventary[random];
                     Enemy.hand.Add( new Relics(Owner, Enemy, relic.id, relic.name, relic.passiveDuration, relic.activeDuration, 
                                     relic.imgAddress,relic.isTrap, relic.Condition, relic.EffectsOrder));
                 }
@@ -57,7 +57,7 @@ namespace card_gameEngine
                         Random rnd = new Random();
                         int random = rnd.Next(0, Owner.getCardType(CardState.OnGraveyard)+Enemy.getCardType(CardState.OnGraveyard));
 
-                        foreach (var player in MainNode.PlayersInventary)
+                        foreach (var player in board.PlayersInventary)
                         {
                             foreach (var card in player.hand)
                             {
@@ -66,7 +66,7 @@ namespace card_gameEngine
                                     if(random == 0)
                                     {
                                         card.cardState = CardState.OnDeck;
-                                        Relics relic = MainNode.CardsInventary[card.id];
+                                        Relics relic = board.CardsInventary[card.id];
                                         Owner.hand.Add( new Relics(Owner, Enemy, relic.id, relic.name, relic.passiveDuration, relic.activeDuration, 
                                                         relic.imgAddress,relic.isTrap, relic.Condition, relic.EffectsOrder));
                                         goto Found;
@@ -89,10 +89,10 @@ namespace card_gameEngine
                 foreach (var card in Ids)
                 {
                     try{
-                        Relics relic = MainNode.CardsInventary[card];
+                        Relics relic = board.CardsInventary[card];
                         Owner.hand.Add( new Relics(Owner, Enemy, relic.id, relic.name, relic.passiveDuration, relic.activeDuration, 
                                         relic.imgAddress,relic.isTrap, relic.Condition, relic.EffectsOrder));
-                        MainNode.GraveYard.RemoveAt(card);
+                        board.GraveYard.RemoveAt(card);
                     }
                     catch(System.Exception)
                     {
@@ -134,7 +134,7 @@ namespace card_gameEngine
                 {
                     try
                     {
-                        Owner.hand.Remove(MainNode.CardsInventary[card]);
+                        Owner.hand.Remove(board.CardsInventary[card]);
                     }
                     catch(System.Exception)
                     {

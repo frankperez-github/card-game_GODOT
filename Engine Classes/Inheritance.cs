@@ -125,7 +125,7 @@ namespace card_gameEngine
         {
             Player Enemy;
 
-            foreach (var player in MainNode.PlayersInventary)
+            foreach (var player in board.PlayersInventary)
             {
                 if (player != Owner)
                 {
@@ -170,7 +170,7 @@ namespace card_gameEngine
                 foreach(var Effect in EffectsOrder)
                 {
                     
-                    Player player = SetPlayer(MainNode.PlayersInventary[0], MainNode.PlayersInventary[1], Effect.Value.relativePlayer);
+                    Player player = SetPlayer(board.PlayersInventary[0], board.PlayersInventary[1], Effect.Value.relativePlayer);
                     Player enemy = SetEnemy(player);
                     double actualFactor;
 
@@ -332,14 +332,14 @@ namespace card_gameEngine
             {
                 if(isTrap)
                 {
-                    if (MainNode.CardsInventary[card.id].isTrap)
+                    if (board.CardsInventary[card.id].isTrap)
                     {
                         this.affectedIds.Add(card);
                     }
                 }
                 if (!isTrap)
                 {
-                    if (!MainNode.CardsInventary[card.id].isTrap)
+                    if (!board.CardsInventary[card.id].isTrap)
                     {
                         this.affectedIds.Add(card);
                     }
@@ -367,7 +367,7 @@ namespace card_gameEngine
                     else
                     {
                         Player Enemy;
-                        foreach (var player in MainNode.PlayersInventary)
+                        foreach (var player in board.PlayersInventary)
                         {
                             if (player != card.Owner)
                             {
@@ -401,7 +401,7 @@ namespace card_gameEngine
                     else
                     {
                         Player Enemy;
-                        foreach (var player in MainNode.PlayersInventary)
+                        foreach (var player in board.PlayersInventary)
                         {
                             if (player != card.Owner)
                             {
@@ -435,7 +435,7 @@ namespace card_gameEngine
                     else
                     {
                         Player Enemy;
-                        foreach (var player in MainNode.PlayersInventary)
+                        foreach (var player in board.PlayersInventary)
                         {
                             if (player != card.Owner)
                             {

@@ -4,7 +4,7 @@ namespace card_gameEngine
 {
     public class Game
     {
-        public static Dictionary<int, Character> CharactersInventary = MainNode.CharactersInventary;
+        public static Dictionary<int, Character> CharactersInventary = board.CharactersInventary;
         // public static Player player1;
         // public static Player player2;
         public static void game()
@@ -17,7 +17,7 @@ namespace card_gameEngine
 
 
 
-            Dictionary<int, Relics> CardsInventary = MainNode.CardsInventary;
+            Dictionary<int, Relics> CardsInventary = board.CardsInventary;
             // List<int> Deck = CargarDeck(CardsInventary);
             
             Console.Clear();
@@ -131,7 +131,7 @@ namespace card_gameEngine
                         }
                         else
                         {
-                            int Defaultpassive = MainNode.CardsInventary[player.hand[index].id].passiveDuration;
+                            int Defaultpassive = board.CardsInventary[player.hand[index].id].passiveDuration;
                             player.hand[index].passiveDuration = Defaultpassive;
                             player.hand[index].activeDuration--;
                         }
