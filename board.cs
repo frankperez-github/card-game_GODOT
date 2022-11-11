@@ -15,6 +15,8 @@ namespace card_gameEngine
         static Sprite Relic = new Sprite();
         Player discardPlayer = default;
         public static List<Button> discardButtons = new List<Button>();
+        PackedScene DiscardScene = (PackedScene)GD.Load("res://DiscardLabel.tscn");
+        public static bool discarding = false;
 
         public override void _Ready()
         {
@@ -163,7 +165,6 @@ namespace card_gameEngine
                         // Next Player takes a card
                         player2.TakeFromDeck(player1, player2, 1, new List<int>());
                     }
-                    CheckAndDiscard(player2);
                 }
                 else // Player2's turn
                 {
@@ -172,7 +173,6 @@ namespace card_gameEngine
                         // Next Player takes a card
                         player1.TakeFromDeck(player2, player1, 1, new List<int>());
                     }
-                    CheckAndDiscard(player1);
                 }
                 RefreshBoard();
                 turn++;
@@ -200,6 +200,7 @@ namespace card_gameEngine
             } 
 
             int index = 1;
+            // Updating cards in board
             foreach (var card in player1.hand)
             {
                 Relic = InstanciateRelic();
@@ -210,13 +211,15 @@ namespace card_gameEngine
                 name.Text = card.name;
                 index++; 
 
-                if (index > maxinHand)
-                {
-                    CheckAndDiscard(player1);
-                }
+            }
+            if (index > maxinHand)
+            {
+                discarding = true;
+                CheckAndDiscard(player1);
             }
 
             int enemyIndex = 1;
+            // Updating enemy's cards in board
             foreach (var card in player2.hand)
             {
                 Relic = InstanciateRelic();
@@ -226,16 +229,16 @@ namespace card_gameEngine
                 Label name = (Label)Relic.GetChild(1);
                 name.Text = card.name;
                 enemyIndex++; 
-
-                if (enemyIndex > maxinHand)
-                {
-                    CheckAndDiscard(player2);
-                }
+            }
+            if (enemyIndex > maxinHand)
+            {
+                discarding = true;
+                CheckAndDiscard(player2);
             }
         }
         public void CheckAndDiscard(Player player)
         {
-            PackedScene DiscardScene = (PackedScene)GD.Load("res://DiscardLabel.tscn");
+            
             Vector2 FirstPosition = new Vector2(0, 247);
 
             if (player.hand.Count > 6)
@@ -245,6 +248,7 @@ namespace card_gameEngine
                 Label label = DiscardTscn.GetNode<Label>("DiscardLabel");
                 label.Text = player.nick+" must discard:  "+(player.hand.Count - 6).ToString();
                 AddChild(DiscardTscn);
+                DiscardTscn.AddToGroup("discardGroup");
 
                 int index = 1;
                 foreach (var card in player.hand)
@@ -253,7 +257,9 @@ namespace card_gameEngine
                     Button button = board.InstanciateButton();
                     relic.Scale = new Vector2((float)0.3,(float)0.3);
                     AddChild(relic);
+                    relic.AddToGroup("discardGroup");
                     AddChild(button);
+                    button.AddToGroup("discardGroup");
                     discardButtons.Add(button);
                     button.SetPosition(new Vector2( 90 * index - 40, FirstPosition.y + 85) ,false);
                     relic.Position = new Vector2( 90 * index, FirstPosition.y); 
@@ -278,23 +284,30 @@ namespace card_gameEngine
 
         public override void _Input(InputEvent @event)
         {
-            if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed)
+            if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && discarding)
             {
                 switch ((ButtonList)mouseEvent.ButtonIndex)
                 {
                     case ButtonList.Left:
-                        foreach (var button in discardButtons)
+                        for (int i = 0; i < discardButtons.Count; i++)
                         {
-                            GD.Print(button.GetRect().HasPoint(mouseEvent.Position));
-                            if (button.GetRect().HasPoint(mouseEvent.Position))
+                            if (discardButtons[i].GetRect().HasPoint(GetLocalMousePosition()))
                             {
-                                int cardIndex = board.discardButtons.IndexOf(button);
+                                discardPlayer.hand.Remove(discardPlayer.hand[i]);
+                                GraveYard.Add(discardPlayer.hand[i].id);
+                                
+                            }
 
-                                GD.Print(discardPlayer.hand.Count);                        
-                                discardPlayer.hand.Remove(discardPlayer.hand[cardIndex]);
-                                GD.Print(discardPlayer.hand.Count);                        
-
-                                GraveYard.Add(discardPlayer.hand[cardIndex].id);
+                            // Discarding finished
+                            // Removing all instances
+                            if (discardPlayer.hand.Count <= 6)
+                            {
+                                foreach (Node item in GetTree().GetNodesInGroup("discardGroup"))
+                                {
+                                    item.QueueFree();
+                                }
+                                discarding = false;
+                                RefreshBoard();
                             }
                         }
                         break;
