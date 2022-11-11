@@ -216,6 +216,7 @@ namespace card_gameEngine
             {
                 discarding = true;
                 CheckAndDiscard(player1);
+
             }
 
             int enemyIndex = 1;
@@ -235,6 +236,7 @@ namespace card_gameEngine
                 discarding = true;
                 CheckAndDiscard(player2);
             }
+
         }
         public void CheckAndDiscard(Player player)
         {
@@ -295,7 +297,6 @@ namespace card_gameEngine
                             {
                                 discardPlayer.hand.Remove(discardPlayer.hand[i]);
                                 GraveYard.Add(discardPlayer.hand[i].id);
-                                
                             }
 
                             // Discarding finished
@@ -306,7 +307,14 @@ namespace card_gameEngine
                                 {
                                     item.QueueFree();
                                 }
+
+                                // Cleaning discardButtons List after discard all we need
+                                discardButtons.Clear();
+
+                                // We don't need to discard for now
                                 discarding = false;
+                                
+                                //Update Conditions
                                 RefreshBoard();
                             }
                         }
