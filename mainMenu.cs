@@ -14,6 +14,12 @@ namespace card_gameEngine
             {
                 GetTree().ChangeScene("res://board.tscn");
             }
+
+            Button Quit = GetNode<Button>("Start/Quit");
+            if (Quit.Pressed)
+            {
+                GetTree().Quit();
+            }
         }
     }
     

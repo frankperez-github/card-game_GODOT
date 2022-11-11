@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 namespace card_gameEngine
 {
@@ -12,6 +13,8 @@ namespace card_gameEngine
         public static int turn = 1;
         const int maxinHand = 6;
         static Sprite Relic = new Sprite();
+        Player discardPlayer = default;
+        public static List<Button> discardButtons = new List<Button>();
 
         public override void _Ready()
         {
@@ -79,6 +82,7 @@ namespace card_gameEngine
             player2.TakeFromDeck(player2, player1, 5, new List<int>());
 
             RefreshBoard();
+            discardPlayer = player1;
 
         }
 
@@ -152,16 +156,16 @@ namespace card_gameEngine
             if (endButton.Pressed)
             {
 
-                if (turn % 2 == 0)
+                if (turn % 2 == 0) // Player1's turn
                 {
                     if (player2.hand.Count <= 6)
                     {
                         // Next Player takes a card
-                        player2.TakeFromDeck(player1, player1, 1, new List<int>());
+                        player2.TakeFromDeck(player1, player2, 1, new List<int>());
                     }
                     CheckAndDiscard(player2);
                 }
-                else
+                else // Player2's turn
                 {
                     if (player1.hand.Count <= 6)
                     {
@@ -173,11 +177,13 @@ namespace card_gameEngine
                 RefreshBoard();
                 turn++;
                 Turnlabel.Text = "Turno: " + turn;
-                endButton.Disabled = true; // Disbling button, increment turn just one time
+                endButton.Disabled = true; // Disabling button, increment turn just one time
             }
             endButton.Disabled = false;
         }
   
+
+
         public void RefreshBoard()
         {
             Player player1 = PlayersInventary[0];
@@ -234,6 +240,7 @@ namespace card_gameEngine
 
             if (player.hand.Count > 6)
             {
+                discardPlayer = player;
                 Tree DiscardTscn = (Tree)DiscardScene.Instance();
                 Label label = DiscardTscn.GetNode<Label>("DiscardLabel");
                 label.Text = player.nick+" must discard:  "+(player.hand.Count - 6).ToString();
@@ -243,9 +250,15 @@ namespace card_gameEngine
                 foreach (var card in player.hand)
                 {
                     Sprite relic = board.InstanciateRelic();
+                    Button button = board.InstanciateButton();
                     relic.Scale = new Vector2((float)0.3,(float)0.3);
                     AddChild(relic);
+                    AddChild(button);
+                    discardButtons.Add(button);
+                    button.SetPosition(new Vector2( 90 * index - 40, FirstPosition.y + 85) ,false);
                     relic.Position = new Vector2( 90 * index, FirstPosition.y); 
+                    Label name = (Label)Relic.GetChild(1);
+                    name.Text = card.name;
                     index++;
                 }
             }
@@ -256,7 +269,38 @@ namespace card_gameEngine
             Relic = (Sprite)relic.Instance();
             return Relic;
         }
-    
+        public static Button InstanciateButton()
+        {
+            PackedScene relic = (PackedScene)GD.Load("res://DiscardButton.tscn");
+            Button button = (Button)relic.Instance();
+            return button;
+        }
+
+        public override void _Input(InputEvent @event)
+        {
+            if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed)
+            {
+                switch ((ButtonList)mouseEvent.ButtonIndex)
+                {
+                    case ButtonList.Left:
+                        foreach (var button in discardButtons)
+                        {
+                            GD.Print(button.GetRect().HasPoint(mouseEvent.Position));
+                            if (button.GetRect().HasPoint(mouseEvent.Position))
+                            {
+                                int cardIndex = board.discardButtons.IndexOf(button);
+
+                                GD.Print(discardPlayer.hand.Count);                        
+                                discardPlayer.hand.Remove(discardPlayer.hand[cardIndex]);
+                                GD.Print(discardPlayer.hand.Count);                        
+
+                                GraveYard.Add(discardPlayer.hand[cardIndex].id);
+                            }
+                        }
+                        break;
+                }
+            }
+        }
     }       
 }
 
