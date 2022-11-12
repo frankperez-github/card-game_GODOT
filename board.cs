@@ -80,8 +80,8 @@ namespace card_gameEngine
             PlayersInventary.Add(player1);
             PlayersInventary.Add(player2);
 
-            player1.TakeFromDeck(player1, player2, 5, new List<int>());
-            player2.TakeFromDeck(player2, player1, 5, new List<int>());
+            player1.TakeFromDeck(player1, player2, 5, new List<Relics>());
+            player2.TakeFromDeck(player2, player1, 5, new List<Relics>());
 
             RefreshBoard();
             discardPlayer = player1;
@@ -163,7 +163,7 @@ namespace card_gameEngine
                     if (player2.hand.Count <= 6)
                     {
                         // Next Player takes a card
-                        player2.TakeFromDeck(player1, player2, 1, new List<int>());
+                        player2.TakeFromDeck(player1, player2, 1, new List<Relics>());
                     }
                 }
                 else // Player2's turn
@@ -171,7 +171,7 @@ namespace card_gameEngine
                     if (player1.hand.Count <= 6)
                     {
                         // Next Player takes a card
-                        player1.TakeFromDeck(player2, player1, 1, new List<int>());
+                        player1.TakeFromDeck(player2, player1, 1, new List<Relics>());
                     }
                 }
                 RefreshBoard();
@@ -192,7 +192,7 @@ namespace card_gameEngine
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
             
             Vector2 PlayerHandPosition = new Vector2(175 - (player1.hand.Count * 10), 532);
-            Vector2 EnemyHandPosition = new Vector2(175 - (player1.hand.Count * 10), 12);
+            Vector2 EnemyHandPosition = new Vector2(175 - (player2.hand.Count * 10), 12);
 
             foreach (Node node in GetTree().GetNodesInGroup("VisibleCards"))
             {
@@ -295,8 +295,8 @@ namespace card_gameEngine
                         {
                             if (discardButtons[i].GetRect().HasPoint(GetLocalMousePosition()))
                             {
-                                discardPlayer.hand.Remove(discardPlayer.hand[i]);
                                 GraveYard.Add(discardPlayer.hand[i].id);
+                                discardPlayer.hand.Remove(discardPlayer.hand[i]);
                             }
 
                             // Discarding finished
@@ -324,4 +324,3 @@ namespace card_gameEngine
         }
     }       
 }
-

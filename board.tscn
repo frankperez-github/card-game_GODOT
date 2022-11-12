@@ -89,9 +89,9 @@ custom_fonts/font = SubResource( 3 )
 text = "Attack: 5"
 
 [node name="Player2Info" type="Label" parent="."]
-margin_left = 875.0
+margin_left = 884.0
 margin_top = 63.0
-margin_right = 979.0
+margin_right = 988.0
 margin_bottom = 190.0
 text = "
 "

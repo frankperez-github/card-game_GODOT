@@ -4,69 +4,259 @@ namespace card_gameEngine
 {
     //PassiveDuration: Cada cuanto tiempo se activa el efecto
     //ActiveDuration: Cuanto tiempo dura el efecto
+    
+    public abstract class Expression
+    {
+        public abstract bool Evaluate();
+    }
+
+    public abstract class BinaryExpression : Expression
+    {
+        protected readonly Expression left;
+        protected readonly Expression right;
+
+        public BinaryExpression(Expression left, Expression right)
+        {
+            this.left = left;
+            this.right = right;
+        }
+
+        public override bool Evaluate()
+        {
+            bool leftValue = this.left.Evaluate();
+            bool rightValue = this.right.Evaluate();
+
+            return this.Evaluate(leftValue, rightValue);
+        }
+
+        protected abstract bool Evaluate(bool left, bool right);
+    }
+
+    public class And : BinaryExpression
+    {
+        public And(Expression left, Expression right) : base(left, right)
+        {
+
+        }
+
+        protected override bool Evaluate(bool left, bool right)
+        {
+            return (left && right);
+        }
+    }
+
+    public class Or : BinaryExpression
+    {
+        public Or(Expression left, Expression right) : base(left, right)
+        {
+
+        }
+
+        protected override bool Evaluate(bool left, bool right)
+        {
+            return (left || right);
+        }
+    }
     public class Condition
     {
+        
         public bool condition;
+        relativePlayer relativePlayer;
+        relativePlayer relativePlayer1;
+        Player player;
+        Property property;
+        int b = 0;
+        int OperId;
+        State state;
 
-        public Condition()
-        {
+        public Condition(){
             this.condition = true;
         }
-        public Condition(int a, int b, int operId)
+
+        public Condition(relativePlayer relativePlayer, Property property, int b, int operId)
         {
-            switch (operId)
+            this.relativePlayer = relativePlayer;
+            this.property = property;
+            this.b = b;
+            this.OperId = operId;
+        }
+        
+        public Condition (relativePlayer relativePlayer, State state)
+        {
+            this.relativePlayer = relativePlayer;
+            this.state = state;
+        }
+        public Condition(relativePlayer relativePlayer, Property property, relativePlayer relativePlayer1, int operId)
+        {
+            this.relativePlayer = relativePlayer;
+            this.property = property;
+            this.relativePlayer1 = relativePlayer1;
+            this.OperId = operId;
+        }
+        
+        public bool Evaluate(Player Owner, Player Enemy)
+        {
+            // Comparing a player's property with a number
+            if (this.b != 0)
             {
-                case 1: // = operator
-                    if (a == b)
-                    {
-                        this.condition = true;
-                    }
-                    break; 
+                Player affected = Relics.SetPlayer(Owner, Enemy, this.relativePlayer);
+                switch (this.property)
+                {
+                    case Property.Attack:
+                        switch (this.OperId)
+                        {
+                            case 1:
+                                return affected.attack >= this.b;
+                            case 2:
+                                return affected.attack <= this.b;
+                            case 3:
+                                return affected.attack == this.b;
+                        }
+                        break;
 
-                case 2: // < operator
-                    if (a < b)
-                    {
-                        this.condition = true;
-                    }
-                    break; 
+                    case Property.BatteField:
+                        switch (this.OperId)
+                        {
+                            case 1:
+                                return affected.userBattleField.Count >= this.b;
+                            case 2:
+                                return affected.userBattleField.Count <= this.b;
+                            case 3:
+                                return affected.userBattleField.Count == this.b;
+                        }
+                        break;
 
-                case 3: // > operator
-                    if (a > b)
-                    {
-                        this.condition = true;
-                    }
-                    break;
+                    case Property.Defense:
+                        switch (this.OperId)
+                        {
+                            case 1:
+                                return affected.defense >= this.b;
+                            case 2:
+                                return affected.defense <= this.b;
+                            case 3:
+                                return affected.defense == this.b;
+                        }
+                        break;
 
-                case 4: // <= operator
-                    if (a <= b)
-                    {
-                        this.condition = true;
-                    }
-                    break; 
+                    case Property.GraveYard:
+                        switch (this.OperId)
+                        {
+                            case 1:
+                                return card_gameEngine.board.GraveYard.Count >= this.b;
+                            case 2:
+                                return card_gameEngine.board.GraveYard.Count <= this.b;
+                            case 3:
+                                return card_gameEngine.board.GraveYard.Count == this.b;
+                        }
+                        break;
+                    
+                    case Property.Hand:
+                        switch (this.OperId)
+                        {
+                            case 1:
+                                return affected.hand.Count >= this.b;
+                            case 2:
+                                return affected.hand.Count <= this.b;
+                            case 3:
+                                return affected.hand.Count == this.b;
+                        }
+                        break;
+                    
+                    case Property.Life:
+                        switch (this.OperId)
+                        {
+                            case 1:
+                                return affected.life >= this.b;
+                            case 2:
+                                return affected.life <= this.b;
+                            case 3:
+                                return affected.life == this.b;
+                        }
+                        break;
 
-                case 5: // >= operator
-                    if (a >= b)
-                    {
-                        this.condition = true;
-                    }
-                    break;  
+                }
 
             }
-        }
-        public Condition(State a, State b)
-        {
-            if (a == b)
+            // Comparing only states
+            if (this.state != State.NULL)
             {
-                this.condition = true;
+                Player affected = Relics.SetPlayer(Owner, Enemy, this.relativePlayer);
+                return affected.state == this.state;
             }
-        }
-        public Condition(CardState a, CardState b)
-        {
-            if (a == b)
+            // Comparing a player's property with another player's same property
+            if(relativePlayer != relativePlayer.NULL)
             {
-                this.condition = true;
+                Player player = Relics.SetPlayer(Owner, Enemy, this.relativePlayer);
+                Player player2 = Relics.SetPlayer(Owner, Enemy, this.relativePlayer1);
+                
+                switch (this.property)
+                {
+                    case Property.Attack:
+                        switch (this.OperId)
+                        {
+                            case 1:
+                                return player.attack >= player2.attack;
+                            case 2:
+                                return player.attack <= player2.attack;
+                            case 3:
+                                return player.attack == player2.attack;
+                        }
+                        break;
+
+                    case Property.Defense:
+                        switch (this.OperId)
+                        {
+                            case 1:
+                                return player.defense >= player2.defense;
+                            case 2:
+                                return player.defense <= player2.defense;
+                            case 3:
+                                return player.defense == player2.defense;
+                        }
+                        break;
+
+                    case Property.Life:
+                        switch (this.OperId)
+                        {
+                            case 1:
+                                return player.life >= player2.life;
+                            case 2:
+                                return player.life <= player2.life;
+                            case 3:
+                                return player.life == player2.life;
+                        }
+                        break;
+
+                    case Property.BatteField:
+                        switch (this.OperId)
+                        {
+                            case 1:
+                                return player.userBattleField.Count >= player2.userBattleField.Count;
+                            case 2:
+                                return player.userBattleField.Count <= player2.userBattleField.Count;
+                            case 3:
+                                return player.userBattleField.Count == player2.userBattleField.Count;
+                        }
+                        break;
+                    
+                    case Property.Hand:
+                        switch (this.OperId)
+                        {
+                            case 1:
+                                return player.hand.Count >= player2.hand.Count;
+                            case 2:
+                                return player.hand.Count <= player2.hand.Count;
+                            case 3:
+                                return player.hand.Count == player2.hand.Count;
+                        }
+                        break;
+                }
             }
+
+            this.condition = false;
+            return false;
         }
+        
 
 
     }
@@ -125,7 +315,7 @@ namespace card_gameEngine
         {
             Player Enemy;
 
-            foreach (var player in board.PlayersInventary)
+            foreach (var player in card_gameEngine.board.PlayersInventary)
             {
                 if (player != Owner)
                 {
@@ -165,51 +355,54 @@ namespace card_gameEngine
                 
         public void Effect()
         {
-            if (Condition.condition)
+            if (this.Condition.Evaluate(Owner, Enemy))
             {
                 foreach(var Effect in EffectsOrder)
                 {
                     
-                    Player player = SetPlayer(board.PlayersInventary[0], board.PlayersInventary[1], Effect.Value.relativePlayer);
-                    Player enemy = SetEnemy(player);
+                    this.cardState = CardState.Activated;
+                    this.Owner.userBattleField.Add(this);
+                    Player affectedPlayer = SetPlayer(Owner, Enemy, Effect.Value.relativePlayer);
+                    Player notAffectedPlayer = SetEnemy(affectedPlayer);
+                    List<Relics> affectedCards = new List<Relics>();
                     double actualFactor;
 
                     switch (Effect.Key)
                     {
                         case 1:
-                            TakeFromDeck(player, enemy, Effect.Value.affects, Effect.Value.affectedIds);
+                            TakeFromDeck(affectedPlayer, notAffectedPlayer, Effect.Value.affects, affectedCards);
                             break;
 
                         case 2:
-                            TakeFromEnemyHand(player, enemy, Effect.Value.affects);
+                            TakeFromEnemyHand(affectedPlayer, notAffectedPlayer, Effect.Value.affects);
                             break;
 
                         case 3:
-                            TakeFromGraveyard(player, enemy, Effect.Value.affects, Effect.Value.affectedIds);
+                            TakeFromGraveyard(affectedPlayer, notAffectedPlayer, Effect.Value.affects, affectedCards);
                             break;
 
                         case 4:
-                            actualFactor = setFactor(Effect.Key, player, enemy);
-                            Life(player, enemy, Effect.Value.affects, actualFactor);
+                            actualFactor = setFactor(Effect.Key, affectedPlayer, notAffectedPlayer);
+                            Life(affectedPlayer, Effect.Value.affects, actualFactor);
                             break;
 
                         case 5:
-                            actualFactor = setFactor(Effect.Key, player, enemy);
-                            Attack(player, enemy, Effect.Value.affects,  actualFactor);
+                            actualFactor = setFactor(Effect.Key, affectedPlayer, notAffectedPlayer);
+                            Attack(affectedPlayer, Effect.Value.affects,  actualFactor);
                             break;
 
                         case 6:
-                            actualFactor = setFactor(Effect.Key, player, enemy);
-                            Defense(player, enemy, Effect.Value.affects, actualFactor);
+                            actualFactor = setFactor(Effect.Key, affectedPlayer, notAffectedPlayer);
+                            Defense(affectedPlayer, Effect.Value.affects, actualFactor);
                             break;
                         
                         case 7:
-                            actualFactor = setFactor(Effect.Key, player, enemy);
-                            Discard(player, enemy, Effect.Value.affects, actualFactor, Effect.Value.affectedIds);
+                            actualFactor = setFactor(Effect.Key, affectedPlayer, notAffectedPlayer);
+                            Discard(affectedPlayer, Effect.Value.affects, actualFactor, affectedCards);
                             break;
 
                         case 8:
-                            ChangeState(player, enemy, Effect.Value.state);
+                            ChangePlayerState(affectedPlayer, Effect.Value.state);
                             break;
                     }
                 }
@@ -244,6 +437,7 @@ namespace card_gameEngine
         public string nick = "";
         public double life;
         public List<Relics> hand = new List<Relics>();
+        public List<Relics> userBattleField = new List<Relics>();
         public State state = State.Safe;
 
         public Player(Character character, string nick): base(character.name, character.passiveDuration, character.activeDuration, character.imgAddress, character.attack, character.defense) 
@@ -261,64 +455,53 @@ namespace card_gameEngine
             Console.WriteLine("State: " + this.state);
             this.PrintHand();
             this.PrintBattleField();
-            this.PrintGraveYard();
         }
         public void PrintHand()
         {
             Console.WriteLine();
             Console.WriteLine("Hand: ");
+            int index = 0;
             foreach (var card in hand)
             {
-                if(card.cardState == CardState.OnHand)
-                {
-                    Console.WriteLine("Id: "+ card.id + " Name: "+ card.name);            
-                }
+                Console.WriteLine("CardPossition: "+ index + " Id: "+ card.id + " Name: "+ card.name);            
+                index++;
             }
         }
         public void PrintBattleField()
         {
             Console.WriteLine();
-            int quant = 0;
-            foreach (var card in this.hand)
+            foreach (var card in this.userBattleField)
             {
-                if (card.cardState == CardState.Activated)
-                {
-                    quant++;
-                    Console.Write(card.name+", ");
-                }
+                Console.Write(card.name+", ");
             }
             Console.WriteLine();
-            Console.WriteLine("BatteField-"+this.name+": "+quant);
+            Console.WriteLine("BatteField-"+this.name+": "+ this.userBattleField.Count);
             Console.WriteLine();
-
-        }
-        public void PrintGraveYard()
-        {
-            int quant = 0;
-            foreach (var card in this.hand)
-            {
-                if (card.cardState == CardState.OnGraveyard)
-                {
-                    quant++;
-                    Console.Write(card.name+", ");
-                }
-                
-            }
-            Console.WriteLine();
-            Console.WriteLine("Graveyard-"+this.name+": "+quant);
 
         }
         public int getCardType(CardState cardState)
         {
-            int total = 0;
-            foreach (var card in this.hand)
+            switch (cardState)
             {
-                if (card.cardState == cardState)
+                case CardState.OnHand:
+                    return this.hand.Count;
+                case CardState.Activated:
+                    return this.userBattleField.Count;
+                case CardState.OnGraveyard:
+                    return card_gameEngine.board.GraveYard.Count;
+            }
+            return 0;
+        }
+        public bool Trap()
+        {
+            foreach (var card in hand)
+            {
+                if(card.cardState == CardState.OnHand && card.isTrap)
                 {
-                    total++;
+                    return true;
                 }
             }
-            return total;
+            return false;
         }
     }
 
@@ -332,14 +515,14 @@ namespace card_gameEngine
             {
                 if(isTrap)
                 {
-                    if (board.CardsInventary[card.id].isTrap)
+                    if (card_gameEngine.board.CardsInventary[card.id].isTrap)
                     {
                         this.affectedIds.Add(card);
                     }
                 }
                 if (!isTrap)
                 {
-                    if (!board.CardsInventary[card.id].isTrap)
+                    if (!card_gameEngine.board.CardsInventary[card.id].isTrap)
                     {
                         this.affectedIds.Add(card);
                     }
@@ -367,7 +550,7 @@ namespace card_gameEngine
                     else
                     {
                         Player Enemy;
-                        foreach (var player in board.PlayersInventary)
+                        foreach (var player in card_gameEngine.board.PlayersInventary)
                         {
                             if (player != card.Owner)
                             {
@@ -401,7 +584,7 @@ namespace card_gameEngine
                     else
                     {
                         Player Enemy;
-                        foreach (var player in board.PlayersInventary)
+                        foreach (var player in card_gameEngine.board.PlayersInventary)
                         {
                             if (player != card.Owner)
                             {
@@ -435,7 +618,7 @@ namespace card_gameEngine
                     else
                     {
                         Player Enemy;
-                        foreach (var player in board.PlayersInventary)
+                        foreach (var player in card_gameEngine.board.PlayersInventary)
                         {
                             if (player != card.Owner)
                             {
@@ -460,7 +643,7 @@ namespace card_gameEngine
         public relativePlayer relativePlayer;
         public State state;
         public double factor = 1;
-        public int affects;
+        public double affects;
         public List<int> affectedIds = new List<int>();
         public relativeFactor relativeFactor = relativeFactor.Fixed;
 
@@ -518,6 +701,7 @@ namespace card_gameEngine
         Poisoned,
         Freezed,
         Asleep,
+        NULL
     }
     public enum relativeFactor
     {
@@ -531,7 +715,18 @@ namespace card_gameEngine
     public enum relativePlayer
     {
         Owner,
-        Enemy
+        Enemy,
+        NULL
+    }
+    public enum Property
+    {
+        State,
+        Life,
+        Defense,
+        Attack,
+        Hand,
+        BatteField,
+        GraveYard
     }
     
     #endregion
