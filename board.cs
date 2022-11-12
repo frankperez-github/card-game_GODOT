@@ -5,7 +5,8 @@ namespace card_gameEngine
 {
     public class board : Godot.Node2D
     {   
-
+        public Player player1;
+        public Player player2;
         public static List<Player> PlayersInventary = new List<Player>();
         public static Dictionary<int, Relics> CardsInventary= new Dictionary<int, Relics>();
         public static Dictionary<int, Character> CharactersInventary = new Dictionary<int, Character>();
@@ -15,8 +16,35 @@ namespace card_gameEngine
         static Sprite Relic = new Sprite();
         Player discardPlayer = default;
         public static List<Button> discardButtons = new List<Button>();
+
+        #region Visual Board elements
+        public List<Sprite> Player1Hand = new List<Sprite>();
+        public List<Sprite> Player2Hand = new List<Sprite>();
+        Vector2[] Player2Field = new Vector2[4]
+        {
+            new Vector2(345, 142),
+            new Vector2(465, 142),
+            new Vector2(585, 142),
+            new Vector2(705, 142)
+        };
+        bool[] boolPlayer2Field = new bool[4];
+
+        Vector2[] Player1Field = new Vector2[4]
+        {
+            new Vector2(345, 401),
+            new Vector2(465, 401),
+            new Vector2(585, 401),
+            new Vector2(705, 401)
+        };
+        bool[] boolPlayer1Field = new bool[4];
+
+        int emptySlots = 4;
+
+
+        #endregion
+
         PackedScene DiscardScene = (PackedScene)GD.Load("res://DiscardLabel.tscn");
-        public static bool discarding = false;
+        static bool discarding = false;
 
         public override void _Ready()
         {
@@ -75,8 +103,8 @@ namespace card_gameEngine
             CardsInventary.Add(6,new Relics(defaultPlayer, defaultPlayer, 5, "Libro de los secretos", 0, 1, "imgpath4", false, new Condition(), card6Dict));
             #endregion
 
-            Player player1 = new Player(CharactersInventary[1], "Pepe el macho");
-            Player player2 = new Player(CharactersInventary[2], "Juan la sombra");
+            player1 = new Player(CharactersInventary[1], "Pepe el macho");
+            player2 = new Player(CharactersInventary[2], "Juan la sombra");
             PlayersInventary.Add(player1);
             PlayersInventary.Add(player2);
 
@@ -154,25 +182,22 @@ namespace card_gameEngine
                 }
             }
 
-            //Change Turn
+            //Change Turn (END BUTTON)
             if (endButton.Pressed)
             {
-
                 if (turn % 2 == 0) // Player1's turn
                 {
-                    if (player2.hand.Count <= 6)
-                    {
-                        // Next Player takes a card
-                        player2.TakeFromDeck(player1, player2, 1, new List<Relics>());
-                    }
+                    // Next Player takes a card
+                    player2.TakeFromDeck(player1, player2, 1, new List<Relics>());
+                    UpdateBattleField(player1);
+                    emptySlots = 4;
                 }
                 else // Player2's turn
                 {
-                    if (player1.hand.Count <= 6)
-                    {
-                        // Next Player takes a card
-                        player1.TakeFromDeck(player2, player1, 1, new List<Relics>());
-                    }
+                    // Next Player takes a card
+                    player1.TakeFromDeck(player2, player1, 1, new List<Relics>());
+                    UpdateBattleField(player2);
+                    emptySlots = 4;
                 }
                 RefreshBoard();
                 turn++;
@@ -191,9 +216,12 @@ namespace card_gameEngine
 
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
             
-            Vector2 PlayerHandPosition = new Vector2(175 - (player1.hand.Count * 10), 532);
-            Vector2 EnemyHandPosition = new Vector2(175 - (player2.hand.Count * 10), 12);
+            Vector2 Player1HandPosition = new Vector2(175 - (player1.hand.Count * 10), 532);
+            Vector2 Player2HandPosition = new Vector2(175 - (player2.hand.Count * 10), 12);
 
+            // Erasing old data
+            Player2Hand.Clear();
+            Player1Hand.Clear();
             foreach (Node node in GetTree().GetNodesInGroup("VisibleCards"))
             {
                 node.QueueFree();
@@ -203,9 +231,10 @@ namespace card_gameEngine
             // Updating cards in board
             foreach (var card in player1.hand)
             {
-                Relic = InstanciateRelic();
+                Relic = InstanciateRelic(card);
                 Relic.AddToGroup("VisibleCards");
-                Relic.Position = new Vector2(PlayerHandPosition.x + 115*index, PlayerHandPosition.y);
+                Player1Hand.Add(Relic);
+                Relic.Position = new Vector2(Player1HandPosition.x + 115*index, Player1HandPosition.y);
                 AddChild(Relic);
                 Label name = (Label)Relic.GetChild(1);
                 name.Text = card.name;
@@ -223,12 +252,11 @@ namespace card_gameEngine
             // Updating enemy's cards in board
             foreach (var card in player2.hand)
             {
-                Relic = InstanciateRelic();
+                Relic = InstanciateRelic(card);
                 Relic.AddToGroup("VisibleCards");
-                Relic.Position = new Vector2(EnemyHandPosition.x + 115*enemyIndex, EnemyHandPosition.y);
+                Player2Hand.Add(Relic);
+                Relic.Position = new Vector2(Player2HandPosition.x + 115*enemyIndex, Player2HandPosition.y);
                 AddChild(Relic);
-                Label name = (Label)Relic.GetChild(1);
-                name.Text = card.name;
                 enemyIndex++; 
             }
             if (enemyIndex > maxinHand)
@@ -241,7 +269,7 @@ namespace card_gameEngine
         public void CheckAndDiscard(Player player)
         {
             
-            Vector2 FirstPosition = new Vector2(0, 247);
+            Vector2 FirstDiscardPosition = new Vector2(0, 247);
 
             if (player.hand.Count > 6)
             {
@@ -255,7 +283,7 @@ namespace card_gameEngine
                 int index = 1;
                 foreach (var card in player.hand)
                 {
-                    Sprite relic = board.InstanciateRelic();
+                    Sprite relic = board.InstanciateRelic(card);
                     Button button = board.InstanciateButton();
                     relic.Scale = new Vector2((float)0.3,(float)0.3);
                     AddChild(relic);
@@ -263,18 +291,20 @@ namespace card_gameEngine
                     AddChild(button);
                     button.AddToGroup("discardGroup");
                     discardButtons.Add(button);
-                    button.SetPosition(new Vector2( 90 * index - 40, FirstPosition.y + 85) ,false);
-                    relic.Position = new Vector2( 90 * index, FirstPosition.y); 
+                    button.SetPosition(new Vector2( 90 * index - 40, FirstDiscardPosition.y + 85) ,false);
+                    relic.Position = new Vector2( 90 * index, FirstDiscardPosition.y); 
                     Label name = (Label)Relic.GetChild(1);
                     name.Text = card.name;
                     index++;
                 }
             }
         }
-        public static Sprite InstanciateRelic()
+        public static Sprite InstanciateRelic(Relics card)
         {
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
             Relic = (Sprite)relic.Instance();
+            Label name = (Label)Relic.GetChild(1);
+            name.Text = card.name;
             return Relic;
         }
         public static Button InstanciateButton()
@@ -283,41 +313,139 @@ namespace card_gameEngine
             Button button = (Button)relic.Instance();
             return button;
         }
-
+        public static void UpdateBattleField(Player player)
+        {
+            for (int index = 0; index < player.userBattleField.Count; index++)
+            {
+                if (player.userBattleField[index].activeDuration == 1)
+                {
+                    foreach (var effect in player.userBattleField[index].EffectsOrder)
+                    {
+                        if(effect.Key == 5)
+                        {
+                            effect.Value.affects = effect.Value.affects*(-1); 
+                            player.userBattleField[index].Effect();
+                            effect.Value.affects = effect.Value.affects*(-1);
+                        }
+                    }
+                    // Removing card from battelfield
+                    GraveYard.Add(player.userBattleField[index].id);
+                    player.userBattleField.Remove(player.userBattleField[index]); 
+                }
+                else
+                {
+                    if (player.userBattleField[index].passiveDuration != 0)
+                    {
+                        player.userBattleField[index].passiveDuration--;
+                    }
+                    else
+                    {
+                        int Defaultpassive = CardsInventary[player.userBattleField[index].id].passiveDuration;
+                        player.userBattleField[index].passiveDuration = Defaultpassive;
+                        player.userBattleField[index].activeDuration--;
+                    }
+                }
+                
+            }
+        }
         public override void _Input(InputEvent @event)
         {
-            if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && discarding)
+            if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed)
             {
                 switch ((ButtonList)mouseEvent.ButtonIndex)
                 {
                     case ButtonList.Left:
-                        for (int i = 0; i < discardButtons.Count; i++)
+                        
+                        if (turn % 2 == 0)
                         {
-                            if (discardButtons[i].GetRect().HasPoint(GetLocalMousePosition()))
+                            // Player 1 is clicking
+                            for(int i = 0; i < Player1Hand.Count; i++)
                             {
-                                GraveYard.Add(discardPlayer.hand[i].id);
-                                discardPlayer.hand.Remove(discardPlayer.hand[i]);
+                                if (Player1Hand[i].GetRect().HasPoint(Player1Hand[i].ToLocal(mouseEvent.Position)) && emptySlots > 0)
+                                {
+                                    // Add to player's battlefield
+                                    player1.hand[i].Effect(); // Activating effect of card
+                                    player1.hand.Remove(player1.hand[i]);
+                                    emptySlots--;
+
+                                    RefreshBoard();
+                                }
+                                
                             }
 
-                            // Discarding finished
-                            // Removing all instances
-                            if (discardPlayer.hand.Count <= 6)
+                            // Fulling (visualy) battlefield
+                            for (int slot = 0; slot < player1.userBattleField.Count; slot++)
                             {
-                                foreach (Node item in GetTree().GetNodesInGroup("discardGroup"))
+                                if (!boolPlayer1Field[slot] && emptySlots < 4)
                                 {
-                                    item.QueueFree();
+                                    Sprite battleCard = InstanciateRelic(player1.userBattleField[slot]);
+                                    AddChild(battleCard);
+                                    battleCard.Position = Player1Field[slot];
+                                    boolPlayer1Field[slot] = true;
                                 }
-
-                                // Cleaning discardButtons List after discard all we need
-                                discardButtons.Clear();
-
-                                // We don't need to discard for now
-                                discarding = false;
-                                
-                                //Update Conditions
-                                RefreshBoard();
                             }
                         }
+                        else // Player2 is clicking
+                        {
+
+                            for(int i = 0; i < Player2Hand.Count; i++)
+                            {
+                                if (Player2Hand[i].GetRect().HasPoint(Player2Hand[i].ToLocal(mouseEvent.Position)) && emptySlots > 0)
+                                {
+                                    // Add to player's battlefield
+                                    player2.hand[i].Effect(); // Activating effect of card
+                                    player2.hand.Remove(player2.hand[i]);
+                                    emptySlots--;
+
+                                    RefreshBoard();
+                                }
+                                
+                            }
+
+                            // Fulling (visualy) battlefield
+                            for (int slot = 0; slot < player2.userBattleField.Count; slot++)
+                            {
+                                if (!boolPlayer2Field[slot] && emptySlots < 4)
+                                {
+                                    Sprite battleCard = InstanciateRelic(player2.userBattleField[slot]);
+                                    AddChild(battleCard);
+                                    battleCard.Position = Player2Field[slot];
+                                    boolPlayer2Field[slot] = true;
+                                }
+                            }
+                        }
+                        
+                        if (discarding)
+                        {
+                            for (int i = 0; i < discardButtons.Count; i++)
+                            {
+                                if (discardButtons[i].GetRect().HasPoint(ToLocal(mouseEvent.Position)))
+                                {
+                                    GraveYard.Add(discardPlayer.hand[i].id);
+                                    discardPlayer.hand.Remove(discardPlayer.hand[i]);
+                                }
+
+                                // Discarding finished
+                                // Removing all instances
+                                if (discardPlayer.hand.Count <= 6)
+                                {
+                                    foreach (Node item in GetTree().GetNodesInGroup("discardGroup"))
+                                    {
+                                        item.QueueFree();
+                                    }
+
+                                    // Cleaning discardButtons List after discard all we need
+                                    discardButtons.Clear();
+
+                                    // We don't need to discard for now
+                                    discarding = false;
+                                    
+                                    //Update Conditions
+                                    RefreshBoard();
+                                }
+                            }
+                        }
+
                         break;
                 }
             }
