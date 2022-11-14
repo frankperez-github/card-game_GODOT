@@ -38,8 +38,8 @@ namespace card_gameEngine
         };
         bool[] boolPlayer1Field = new bool[4];
 
-        int emptySlots = 4;
-
+        int Player1emptySlots = 4;
+        int Player2emptySlots = 4;
 
         #endregion
 
@@ -64,14 +64,14 @@ namespace card_gameEngine
             Dictionary<int, ActionInfo> card1Dict = new Dictionary<int, ActionInfo>();
             ActionInfo card1Info = new ActionInfo(relativePlayer.Owner, 15);
             card1Dict.Add(5, card1Info);
-            CardsInventary.Add(1, new Relics(defaultPlayer, defaultPlayer, 1, "Espada del destino", 0, 3, "img", false, new Condition(), card1Dict));
+            CardsInventary.Add(1, new Relics(defaultPlayer, defaultPlayer, 1, "Espada del destino", 0, 3, "img", false, "", card1Dict));
 
             //Capsula del Tiempo
             //Roba una carta del cementerio
             Dictionary<int, ActionInfo> card2Dict = new Dictionary<int, ActionInfo>();
             ActionInfo card2Info = new ActionInfo(relativePlayer.Owner, 1);
             card2Dict.Add(3, card2Info);
-            CardsInventary.Add(2,new Relics(defaultPlayer, defaultPlayer, 2, "Capsula del Tiempo", 0, 1, "imgpath2", false,new Condition(), card2Dict));
+            CardsInventary.Add(2,new Relics(defaultPlayer, defaultPlayer, 2, "Capsula del Tiempo", 0, 1, "imgpath2", false,"", card2Dict));
 
             //Anillo de Zeus
             //Ganas 5 de vida por cada carta en tu mano
@@ -79,28 +79,28 @@ namespace card_gameEngine
             Dictionary<int, ActionInfo> card3Dict = new Dictionary<int, ActionInfo>();
             ActionInfo card3Info = new ActionInfo(relativePlayer.Owner, 5, 1, relativeFactor.OwnerHand);
             card3Dict.Add(4, card3Info);
-            CardsInventary.Add(3 ,new Relics(defaultPlayer1, defaultPlayer, 3, "Anillo de Zeus", 0, 1, "imgpath3", false,  new Condition(), card3Dict));
+            CardsInventary.Add(3 ,new Relics(defaultPlayer1, defaultPlayer, 3, "Anillo de Zeus", 0, 1, "imgpath3", false,  "", card3Dict));
 
             //Escudo de la pobreza
             //Trap, evita el 50% del dano del enemigo
             Dictionary<int, ActionInfo> card4Dict = new Dictionary<int, ActionInfo>();
             ActionInfo card4Info = new ActionInfo(relativePlayer.Owner, 1, 0.5, relativeFactor.Fixed);
             card4Dict.Add(6, card4Info);
-            CardsInventary.Add(4,new Relics(defaultPlayer, defaultPlayer, 4, "Escudo de la pobreza", 0, 1, "imgpath", true, new Condition(), card4Dict));
+            CardsInventary.Add(4,new Relics(defaultPlayer, defaultPlayer, 4, "Escudo de la pobreza", 0, 1, "imgpath", true, "", card4Dict));
 
             //Libro de los secretos 
             //Robas 2 cartas del deck
             Dictionary<int, ActionInfo> card5Dict = new Dictionary<int, ActionInfo>();
             ActionInfo card5Info = new ActionInfo(2, new List<int>());
             card5Dict.Add(1, card5Info);
-            CardsInventary.Add(5,new Relics(defaultPlayer, defaultPlayer, 5, "Libro de los secretos", 0, 1, "imgpath4", false, new Condition(), card5Dict));
+            CardsInventary.Add(5,new Relics(defaultPlayer, defaultPlayer, 5, "Libro de los secretos", 0, 1, "imgpath4", false, "", card5Dict));
             
             //Caliz de la Venganza
             //Tu adversario descarta 2 cartas de su mano
             Dictionary<int, ActionInfo> card6Dict = new Dictionary<int, ActionInfo>();
             ActionInfo card6Info = new ActionInfo(relativePlayer.Enemy, 2, new List<int>());
             card6Dict.Add(7, card6Info);
-            CardsInventary.Add(6,new Relics(defaultPlayer, defaultPlayer, 5, "Libro de los secretos", 0, 1, "imgpath4", false, new Condition(), card6Dict));
+            CardsInventary.Add(6,new Relics(defaultPlayer, defaultPlayer, 5, "Caliz de la veganza", 0, 1, "imgpath4", false, "", card6Dict));
             #endregion
 
             player1 = new Player(CharactersInventary[1], "Pepe el macho");
@@ -190,14 +190,12 @@ namespace card_gameEngine
                     // Next Player takes a card
                     player2.TakeFromDeck(player1, player2, 1, new List<Relics>());
                     UpdateBattleField(player1);
-                    emptySlots = 4;
                 }
                 else // Player2's turn
                 {
                     // Next Player takes a card
                     player1.TakeFromDeck(player2, player1, 1, new List<Relics>());
                     UpdateBattleField(player2);
-                    emptySlots = 4;
                 }
                 RefreshBoard();
                 turn++;
@@ -329,6 +327,7 @@ namespace card_gameEngine
                         }
                     }
                     // Removing card from battelfield
+                    
                     GraveYard.Add(player.userBattleField[index].id);
                     player.userBattleField.Remove(player.userBattleField[index]); 
                 }
@@ -361,14 +360,12 @@ namespace card_gameEngine
                             // Player 1 is clicking
                             for(int i = 0; i < Player1Hand.Count; i++)
                             {
-                                if (Player1Hand[i].GetRect().HasPoint(Player1Hand[i].ToLocal(mouseEvent.Position)) && emptySlots > 0)
+                                if (Player1Hand[i].GetRect().HasPoint(Player1Hand[i].ToLocal(mouseEvent.Position)) && Player1emptySlots > 0)
                                 {
                                     // Add to player's battlefield
                                     player1.hand[i].Effect(); // Activating effect of card
                                     player1.hand.Remove(player1.hand[i]);
-                                    emptySlots--;
-
-                                    RefreshBoard();
+                                    Player1emptySlots--;
                                 }
                                 
                             }
@@ -376,7 +373,7 @@ namespace card_gameEngine
                             // Fulling (visualy) battlefield
                             for (int slot = 0; slot < player1.userBattleField.Count; slot++)
                             {
-                                if (!boolPlayer1Field[slot] && emptySlots < 4)
+                                if (!boolPlayer1Field[slot] && Player1emptySlots < 4)
                                 {
                                     Sprite battleCard = InstanciateRelic(player1.userBattleField[slot]);
                                     AddChild(battleCard);
@@ -384,20 +381,20 @@ namespace card_gameEngine
                                     boolPlayer1Field[slot] = true;
                                 }
                             }
+
+                            RefreshBoard();
                         }
                         else // Player2 is clicking
                         {
 
                             for(int i = 0; i < Player2Hand.Count; i++)
                             {
-                                if (Player2Hand[i].GetRect().HasPoint(Player2Hand[i].ToLocal(mouseEvent.Position)) && emptySlots > 0)
+                                if (Player2Hand[i].GetRect().HasPoint(Player2Hand[i].ToLocal(mouseEvent.Position)) && Player2emptySlots > 0)
                                 {
                                     // Add to player's battlefield
                                     player2.hand[i].Effect(); // Activating effect of card
                                     player2.hand.Remove(player2.hand[i]);
-                                    emptySlots--;
-
-                                    RefreshBoard();
+                                    Player2emptySlots--;
                                 }
                                 
                             }
@@ -405,7 +402,7 @@ namespace card_gameEngine
                             // Fulling (visualy) battlefield
                             for (int slot = 0; slot < player2.userBattleField.Count; slot++)
                             {
-                                if (!boolPlayer2Field[slot] && emptySlots < 4)
+                                if (!boolPlayer2Field[slot] && Player2emptySlots < 4)
                                 {
                                     Sprite battleCard = InstanciateRelic(player2.userBattleField[slot]);
                                     AddChild(battleCard);
@@ -413,6 +410,8 @@ namespace card_gameEngine
                                     boolPlayer2Field[slot] = true;
                                 }
                             }
+
+                            RefreshBoard();
                         }
                         
                         if (discarding)

@@ -28,7 +28,7 @@ size = 34
 font_data = ExtResource( 5 )
 
 [node name="board" type="Node2D"]
-position = Vector2( 7, 29 )
+position = Vector2( -25, 37 )
 script = ExtResource( 1 )
 
 [node name="Board-texture" type="Sprite" parent="."]

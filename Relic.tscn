@@ -11,7 +11,7 @@ size = 53
 font_data = ExtResource( 3 )
 
 [node name="Relic" type="Sprite"]
-position = Vector2( 375, 308 )
+position = Vector2( 411, 263 )
 scale = Vector2( 0.401818, 0.375269 )
 texture = ExtResource( 1 )
 normal_map = SubResource( 1 )
@@ -22,9 +22,9 @@ scale = Vector2( 3.2664, 2.01956 )
 texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = -112.0
-margin_top = -45.0
-margin_right = 105.0
-margin_bottom = 99.0
+margin_left = -121.946
+margin_top = -47.9656
+margin_right = 95.0542
+margin_bottom = 96.0344
 custom_fonts/font = SubResource( 2 )
 text = "Name"
