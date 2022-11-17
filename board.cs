@@ -169,19 +169,7 @@ namespace card_gameEngine
             // Checking end of game
             if (!(player1.life > 0 && player2.life > 0))
             {
-                if (player1.life <= 0)
-                {
-                    player1.life = 0;
-                    Attack.Disabled = true;
-                    Turnlabel.Text = player2.nick + " wins";
-                }
-
-                if (player2.life <= 0)
-                {
-                    player2.life = 0;
-                    Attack.Disabled = true;
-                    Turnlabel.Text = player1.nick + " wins";
-                }
+                GetTree().ChangeScene("res://GameOver.tscn");
             }
             
             Attack.Visible = true;
@@ -415,7 +403,6 @@ namespace card_gameEngine
                         
                         if (turn % 2 == 0)
                         {
-                            GD.Print("Player1");
                             // Player 1 is clicking
                             for(int i = 0; i < Player1Hand.Count; i++)
                             {

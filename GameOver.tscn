@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://GameOver.cs" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 160
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 86
+font_data = ExtResource( 1 )
+
+[node name="Node" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Tree" type="Tree" parent="."]
+margin_right = 1033.0
+margin_bottom = 616.0
+
+[node name="Label" type="Label" parent="Tree"]
+margin_left = 293.0
+margin_top = 61.0
+margin_right = 731.0
+margin_bottom = 173.0
+custom_fonts/font = SubResource( 1 )
+text = "Game Over"
+
+[node name="wins" type="Label" parent="Tree"]
+margin_left = 277.0
+margin_top = 207.0
+margin_right = 739.0
+margin_bottom = 298.0
+custom_fonts/font = SubResource( 2 )
+text = "I allways win"
