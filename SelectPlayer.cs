@@ -1,6 +1,5 @@
 using Godot;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace card_gameEngine
 {
@@ -20,6 +19,7 @@ namespace card_gameEngine
         List<Sprite> characters = new List<Sprite>();
         TextEdit Nick;
         Label choose;
+
         public override void _Ready()
         {
             int index = 0;

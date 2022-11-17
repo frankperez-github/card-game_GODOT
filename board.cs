@@ -127,13 +127,21 @@ namespace card_gameEngine
             discardPlayer = player1;
         }
 
+        bool player1Attack = false;
+        bool player2Attack = false;
         public override void _Process(float delta)
         {
+            Label Turnlabel = GetNode<Label>("TurnLabel");
+
+
+            // Checking end of game
+            if (!(player1.life > 0 && player2.life > 0))
+            {
+                GetTree().ChangeScene("res://GameOver.tscn");
+            }
 
             Button Attack = GetNode<Button>("Attack");
             Button endButton = GetNode<Button>("endButton");
-
-            Label Turnlabel = GetNode<Label>("TurnLabel");
 
             #region updating players' info
             Label PlayerNick = GetNode<Label>("PlayerInfo/Player's Nick");
@@ -158,30 +166,26 @@ namespace card_gameEngine
             Label Player2State = GetNode<Label>("Player2Info/Player2's State");
             Player2State.Text = "State : "+ PlayersInventary[1].state.ToString();
             #endregion
-
-            // Checking end of game
-            if (!(player1.life > 0 && player2.life > 0))
-            {
-                GetTree().ChangeScene("res://GameOver.tscn");
-            }
             
-            Attack.Visible = true;
-            if (turn % 2 == 0) // Player1's Turn
+            Attack.Disabled = false;
+            if (Attack.Pressed)
             {
-                if (Attack.Pressed)
+                if (turn % 2 == 0 && !player1Attack) // Player1's Turn
                 {
-                    player2.life -= player1.attack;
-                    Attack.Visible = false;
+                        player2.life -= player1.attack;
+                        player1Attack = true;
+                        player2Attack = false; // Enabling attack button to next turn 
+                        Attack.Disabled = true;
+                }
+                if (turn % 2 != 0 && !player2Attack)// Player2's Turn
+                {
+                        player1.life -= player2.attack;
+                        player2Attack = true;
+                        player1Attack = false; // Enabling attack button to next turn 
+                        Attack.Disabled = true;
                 }
             }
-            else // Player2's Turn
-            {
-                if (Attack.Pressed)
-                {
-                    player1.life -= player2.attack;
-                    Attack.Visible = false;
-                }
-            }
+
 
             //Change Turn (END BUTTON)
             if (endButton.Pressed)
