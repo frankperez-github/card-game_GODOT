@@ -6,11 +6,10 @@ namespace card_gameEngine
 {
     public class board : Godot.Node2D
     {   
-        static Player player1;
-        static Player player2;
+        Player player1;
+        Player player2;
         public static List<Player> PlayersInventary = new List<Player>();
         public static Dictionary<int, Relics> CardsInventary= new Dictionary<int, Relics>();
-        public static Dictionary<int, Character> CharactersInventary = new Dictionary<int, Character>();
         public static List<Relics> GraveYard = new List<Relics>();
         public static int turn = 1;
         const int maxinHand = 6;
@@ -52,15 +51,16 @@ namespace card_gameEngine
 
         public override void _Ready()
         {
-            #region Defining characters
-            CharactersInventary.Add(1, new Character("El dragón indiferente", 1, 0, "imgpath1", 10, 3));
-            CharactersInventary.Add(2, new Character("El toro alado", 3, 0, "imgpath2", 0, 5));
-            CharactersInventary.Add(3, new Character("La serpiente truhana", 1, 0, "imgpath3", 5, 0));
-            CharactersInventary.Add(4, new Character("El tigre recursivo", 1, 0, "imgpath4", 8, 0));
-            CharactersInventary.Add(5, new Character("El leon amistoso", 2, 0, "imgpath", 0, 1));
-            #endregion
+            // setting virtual player's character and nick
+            if (mainMenu.gameType.ToLower() == "virtual")
+            {
+                board.PlayersInventary.Add(new Player(mainMenu.CharactersInventary[0], "el otro"));
+            }
 
-            Player defaultPlayer = new Player(CharactersInventary[1], "defaultName");
+            player1 = PlayersInventary[0];
+            player2 = PlayersInventary[1];
+
+            Player defaultPlayer = new Player(mainMenu.CharactersInventary[1], "defaultName");
             #region Defining cards
             //Espada del Destino
             //Te suma 15 de ataque
@@ -78,7 +78,7 @@ namespace card_gameEngine
 
             //Anillo de Zeus
             //Ganas 5 de vida por cada carta en tu mano
-            Player defaultPlayer1 = new Player(CharactersInventary[1], "pepito");
+            Player defaultPlayer1 = new Player(mainMenu.CharactersInventary[1], "pepito");
             Dictionary<int, ActionInfo> card3Dict = new Dictionary<int, ActionInfo>();
             ActionInfo card3Info = new ActionInfo(relativePlayer.Owner, 5, 1, relativeFactor.OwnerHand);
             card3Dict.Add(4, card3Info);
@@ -120,11 +120,6 @@ namespace card_gameEngine
             CardsInventary.Add(8,new Relics(defaultPlayer, defaultPlayer, 8, "Objetivo Enemigo", 0, 1, "imgpath4", false, "", "trap", card8Dict));
             #endregion
 
-            player1 = new Player(CharactersInventary[1], "Pepe el macho");
-            player2 = new Player(CharactersInventary[2], "Juan la sombra");
-            PlayersInventary.Add(player1);
-            PlayersInventary.Add(player2);
-
             player1.TakeFromDeck(player1, player2, 5, new List<Relics>());
             player2.TakeFromDeck(player2, player1, 5, new List<Relics>());
 
@@ -134,8 +129,6 @@ namespace card_gameEngine
 
         public override void _Process(float delta)
         {
-            Player player1 = PlayersInventary[0];
-            Player player2 = PlayersInventary[1];
 
             Button Attack = GetNode<Button>("Attack");
             Button endButton = GetNode<Button>("endButton");
@@ -237,7 +230,7 @@ namespace card_gameEngine
             // Updating cards in board
             foreach (var card in player1.hand)
             {
-                Relic = InstanciateRelic(card);
+                Relic = InstanciateVisualCard(card);
                 Relic.AddToGroup("VisibleCards");
                 Player1Hand.Add(Relic);
                 Relic.Position = new Vector2(Player1HandPosition.x + 115*index, Player1HandPosition.y);
@@ -258,7 +251,7 @@ namespace card_gameEngine
             // Updating enemy's cards in board
             foreach (var card in player2.hand)
             {
-                Relic = InstanciateRelic(card);
+                Relic = InstanciateVisualCard(card);
                 Relic.AddToGroup("VisibleCards");
                 Player2Hand.Add(Relic);
                 Relic.Position = new Vector2(Player2HandPosition.x + 115*enemyIndex, Player2HandPosition.y);
@@ -288,7 +281,7 @@ namespace card_gameEngine
                 int index = 1;
                 foreach (var card in player.hand)
                 {
-                    Sprite relic = board.InstanciateRelic(card);
+                    Sprite relic = board.InstanciateVisualCard(card);
                     Button button = board.InstanciateButton();
                     relic.Scale = new Vector2((float)0.3,(float)0.3);
                     AddChild(relic);
@@ -304,7 +297,7 @@ namespace card_gameEngine
                 }
             }
         }
-        public static Sprite InstanciateRelic(Relics card)
+        public static Sprite InstanciateVisualCard(Cards card)
         {
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
             Relic = (Sprite)relic.Instance();

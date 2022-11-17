@@ -1,10 +1,22 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://mainMenu.cs" type="Script" id=1]
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Sprites/board-texture.jpeg" type="Texture" id=3]
 
 [sub_resource type="DynamicFont" id=1]
+size = 57
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 57
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 57
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
 size = 57
 font_data = ExtResource( 2 )
 
@@ -18,70 +30,49 @@ scale = Vector2( 3.83351, 3.47461 )
 texture = ExtResource( 3 )
 
 [node name="Start" type="Button" parent="."]
-margin_left = 337.0
-margin_top = 114.0
-margin_right = 676.0
-margin_bottom = 205.0
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="Label" type="Label" parent="Start"]
-anchor_top = 0.043956
-anchor_bottom = 0.043956
-margin_left = 39.0
-margin_top = 20.0
-margin_right = 307.0
-margin_bottom = 72.0
+margin_left = 336.991
+margin_top = 26.1193
+margin_right = 675.991
+margin_bottom = 117.119
 custom_fonts/font = SubResource( 1 )
-text = "Comenzar a jugar"
+text = "vs virtual player"
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Button" type="Button" parent="Start"]
+[node name="Human" type="Button" parent="Start"]
+margin_left = 0.948761
+margin_top = 145.0
+margin_right = 342.949
+margin_bottom = 235.0
+custom_fonts/font = SubResource( 2 )
+text = "vs Human Player"
+
+[node name="Edit" type="Button" parent="Start"]
+anchor_left = 0.00543915
+anchor_top = 1.57275
+anchor_right = 0.00543915
+anchor_bottom = 1.57275
 margin_left = 2.0
 margin_top = 151.0
 margin_right = 337.0
 margin_bottom = 241.0
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="Label2" type="Label" parent="Start/Button"]
-anchor_left = -0.0152307
-anchor_top = 0.0238695
-anchor_right = -0.0152307
-anchor_bottom = 0.0238695
-margin_left = 85.0
-margin_top = 22.0
-margin_right = 265.0
-margin_bottom = 74.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 text = "Editar Deck"
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
 [node name="Quit" type="Button" parent="Start"]
+anchor_left = 0.00543915
+anchor_top = 1.57275
+anchor_right = 0.00543915
+anchor_bottom = 1.57275
 margin_left = 1.0
 margin_top = 298.0
 margin_right = 340.0
 margin_bottom = 385.0
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="Label" type="Label" parent="Start/Quit"]
-anchor_left = -0.0387981
-anchor_top = 0.0476043
-anchor_right = -0.0387981
-anchor_bottom = 0.0476043
-margin_left = 75.0
-margin_top = 15.0
-margin_right = 303.0
-margin_bottom = 67.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 4 )
 text = "Salir del juego"
 __meta__ = {
 "_edit_use_anchors_": true

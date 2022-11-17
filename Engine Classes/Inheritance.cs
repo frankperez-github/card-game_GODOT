@@ -59,7 +59,7 @@ namespace card_gameEngine
                 this.Affected = Enemy;
             }
         }
-        public  void SetEnemy()
+        public void SetEnemy()
         {
             foreach (var player in board.PlayersInventary)
             {
@@ -117,7 +117,7 @@ namespace card_gameEngine
             {
                 if(Owner.userVisualBattleField[i] == null)
                 {
-                    this.Owner.userVisualBattleField[i] = board.InstanciateRelic(this);
+                    this.Owner.userVisualBattleField[i] = board.InstanciateVisualCard(this);
                     break;
                 }
             }
