@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
 namespace card_gameEngine
 {
     using System.Text.RegularExpressions;
@@ -342,4 +345,119 @@ namespace card_gameEngine
         }
     }
     
+
+    class InterpreterList
+    {
+        public string condition = "";
+        
+        //He can ask for an specifics cards or specifics property of card  
+        public List<Relics>FullList(string condition, Player player)
+        {
+            this.condition = condition;
+            
+            for (int i = 0; i < condition.Length; i++)
+            {
+                if(condition == "deck")
+                {
+                    return new List<Relics>();
+                }
+                if(condition[i] == '.')
+                {
+                    switch(condition.Substring(0, i))
+                    {
+                        case "battlefield":
+                            return AddForType(condition.Substring(i+1, condition.Length - (i+1)), player.userBattleField.ToList());
+                        case "graveyard":
+                            return AddForType(condition.Substring(i+1, condition.Length - (i+1)), board.GraveYard);
+                        case "hand":
+                            return AddForType(condition.Substring(i+1, condition.Length - (i+1)), player.hand);
+                        default:
+                            Console.WriteLine("Place not found xd");
+                            return new List<Relics>();
+                    }
+                }
+            }
+            Console.WriteLine("Error: List condition not found");
+            return new List<Relics>();
+        }
+       public List<Relics> AddForType(string condition, List<Relics> list)
+         {
+            Console.WriteLine("condition: " + condition);
+
+            for (int i = 0; i < condition.Length; i++)
+            {
+                if(condition[i] == '.')
+                {
+                    switch(condition.Substring(0, i))
+                    {
+                        case "trap":
+                            return AddFinal(condition.Substring(i+1, condition.Length - (i+1)), list, "trap");
+                        case "cure":
+                            return AddFinal(condition.Substring(i+1, condition.Length - (i+1)), list, "cure");
+                        case "damage":
+                            return AddFinal(condition.Substring(i+1, condition.Length - (i+1)), list, "damage");
+                        case "defense":
+                            return AddFinal(condition.Substring(i+1, condition.Length - (i+1)), list, "defense");
+                        case "draw":
+                            return AddFinal(condition.Substring(i+1, condition.Length - (i+1)), list, "draw");
+                        case "state":
+                            return AddFinal(condition.Substring(i+1, condition.Length - (i+1)), list, "state");
+                        case "random":
+                            return AddFinal(condition.Substring(i+1, condition.Length - (i+1)), list, "random");
+                        default:
+                            Console.WriteLine("type not found xd");
+                            return new List<Relics>();
+                    }
+                }
+            }
+            Console.WriteLine("Type not found xd");
+            return new List<Relics>();
+         }
+        public List<Relics>AddFinal(string condition, List<Relics> list, string type)
+        {
+            List<Relics> result = new List<Relics>();
+            if(condition == "all")
+            {
+                foreach (var Relic in list)
+                {
+                    if(Relic != null)
+                    {
+                        if(type == "random")
+                        {
+                            result.Add(Relic);
+                        }
+                        else if(Relic.type == type)
+                        {
+                            result.Add(Relic);
+                        }
+                    }
+                }
+                return result;
+            }
+            Console.Clear();
+            List<Relics> Cache = new List<Relics>();
+            foreach (var Relic in list)
+            {
+                if(Relic != null)
+                {
+                    if(type == "random")
+                    {
+                        Cache.Add(Relic);
+                        Console.WriteLine(Relic.name);
+                    }
+                    else if(Relic.type == type)
+                    {
+                        Cache.Add(Relic);
+                    }
+                }
+            }
+            Console.WriteLine("Seleccione las cartas que desee:");
+            for (int i = 0; i < int.Parse(condition); i++)
+            {
+                result.Add(Cache.ElementAt(int.Parse(Console.ReadLine())));
+            }
+            return result;
+        }
+        
+    }
 }
