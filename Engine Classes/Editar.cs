@@ -1,4 +1,4 @@
-namespace card_gameEngine
+namespace gameEngine
 {
     class eitar
     {

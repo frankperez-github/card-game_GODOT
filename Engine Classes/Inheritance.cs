@@ -2,7 +2,7 @@
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
-namespace card_gameEngine
+namespace gameEngine
 {
     //PassiveDuration: Cada cuanto tiempo se activa el efecto
     //ActiveDuration: Cuanto tiempo dura el efecto
@@ -61,7 +61,7 @@ namespace card_gameEngine
         }
         public void SetEnemy()
         {
-            foreach (var player in board.PlayersInventary)
+            foreach (var player in Settings.PlayersInventary)
             {
                 if (player != this.Affected)
                 {
@@ -117,7 +117,7 @@ namespace card_gameEngine
             {
                 if(Owner.userVisualBattleField[i] == null)
                 {
-                    this.Owner.userVisualBattleField[i] = board.InstanciateVisualCard(this);
+                    this.Owner.userVisualBattleField[i] = gameVisual.Visual.InstanciateVisualCard(this);
                     break;
                 }
             }
@@ -264,12 +264,12 @@ namespace card_gameEngine
         }
         public void PrintGraveYard()
         {
-            foreach (var card in board.GraveYard)
+            foreach (var card in Settings.GraveYard)
             {
                 Console.Write(card.name+", ");
             }
             Console.WriteLine();
-            Console.WriteLine("Graveyard-"+this.name+": "+ board.GraveYard.Count());
+            Console.WriteLine("Graveyard-"+this.name+": "+ Settings.GraveYard.Count());
 
         }
         public int getCardType(CardState cardState)
@@ -281,7 +281,7 @@ namespace card_gameEngine
                 case CardState.Activated:
                     return this.userBattleField.Length;
                 case CardState.OnGraveyard:
-                    return board.GraveYard.Count();
+                    return Settings.GraveYard.Count();
             }
             return 0;
         }

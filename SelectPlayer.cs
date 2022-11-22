@@ -1,7 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-namespace card_gameEngine
+namespace gameVisual
 {
     public class SelectPlayer : Node
     {
@@ -15,7 +15,7 @@ namespace card_gameEngine
             new Vector2(800,200)
         };
 
-        Character character1;
+        gameEngine.Character character1;
         List<Sprite> characters = new List<Sprite>();
         TextEdit Nick;
         Label choose;
@@ -23,9 +23,9 @@ namespace card_gameEngine
         public override void _Ready()
         {
             int index = 0;
-            foreach(var character in mainMenu.CharactersInventary)
+            foreach(var character in gameEngine.Settings.CharactersInventary)
             {
-                Sprite Character = board.InstanciateVisualCard(character);
+                Sprite Character = gameVisual.Visual.InstanciateVisualCard(character);
                 AddChild(Character);
                 characters.Add(Character);
                 Character.Position = charactPositions[index];
@@ -47,8 +47,8 @@ namespace card_gameEngine
             {
                 if (Nick.Text != "")
                 {
-                    Player player = new Player(character1, Nick.Text);
-                    board.PlayersInventary.Add(player);
+                    gameEngine.Player player = new gameEngine.Player(character1, Nick.Text);
+                    gameEngine.Settings.PlayersInventary.Add(player);
                     if (mainMenu.gameType.ToLower() == "human")
                     {
                         GetTree().ChangeScene("res://SelectPlayer.tscn");
@@ -79,7 +79,7 @@ namespace card_gameEngine
                                 }
                                 characters[i].Scale = new Vector2((float)0.5,(float)0.5);
 
-                                character1 = mainMenu.CharactersInventary[i];
+                                character1 = gameEngine.Settings.CharactersInventary[i];
                             }
                         }
                         break;

@@ -1,6 +1,6 @@
 using Godot;
 using System;
-namespace card_gameEngine
+namespace gameVisual
 {
     public class GameOver : Node
     {
@@ -12,17 +12,17 @@ namespace card_gameEngine
         public override void _Ready()
         {
             string winner;
-            if (board.PlayersInventary[0].life == 0 && board.PlayersInventary[0].life == 0)
+            if (gameEngine.Settings.PlayersInventary[0].life == 0 && gameEngine.Settings.PlayersInventary[0].life == 0)
             {
                 winner = "Empate";
             }
-            else if (board.PlayersInventary[0].life == 0)
+            else if (gameEngine.Settings.PlayersInventary[0].life == 0)
             {
-                winner = board.PlayersInventary[0].nick+" wins";
+                winner = gameEngine.Settings.PlayersInventary[0].nick+" wins";
             }
             else
             {
-                winner = board.PlayersInventary[1].nick+" wins";
+                winner = gameEngine.Settings.PlayersInventary[1].nick+" wins";
             }
             Label winnerLabel = GetNode<Label>("Tree/wins");
             winnerLabel.Text = winner;

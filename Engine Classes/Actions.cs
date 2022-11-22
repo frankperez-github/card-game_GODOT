@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace card_gameEngine
+namespace gameEngine
 {   
     // Action extends Condition because we need Cards to extend Condition
     public class Actions
@@ -14,8 +14,8 @@ namespace card_gameEngine
                 for (int i = 0; i < cards; i++)
                 {
                     Random rnd = new Random();
-                    int random = rnd.Next(1, board.CardsInventary.Count()+1);
-                    Relics relic = board.CardsInventary[random];
+                    int random = rnd.Next(1, Settings.CardsInventary.Count()+1);
+                    Relics relic = Settings.CardsInventary[random];
                     
                     Affected.hand.Add( new Relics(Affected, Enemy, relic.id, relic.name, relic.passiveDuration, relic.activeDuration, 
                                     relic.imgAddress, relic.isTrap, relic.condition, relic.type, relic.EffectsOrder));
@@ -25,7 +25,7 @@ namespace card_gameEngine
             {
                 foreach (var card in affectecards)
                 {
-                    Relics relic = board.CardsInventary[card.id];
+                    Relics relic = Settings.CardsInventary[card.id];
                     Affected.hand.Add( new Relics(Affected, Enemy, relic.id, relic.name, relic.passiveDuration, relic.activeDuration, 
                                     relic.imgAddress,relic.isTrap, relic.condition, relic.type, relic.EffectsOrder));
                 }
@@ -42,7 +42,7 @@ namespace card_gameEngine
                     int random = rnd.Next(0, Affected.hand.Count()-1);
                     int cardId = Affected.hand[random].id;
                     Affected.hand.RemoveAt(random);
-                    Relics relic = board.CardsInventary[random];
+                    Relics relic = Settings.CardsInventary[random];
                     Enemy.hand.Add( new Relics(Affected, Enemy, relic.id, relic.name, relic.passiveDuration, relic.activeDuration, 
                                     relic.imgAddress,relic.isTrap, relic.condition, relic.type, relic.EffectsOrder));
                 }
@@ -56,12 +56,12 @@ namespace card_gameEngine
                 {
                     try{
                         Random rnd = new Random();
-                        int random = rnd.Next(0, board.GraveYard.Count());
-                        int cardId = board.GraveYard[random].id;
-                        Relics relic = board.CardsInventary[cardId];
+                        int random = rnd.Next(0, Settings.GraveYard.Count());
+                        int cardId = Settings.GraveYard[random].id;
+                        Relics relic = Settings.CardsInventary[cardId];
                         Affected.hand.Add( new Relics(Affected, Enemy, relic.id, relic.name, relic.passiveDuration, relic.activeDuration, 
                                         relic.imgAddress,relic.isTrap, relic.condition, relic.type, relic.EffectsOrder));
-                        board.GraveYard.RemoveAt(random);
+                        Settings.GraveYard.RemoveAt(random);
                     }
                     catch(System.Exception)
                     {
@@ -73,14 +73,14 @@ namespace card_gameEngine
             {
                 foreach (var card in affectecards)
                 {
-                    foreach (var Relic in board.GraveYard)
+                    foreach (var Relic in Settings.GraveYard)
                     {
                         if(Relic.id == card.id)
                         {
-                            Relics relic = board.CardsInventary[card.id];
+                            Relics relic = Settings.CardsInventary[card.id];
                             Affected.hand.Add( new Relics(Affected, Enemy, relic.id, relic.name, relic.passiveDuration, relic.activeDuration, 
                                             relic.imgAddress,relic.isTrap, relic.condition, relic.type, relic.EffectsOrder));
-                            board.GraveYard.Remove(Relic);
+                            Settings.GraveYard.Remove(Relic);
                             break;
                         }
                     }
@@ -120,7 +120,7 @@ namespace card_gameEngine
                 {
                     try
                     {
-                        board.GraveYard.Add(board.CardsInventary[card.id]);
+                        Settings.GraveYard.Add(Settings.CardsInventary[card.id]);
                         Affected.hand.Remove(card);
                     }
                     catch(System.Exception)
@@ -143,7 +143,7 @@ namespace card_gameEngine
                 {
                     if(Affected.userBattleField[i] == card)
                     {
-                        board.GraveYard.Add(board.CardsInventary[card.id]);
+                        Settings.GraveYard.Add(Settings.CardsInventary[card.id]);
                         Affected.userBattleField[i] = null;
                     }
                 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://board.cs" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Sprites/card-back.png" type="Texture" id=4]
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Sprites/board-texture.jpeg" type="Texture" id=6]
+[ext_resource path="res://Visual.cs" type="Script" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 39
@@ -34,6 +35,9 @@ font_data = ExtResource( 5 )
 [node name="board" type="Node2D"]
 position = Vector2( 5, 37 )
 script = ExtResource( 1 )
+
+[node name="Visual" type="Node2D" parent="."]
+script = ExtResource( 7 )
 
 [node name="Board-texture" type="Sprite" parent="."]
 position = Vector2( 492.5, 282.75 )

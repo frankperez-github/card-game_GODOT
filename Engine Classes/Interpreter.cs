@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-namespace card_gameEngine
+namespace gameEngine
 {
     using System.Text.RegularExpressions;
     abstract class Expression
@@ -368,7 +368,7 @@ namespace card_gameEngine
                         case "battlefield":
                             return AddForType(condition.Substring(i+1, condition.Length - (i+1)), player.userBattleField.ToList());
                         case "graveyard":
-                            return AddForType(condition.Substring(i+1, condition.Length - (i+1)), board.GraveYard);
+                            return AddForType(condition.Substring(i+1, condition.Length - (i+1)), Settings.GraveYard);
                         case "hand":
                             return AddForType(condition.Substring(i+1, condition.Length - (i+1)), player.hand);
                         default:
