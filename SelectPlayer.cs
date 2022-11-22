@@ -25,7 +25,7 @@ namespace gameVisual
             int index = 0;
             foreach(var character in gameEngine.Settings.CharactersInventary)
             {
-                Sprite Character = gameVisual.Visual.InstanciateVisualCard(character);
+                Sprite Character = gameVisual.board.InstanciateVisualCard(character);
                 AddChild(Character);
                 characters.Add(Character);
                 Character.Position = charactPositions[index];

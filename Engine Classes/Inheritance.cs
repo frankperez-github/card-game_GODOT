@@ -117,7 +117,7 @@ namespace gameEngine
             {
                 if(Owner.userVisualBattleField[i] == null)
                 {
-                    this.Owner.userVisualBattleField[i] = gameVisual.Visual.InstanciateVisualCard(this);
+                    this.Owner.userVisualBattleField[i] = gameVisual.board.InstanciateVisualCard(this);
                     break;
                 }
             }
