@@ -8,11 +8,11 @@ namespace gameVisual
         // Called when the node enters the scene tree for the first time.
         Vector2[] charactPositions = new Vector2[5]
         {
-            new Vector2(200,200),
-            new Vector2(350, 200),
-            new Vector2(500,200),
-            new Vector2(650,200),
-            new Vector2(800,200)
+            new Vector2(400,400),
+            new Vector2(650, 400),
+            new Vector2(900,400),
+            new Vector2(1150,400),
+            new Vector2(1400,400)
         };
 
         gameEngine.Character character1;
@@ -30,6 +30,10 @@ namespace gameVisual
                 characters.Add(Character);
                 Character.Position = charactPositions[index];
                 index++;
+            }
+            foreach (var charact in characters)
+            {
+                charact.Scale = new Vector2((float)0.097,(float)0.097);
             }
         }
        
@@ -75,10 +79,10 @@ namespace gameVisual
                             {
                                 foreach (var charact in characters)
                                 {
-                                    charact.Scale = new Vector2((float)0.402,(float)0.375);
+                                    charact.Scale = new Vector2((float)0.097,(float)0.097);
                                 }
-                                characters[i].Scale = new Vector2((float)0.5,(float)0.5);
-
+                                
+                                characters[i].Scale = new Vector2((float)0.12,(float)0.12);
                                 character1 = gameEngine.Settings.CharactersInventary[i];
                             }
                         }

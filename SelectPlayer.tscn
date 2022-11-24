@@ -23,31 +23,31 @@ font_data = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Tree" type="Tree" parent="."]
-margin_right = 1051.0
-margin_bottom = 618.0
+margin_right = 1979.0
+margin_bottom = 1110.0
 
 [node name="Choose" type="Label" parent="Tree"]
-margin_left = 16.0
-margin_top = 24.0
-margin_right = 645.0
-margin_bottom = 97.0
+margin_left = 58.0
+margin_top = 84.0
+margin_right = 687.0
+margin_bottom = 157.0
 custom_fonts/font = SubResource( 1 )
 text = "Player 1 choose your character:
 "
 
 [node name="Continue" type="Button" parent="Tree"]
-margin_left = 825.0
-margin_top = 512.0
-margin_right = 996.0
-margin_bottom = 571.0
+margin_left = 1617.0
+margin_top = 940.0
+margin_right = 1788.0
+margin_bottom = 999.0
 custom_fonts/font = SubResource( 2 )
 text = "Continue"
 
 [node name="Label" type="Label" parent="Tree"]
-margin_left = 94.0
-margin_top = 459.0
-margin_right = 442.0
-margin_bottom = 504.0
+margin_left = 230.0
+margin_top = 940.0
+margin_right = 578.0
+margin_bottom = 985.0
 custom_fonts/font = SubResource( 4 )
 text = "Type a nick to your player here"
 

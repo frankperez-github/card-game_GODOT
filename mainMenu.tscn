@@ -25,15 +25,16 @@ rotation = -0.000353929
 script = ExtResource( 1 )
 
 [node name="Board-texturejpeg" type="Sprite" parent="."]
-position = Vector2( 508.998, 301.468 )
-scale = Vector2( 3.83351, 3.47461 )
+position = Vector2( -13.0145, -21.0509 )
+scale = Vector2( 6.97495, 6.01587 )
 texture = ExtResource( 3 )
+centered = false
 
 [node name="Start" type="Button" parent="."]
-margin_left = 336.991
-margin_top = 26.1193
-margin_right = 675.991
-margin_bottom = 117.119
+margin_left = 768.919
+margin_top = 229.272
+margin_right = 1107.92
+margin_bottom = 320.272
 custom_fonts/font = SubResource( 1 )
 text = "vs virtual player"
 __meta__ = {

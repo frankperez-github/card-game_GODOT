@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://board.cs" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://Sprites/card-back.png" type="Texture" id=4]
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Sprites/board-texture.jpeg" type="Texture" id=6]
-[ext_resource path="res://Visual.cs" type="Script" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 39
@@ -36,28 +35,26 @@ font_data = ExtResource( 5 )
 position = Vector2( 5, 37 )
 script = ExtResource( 1 )
 
-[node name="Visual" type="Node2D" parent="."]
-script = ExtResource( 7 )
-
 [node name="Board-texture" type="Sprite" parent="."]
-position = Vector2( 492.5, 282.75 )
-scale = Vector2( 3.98913, 3.82787 )
+position = Vector2( 1825, 838 )
+scale = Vector2( 7.58333, 6.40164 )
 texture = ExtResource( 6 )
+offset = Vector2( -110.308, -49.9481 )
 
 [node name="TurnLabel" type="Label" parent="."]
-margin_left = 40.0
-margin_top = 37.0
-margin_right = 124.0
-margin_bottom = 65.0
+margin_left = 124.0
+margin_top = 109.0
+margin_right = 208.0
+margin_bottom = 137.0
 size_flags_stretch_ratio = 0.82
 custom_fonts/font = SubResource( 1 )
 text = "Turno: 1"
 
 [node name="PlayerInfo" type="Label" parent="."]
-margin_left = 42.0
-margin_top = 416.0
-margin_right = 146.0
-margin_bottom = 543.0
+margin_left = 115.0
+margin_top = 838.0
+margin_right = 219.0
+margin_bottom = 965.0
 custom_fonts/font = SubResource( 2 )
 text = "
 "
@@ -104,10 +101,10 @@ custom_fonts/font = SubResource( 6 )
 text = "State: Safe"
 
 [node name="Player2Info" type="Label" parent="."]
-margin_left = 884.0
-margin_top = 63.0
-margin_right = 988.0
-margin_bottom = 190.0
+margin_left = 1759.0
+margin_top = 118.0
+margin_right = 1863.0
+margin_bottom = 245.0
 text = "
 "
 
@@ -153,88 +150,87 @@ custom_fonts/font = SubResource( 6 )
 text = "State: Safe"
 
 [node name="battleField" type="Tree" parent="."]
-margin_left = 178.0
-margin_top = -32.0
-margin_right = 861.0
-margin_bottom = 621.0
+margin_left = 341.0
+margin_top = -35.0
+margin_right = 1657.0
+margin_bottom = 1049.0
+
+[node name="Card-placeholder(2)" type="Sprite" parent="battleField"]
+position = Vector2( 229, 311 )
+scale = Vector2( 0.543796, 0.549676 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)1" type="Sprite" parent="battleField/Card-placeholder(2)"]
+position = Vector2( 517.658, -1.36435 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)2" type="Sprite" parent="battleField/Card-placeholder(2)"]
+position = Vector2( 1034.4, -1.36435 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)3" type="Sprite" parent="battleField/Card-placeholder(2)"]
+position = Vector2( 1557.57, -4.57414 )
+scale = Vector2( 1, 1.00208 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)3" type="Sprite" parent="battleField"]
+position = Vector2( 225, 776 )
+scale = Vector2( 0.543796, 0.549676 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)1" type="Sprite" parent="battleField/Card-placeholder(2)3"]
+position = Vector2( 517.658, -1.36426 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)2" type="Sprite" parent="battleField/Card-placeholder(2)3"]
+position = Vector2( 1034.4, -1.36438 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)3" type="Sprite" parent="battleField/Card-placeholder(2)3"]
+position = Vector2( 1557.57, -1.84526 )
+scale = Vector2( 1, 1.01386 )
+texture = ExtResource( 3 )
 
 [node name="endButton" type="Button" parent="."]
-margin_left = 644.0
-margin_top = 253.625
-margin_right = 755.0
-margin_bottom = 289.625
+margin_left = 1046.0
+margin_top = 484.0
+margin_right = 1215.0
+margin_bottom = 544.0
 
 [node name="Label" type="Label" parent="endButton"]
-margin_left = 18.0
-margin_top = 4.0
-margin_right = 98.0
-margin_bottom = 29.0
+margin_left = 46.0
+margin_top = 19.0
+margin_right = 126.0
+margin_bottom = 44.0
 custom_fonts/font = SubResource( 4 )
 text = "End Turn"
 
 [node name="Attack" type="Button" parent="."]
-margin_left = 286.0
-margin_top = 255.625
-margin_right = 397.0
-margin_bottom = 290.625
+margin_left = 768.0
+margin_top = 484.0
+margin_right = 938.0
+margin_bottom = 544.0
 
 [node name="Label" type="Label" parent="Attack"]
-margin_left = 24.0
-margin_top = 4.0
-margin_right = 89.0
-margin_bottom = 32.0
+margin_left = 56.0
+margin_top = 18.0
+margin_right = 121.0
+margin_bottom = 46.0
 custom_fonts/font = SubResource( 5 )
 text = "Attack"
 
-[node name="Card-placeholder(2)" type="Sprite" parent="."]
-position = Vector2( 345, 401.625 )
-scale = Vector2( 0.293796, 0.309395 )
-texture = ExtResource( 3 )
-
-[node name="Card-placeholder(2)" type="Sprite" parent="Card-placeholder(2)"]
-position = Vector2( 394.832, -3.23206 )
-texture = ExtResource( 3 )
-
-[node name="Card-placeholder(2)2" type="Sprite" parent="Card-placeholder(2)"]
-position = Vector2( 796.472, -3.23206 )
-texture = ExtResource( 3 )
-
-[node name="Card-placeholder(2)3" type="Sprite" parent="Card-placeholder(2)"]
-position = Vector2( 1198.11, 0.000181198 )
-scale = Vector2( 1, 0.990402 )
-texture = ExtResource( 3 )
-
-[node name="Card-placeholder(2)2" type="Sprite" parent="."]
-position = Vector2( 346, 142.625 )
-scale = Vector2( 0.293796, 0.309395 )
-texture = ExtResource( 3 )
-
-[node name="Card-placeholder(2)" type="Sprite" parent="Card-placeholder(2)2"]
-position = Vector2( 394.832, -3.23206 )
-texture = ExtResource( 3 )
-
-[node name="Card-placeholder(2)2" type="Sprite" parent="Card-placeholder(2)2"]
-position = Vector2( 796.472, -3.23206 )
-texture = ExtResource( 3 )
-
-[node name="Card-placeholder(2)3" type="Sprite" parent="Card-placeholder(2)2"]
-position = Vector2( 1198.11, 0.000181198 )
-scale = Vector2( 1, 0.990402 )
-texture = ExtResource( 3 )
-
-[node name="Card-back2" type="Sprite" parent="."]
-position = Vector2( 931, 296 )
-scale = Vector2( 0.330017, 0.328646 )
+[node name="Card-back4" type="Sprite" parent="."]
+position = Vector2( 1784, 864 )
+scale = Vector2( 0.732282, 0.701957 )
 texture = ExtResource( 4 )
 
-[node name="Card-back5" type="Sprite" parent="."]
-position = Vector2( 518, 270.625 )
-rotation = -1.58204
-scale = Vector2( 0.330017, 0.328646 )
+[node name="Card-back2" type="Sprite" parent="."]
+position = Vector2( 1783, 520 )
+scale = Vector2( 0.732282, 0.701957 )
 texture = ExtResource( 4 )
 
 [node name="Card-back3" type="Sprite" parent="."]
-position = Vector2( 87.2062, 232 )
-scale = Vector2( 0.568772, 0.522396 )
+position = Vector2( 173, 504 )
+scale = Vector2( 1.01166, 0.930015 )
 texture = ExtResource( 4 )
 region_rect = Rect2( 87.206, 232, 23, 0 )
