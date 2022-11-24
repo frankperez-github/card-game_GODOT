@@ -160,7 +160,7 @@ namespace gameVisual
         {
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
             
-            Player1VisualHandPosition = new Vector2(350 - (gameEngine.Settings.player1.hand.Count * 10), 960);
+            Player1VisualHandPosition = new Vector2(350 - (gameEngine.Settings.player1.hand.Count * 10), 1000);
             Player2VisualHandPosition = new Vector2(350 - (gameEngine.Settings.player2.hand.Count * 10), 50);
             
 
@@ -204,7 +204,7 @@ namespace gameVisual
             // Updating enemy's cards in board
             foreach (var card in gameEngine.Settings.player2.hand)
             {
-                Relic = InstanciateVisualCard(card);
+                Relic = InstanciateVisualBackCard(card);
                 Relic.AddToGroup("VisibleCards");
                 Player2VisualHand.Add(Relic);
                 Relic.Position = new Vector2(Player2VisualHandPosition.x + 200*enemyIndex, Player2VisualHandPosition.y);
@@ -262,6 +262,12 @@ namespace gameVisual
             Relic = (Sprite)relic.Instance();
             Label name = (Label)Relic.GetChild(0);
             name.Text = card.name;
+            return Relic;
+        }
+        public static Sprite InstanciateVisualBackCard(gameEngine.Cards card)
+        {
+            PackedScene relic = (PackedScene)GD.Load("res://Back-relic.tscn");
+            Relic = (Sprite)relic.Instance();
             return Relic;
         }
         public static void UpdateBattleField(gameEngine.Player player)
