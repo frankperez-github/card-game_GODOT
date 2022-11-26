@@ -6,29 +6,29 @@
 [sub_resource type="AnimatedTexture" id=1]
 
 [sub_resource type="DynamicFont" id=2]
-size = 214
+size = 86
 font_data = ExtResource( 3 )
 
 [node name="Relic" type="Sprite"]
-position = Vector2( 391.945, 316 )
-scale = Vector2( 0.0874318, 0.0926667 )
+position = Vector2( 379.184, 321.49 )
+scale = Vector2( 0.460205, 0.48613 )
 texture = ExtResource( 4 )
 normal_map = SubResource( 1 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = -505.177
-margin_top = -1430.33
-margin_right = 178.823
-margin_bottom = -1260.33
+margin_left = -183.503
+margin_top = -518.353
+margin_right = 217.497
+margin_bottom = -452.353
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "Name"
 
 [node name="Label2" type="Label" parent="."]
-margin_left = -876.0
-margin_top = 699.0
-margin_right = 811.0
-margin_bottom = 1364.0
+margin_left = -319.0
+margin_top = 259.0
+margin_right = 312.0
+margin_bottom = 508.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "Description"

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace gameVisual
 {
-   
     public class mainMenu : Node2D
     {
         public static string gameType = "virtual";
@@ -12,7 +11,6 @@ namespace gameVisual
         public override void _Ready()
         {
             GetTree().SetScreenStretch(SceneTree.StretchMode.Mode2d, SceneTree.StretchAspect.Keep, new Vector2(1920, 1080), 1);
-            gameEngine.Settings.SetConfig();
         }
 
         public override void _Process(float delta)

@@ -20,10 +20,12 @@ namespace gameVisual
         TextEdit Nick;
         Label choose;
 
+        public static gameEngine.Inventary Inventary = new gameEngine.Inventary();
+
         public override void _Ready()
         {
             int index = 0;
-            foreach(var character in gameEngine.Settings.CharactersInventary)
+            foreach(var character in Inventary.CharactersInventary)
             {
                 Sprite Character = gameVisual.board.InstanciateVisualCard(character);
                 AddChild(Character);
@@ -51,8 +53,17 @@ namespace gameVisual
             {
                 if (Nick.Text != "")
                 {
-                    gameEngine.Player player = new gameEngine.Player(character1, Nick.Text);
-                    gameEngine.Settings.PlayersInventary.Add(player);
+                    if  (mainMenu.gameType.ToLower() == "virtual")
+                    {
+                        Inventary.player2.character = character1;
+                        Inventary.player2.nick = Nick.Text;
+                    }
+                    else
+                    {
+                        Inventary.player1.character = character1;
+                        Inventary.player1.nick = Nick.Text;
+                    }
+
                     if (mainMenu.gameType.ToLower() == "human")
                     {
                         GetTree().ChangeScene("res://SelectPlayer.tscn");
@@ -83,7 +94,7 @@ namespace gameVisual
                                 }
                                 
                                 characters[i].Scale = new Vector2((float)0.12,(float)0.12);
-                                character1 = gameEngine.Settings.CharactersInventary[i];
+                                character1 = Inventary.CharactersInventary[i];
                             }
                         }
                         break;

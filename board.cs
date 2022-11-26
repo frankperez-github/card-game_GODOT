@@ -35,7 +35,6 @@ namespace gameVisual
         public static Vector2 Player2VisualHandPosition;
         #endregion
 
-
         public override void _Ready()
         {
             
@@ -58,15 +57,13 @@ namespace gameVisual
             // setting virtual player's character and nick
             if (mainMenu.gameType.ToLower() == "virtual")
             {
-                gameEngine.Settings.PlayersInventary.Add(new gameEngine.Player(gameEngine.Settings.CharactersInventary[0], "el otro"));
+                gameVisual.SelectPlayer.Inventary.player1.character = gameVisual.SelectPlayer.Inventary.CharactersInventary[0];
+                gameVisual.SelectPlayer.Inventary.player1.nick = "el otro";
             }
 
-            gameEngine.Settings.player1 = gameEngine.Settings.PlayersInventary[0];
-            gameEngine.Settings.player2 = gameEngine.Settings.PlayersInventary[1];
-
             
-            gameEngine.Settings.player1.TakeFromDeck(gameEngine.Settings.player1, gameEngine.Settings.player2, 5, new List<gameEngine.Relics>());
-            gameEngine.Settings.player2.TakeFromDeck(gameEngine.Settings.player2, gameEngine.Settings.player1, 5, new List<gameEngine.Relics>());
+            gameVisual.SelectPlayer.Inventary.player1.TakeFromDeck(5);
+            gameVisual.SelectPlayer.Inventary.player2.TakeFromDeck(5);
 
             RefreshBoard();
         }
@@ -79,7 +76,7 @@ namespace gameVisual
             Label Turnlabel = GetNode<Label>("TurnLabel");
 
             // Checking end of game
-            if (!(gameEngine.Settings.player1.life > 0 && gameEngine.Settings.player2.life > 0))
+            if (!(gameVisual.SelectPlayer.Inventary.player1.life > 0 && gameVisual.SelectPlayer.Inventary.player2.life > 0))
             {
                 GetTree().ChangeScene("res://GameOver.tscn");
             }
@@ -90,42 +87,42 @@ namespace gameVisual
             
             #region Updating visualy playerInfo
             Label PlayerNick = GetNode<Label>("PlayerInfo/Player's Nick");
-            PlayerNick.Text = gameEngine.Settings.PlayersInventary[0].nick;
+            PlayerNick.Text = gameVisual.SelectPlayer.Inventary.player1.nick;
             Label PlayerLife = GetNode<Label>("PlayerInfo/Player's Life");
-            PlayerLife.Text = "Life : "+ gameEngine.Settings.PlayersInventary[0].life.ToString();
+            PlayerLife.Text = "Life : "+ gameVisual.SelectPlayer.Inventary.player1.life.ToString();
             Label PlayerShield = GetNode<Label>("PlayerInfo/Player's Shield");
-            PlayerShield.Text = "Shield : "+ gameEngine.Settings.PlayersInventary[0].defense.ToString();
+            PlayerShield.Text = "Shield : "+ gameVisual.SelectPlayer.Inventary.player1.character.defense.ToString();
             Label PlayerAttack = GetNode<Label>("PlayerInfo/Player's Attack");
-            PlayerAttack.Text = "Attack : "+ gameEngine.Settings.PlayersInventary[0].attack.ToString();
+            PlayerAttack.Text = "Attack : "+ gameVisual.SelectPlayer.Inventary.player1.character.attack.ToString();
             Label Player1State = GetNode<Label>("PlayerInfo/Player's State");
-            Player1State.Text = "State : "+ gameEngine.Settings.PlayersInventary[0].state.ToString();
+            Player1State.Text = "State : "+ gameVisual.SelectPlayer.Inventary.player1.state.ToString();
 
             Label Player2Nick = GetNode<Label>("Player2Info/Player2's Nick");
-            Player2Nick.Text = gameEngine.Settings.PlayersInventary[1].nick;
+            Player2Nick.Text = gameVisual.SelectPlayer.Inventary.player2.nick;
             Label Player2Life = GetNode<Label>("Player2Info/Player2's Life");
-            Player2Life.Text = "Life : "+ gameEngine.Settings.PlayersInventary[1].life.ToString();
+            Player2Life.Text = "Life : "+ gameVisual.SelectPlayer.Inventary.player2.life.ToString();
             Label Player2Shield = GetNode<Label>("Player2Info/Player2's Shield");
-            Player2Shield.Text = "Shield : "+ gameEngine.Settings.PlayersInventary[1].defense.ToString();
+            Player2Shield.Text = "Shield : "+ gameVisual.SelectPlayer.Inventary.player2.character.defense.ToString();
             Label Player2Attack = GetNode<Label>("Player2Info/Player2's Attack");
-            Player2Attack.Text = "Attack : "+ gameEngine.Settings.PlayersInventary[1].attack.ToString();
+            Player2Attack.Text = "Attack : "+ gameVisual.SelectPlayer.Inventary.player2.character.attack.ToString();
             Label Player2State = GetNode<Label>("Player2Info/Player2's State");
-            Player2State.Text = "State : "+ gameEngine.Settings.PlayersInventary[1].state.ToString();
+            Player2State.Text = "State : "+ gameVisual.SelectPlayer.Inventary.player2.state.ToString();
             #endregion
 
             // ATTACK BUTTON
             Attack.Disabled = false;
             if (Attack.Pressed)
             {
-                if (gameEngine.Settings.turn % 2 == 0 && !player1Attack) // Player1's Turn
+                if (gameVisual.SelectPlayer.Inventary.turn % 2 == 0 && !player1Attack) // Player1's Turn
                 {
-                    gameEngine.Settings.player2.life -= gameEngine.Settings.player1.attack;
+                    gameVisual.SelectPlayer.Inventary.player2.life -= gameVisual.SelectPlayer.Inventary.player1.character.attack;
                     player1Attack = true;
                     player2Attack = false; // Enabling attack button to next turn 
                     Attack.Disabled = true;
                 }
-                if (gameEngine.Settings.turn % 2 != 0 && !player2Attack)// Player2's Turn
+                if (gameVisual.SelectPlayer.Inventary.turn % 2 != 0 && !player2Attack)// Player2's Turn
                 {
-                    gameEngine.Settings.player1.life -= gameEngine.Settings.player2.attack;
+                    gameVisual.SelectPlayer.Inventary.player1.life -= gameVisual.SelectPlayer.Inventary.player2.character.attack;
                     player2Attack = true;
                     player1Attack = false; // Enabling attack button to next turn 
                     Attack.Disabled = true;
@@ -136,21 +133,21 @@ namespace gameVisual
             //Change Turn (END BUTTON)
             if (endButton.Pressed)
             {
-                if (gameEngine.Settings.turn % 2 == 0) // Player1's turn
+                if (gameVisual.SelectPlayer.Inventary.turn % 2 == 0) // Player1's turn
                 {
                     // Next Player takes a card
-                    gameEngine.Settings.player1.TakeFromDeck(gameEngine.Settings.player2, gameEngine.Settings.player1, 1, new List<gameEngine.Relics>());
-                    UpdateBattleField(gameEngine.Settings.player1);
+                    gameVisual.SelectPlayer.Inventary.player1.TakeFromDeck(1);
+                    UpdateBattleField(gameVisual.SelectPlayer.Inventary.player1);
                 }
                 else // Player2's turn
                 {
                     // Next Player takes a card
-                    gameEngine.Settings.player2.TakeFromDeck(gameEngine.Settings.player1, gameEngine.Settings.player2, 1, new List<gameEngine.Relics>());
-                    UpdateBattleField(gameEngine.Settings.player2);
+                    gameVisual.SelectPlayer.Inventary.player2.TakeFromDeck(1);
+                    UpdateBattleField(gameVisual.SelectPlayer.Inventary.player2);
                 }
                 RefreshBoard();
-                gameEngine.Settings.turn++;
-                Turnlabel.Text = "Turno: " + gameEngine.Settings.turn;
+                gameVisual.SelectPlayer.Inventary.turn++;
+                Turnlabel.Text = "Turno: " + gameVisual.SelectPlayer.Inventary.turn;
                 endButton.Disabled = true; // Disabling button, increment turn just one time
             }
             endButton.Disabled = false;
@@ -158,10 +155,8 @@ namespace gameVisual
 
         public void RefreshBoard()
         {
-            PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
-            
-            Player1VisualHandPosition = new Vector2(350 - (gameEngine.Settings.player1.hand.Count * 10), 1000);
-            Player2VisualHandPosition = new Vector2(350 - (gameEngine.Settings.player2.hand.Count * 10), 50);
+            Player1VisualHandPosition = new Vector2(350 - (gameVisual.SelectPlayer.Inventary.player1.hand.Count * 10), 1000);
+            Player2VisualHandPosition = new Vector2(350 - (gameVisual.SelectPlayer.Inventary.player2.hand.Count * 10), 50);
             
 
             // Erasing old data
@@ -169,7 +164,6 @@ namespace gameVisual
                 Player1VisualHand.Clear();
             if  (Player2VisualHand.Count != 0)
                 Player2VisualHand.Clear();
-
             try
             {
                 foreach (Node node in GetTree().GetNodesInGroup("VisibleCards"))
@@ -179,42 +173,45 @@ namespace gameVisual
             }
             catch (System.NullReferenceException)
             {}
+
                 
-             int index = 1;
             // Updating cards in board
-            foreach (var card in gameEngine.Settings.player1.hand)
+            UpdateVisualHand(SelectPlayer.Inventary.player1);
+            UpdateVisualHand(SelectPlayer.Inventary.player2);
+
+            
+        }
+        void UpdateVisualHand(gameEngine.Player player)
+        {
+            List<Sprite> PlayerVisualHand;
+            Vector2 PlayerVisualHandPosition;
+
+            if (player == gameVisual.SelectPlayer.Inventary.player1)
             {
-                Relic = InstanciateVisualCard(card);
+                PlayerVisualHand = Player1VisualHand;
+                PlayerVisualHandPosition = Player1VisualHandPosition;
+            }
+            else
+            {
+                PlayerVisualHand = Player2VisualHand;
+                PlayerVisualHandPosition = Player2VisualHandPosition;
+            }
+
+            for (int i = 0; i < player.hand.Count; i++)
+            {
+                Relic = InstanciateVisualCard(player.hand[i]);
                 Relic.AddToGroup("VisibleCards");
-                Player1VisualHand.Add (Relic);
-                Relic.Position = new Vector2(Player1VisualHandPosition.x + 200*index,  Player1VisualHandPosition.y);
+                PlayerVisualHand.Add(Relic);
+                Relic.Position = new Vector2(PlayerVisualHandPosition.x + 200*i,  PlayerVisualHandPosition.y);
                 AddChild(Relic);
                 Label name = (Label) Relic.GetChild(0);
-                name.Text = card.name;
-                index++; 
+                name.Text = player.hand[i].name;
 
-            }
-            if (index > maxinHand)
-            {
-                discarding = true;
-                CheckAndDiscard(gameEngine.Settings.player1);
-            }
-
-            int enemyIndex = 1;
-            // Updating enemy's cards in board
-            foreach (var card in gameEngine.Settings.player2.hand)
-            {
-                Relic = InstanciateVisualBackCard(card);
-                Relic.AddToGroup("VisibleCards");
-                Player2VisualHand.Add(Relic);
-                Relic.Position = new Vector2(Player2VisualHandPosition.x + 200*enemyIndex, Player2VisualHandPosition.y);
-                AddChild(Relic);
-                enemyIndex++; 
-            }
-            if (enemyIndex > maxinHand)
-            {
-                discarding = true;
-                CheckAndDiscard(gameEngine.Settings.player2);
+                if (i > maxinHand)
+                {
+                    discarding = true;
+                    CheckAndDiscard(player);
+                }
             }
         }
         public void CheckAndDiscard(gameEngine.Player player)
@@ -274,7 +271,8 @@ namespace gameVisual
         {
             bool[] boolPlayerField;
             int PlayerEmptySlots;
-            if (player == gameEngine.Settings.player1)
+
+            if (player == gameVisual.SelectPlayer.Inventary.player1)
             {
                 boolPlayerField = boolPlayer1Field;
                 PlayerEmptySlots = Player1emptySlots;
@@ -285,45 +283,32 @@ namespace gameVisual
                 PlayerEmptySlots = Player2emptySlots;
             }
 
-            for (int index = 0; index < player.userBattleField.Length; index++)
+            for (int index = 0; index < player.battleField.userBattleField.Length; index++)
             {
-                if (player.userBattleField[index] != null)
+                if (player.battleField.userBattleField[index] != null)
                 {
                     
-                    if (player.userBattleField[index].activeDuration == 1)
+                    if (player.battleField.userBattleField[index].activeDuration == 1)
                     {
-                        foreach (var effect in player.userBattleField[index].EffectsOrder)
-                        {
-                            if(effect.Key == 5)
-                            {
-                                effect.Value.affects = effect.Value.affects*(-1); 
-                                player.userBattleField[index].Effect();
-                                effect.Value.affects = effect.Value.affects*(-1); 
-                            }
-                            if(effect.Key == 8)
-                            {
-                                player.userBattleField[index].Affected.state = gameEngine.State.Safe;
-                            }
-                        }
                         // Removing card from battelfield
                         PlayerEmptySlots++;
                         boolPlayerField[index] = false;
-                        player.userVisualBattleField[index].QueueFree();
-                        player.userVisualBattleField[index] = null;
-                        gameEngine.Settings.GraveYard.Add(player.userBattleField[index]);
-                        player.userBattleField[index] = null; 
+                        player.battleField.userVisualBattleField[index].QueueFree();
+                        player.battleField.userVisualBattleField[index] = null;
+                        gameVisual.SelectPlayer.Inventary.GraveYard.Add(player.battleField.userBattleField[index]);
+                        player.battleField.userBattleField[index] = null; 
                     }
                     else
                     {
-                        if (player.userBattleField[index].passiveDuration != 0)
+                        if (player.battleField.userBattleField[index].passiveDuration != 0)
                         {
-                            player.userBattleField[index].passiveDuration--;
+                            player.battleField.userBattleField[index].passiveDuration--;
                         }
                         else
                         {
-                            int Defaultpassive = gameEngine.Settings.CardsInventary[player.userBattleField[index].id].passiveDuration;
-                            player.userBattleField[index].passiveDuration = Defaultpassive;
-                            player.userBattleField[index].activeDuration--;
+                            int Defaultpassive = gameVisual.SelectPlayer.Inventary.CardsInventary[player.battleField.userBattleField[index].id].passiveDuration;
+                            player.battleField.userBattleField[index].passiveDuration = Defaultpassive;
+                            player.battleField.userBattleField[index].activeDuration--;
                         }
                     }
 
@@ -331,7 +316,7 @@ namespace gameVisual
             }
 
 
-            if (player == gameEngine.Settings.player1)
+            if (player == gameVisual.SelectPlayer.Inventary.player1)
             {
                 Player1emptySlots = PlayerEmptySlots;
             }
@@ -354,7 +339,7 @@ namespace gameVisual
                             {
                                 if (discardButtons[i].GetRect().HasPoint(ToLocal(mouseEvent.Position)))
                                 {
-                                    gameEngine.Settings.GraveYard.Add(discardPlayer.hand[i]);
+                                    gameVisual.SelectPlayer.Inventary.GraveYard.Add(discardPlayer.hand[i]);
                                     discardPlayer.hand.Remove(discardPlayer.hand[i]);
                                 }
 
@@ -381,7 +366,7 @@ namespace gameVisual
 
                         bool news = false;
 
-                        if(gameEngine.Settings.turn % 2 == 0)
+                        if(gameVisual.SelectPlayer.Inventary.turn % 2 == 0)
                         {
                             // Player 1 is clicking
                             for(int i = 0; i < Player1VisualHand.Count; i++)
@@ -389,7 +374,7 @@ namespace gameVisual
                                 if (Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseEvent.Position)) && Player1emptySlots > 0)
                                 {
                                     // Add to player's battlefield logicaly and visualy
-                                    gameEngine.Settings.player1.hand[i].Effect(); // Activating effect of card
+                                    gameVisual.SelectPlayer.Inventary.player1.hand[i].Effect(); // Activating effect of card
                                     Player1emptySlots--;
                                     news = true;
                                 }
@@ -397,12 +382,12 @@ namespace gameVisual
                             }
 
                             // Fulling (visualy) battlefield
-                            for (int slot = 0; slot < gameEngine.Settings.player1.userBattleField.Length; slot++)
+                            for (int slot = 0; slot < gameVisual.SelectPlayer.Inventary.player1.battleField.userBattleField.Length; slot++)
                             {
-                                if (!boolPlayer1Field[slot] && news && gameEngine.Settings.player1.userVisualBattleField[slot] != null)
+                                if (!boolPlayer1Field[slot] && news && gameVisual.SelectPlayer.Inventary.player1.battleField.userVisualBattleField[slot] != null)
                                 {
-                                    AddChild(gameEngine.Settings.player1.userVisualBattleField[slot]);
-                                    gameEngine.Settings.player1.userVisualBattleField[slot].Position = Player1FieldPositions[slot];
+                                    AddChild(gameVisual.SelectPlayer.Inventary.player1.battleField.userVisualBattleField[slot]);
+                                    gameVisual.SelectPlayer.Inventary.player1.battleField.userVisualBattleField[slot].Position = Player1FieldPositions[slot];
                                     boolPlayer1Field[slot] = true;
                                 }
                             }
@@ -416,19 +401,19 @@ namespace gameVisual
                                 if (Player2VisualHand[i].GetRect().HasPoint(Player2VisualHand[i].ToLocal(mouseEvent.Position)) && Player2emptySlots > 0)
                                 {
                                     // Add to player's battlefield
-                                    gameEngine.Settings.player2.hand[i].Effect(); // Activating effect of card
+                                    gameVisual.SelectPlayer.Inventary.player2.hand[i].Effect(); // Activating effect of card
                                     Player2emptySlots--;
                                     news = true;
                                 }
                             }
 
                             // Fulling (visualy) battlefield
-                            for (int slot = 0; slot < gameEngine.Settings.player2.userBattleField.Length; slot++)
+                            for (int slot = 0; slot < gameVisual.SelectPlayer.Inventary.player2.battleField.userBattleField.Length; slot++)
                             {
-                                if (!boolPlayer2Field[slot] && news && gameEngine.Settings.player2.userVisualBattleField[slot] != null)
+                                if (!boolPlayer2Field[slot] && news && gameVisual.SelectPlayer.Inventary.player2.battleField.userVisualBattleField[slot] != null)
                                 {
-                                    AddChild(gameEngine.Settings.player2.userVisualBattleField[slot]);
-                                    gameEngine.Settings.player2.userVisualBattleField[slot].Position = Player2FieldPositions[slot];
+                                    AddChild(gameVisual.SelectPlayer.Inventary.player2.battleField.userVisualBattleField[slot]);
+                                    gameVisual.SelectPlayer.Inventary.player2.battleField.userVisualBattleField[slot].Position = Player2FieldPositions[slot];
                                     boolPlayer2Field[slot] = true;
                                 }
                             }
@@ -445,21 +430,21 @@ namespace gameVisual
                 {
                     if(Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseMove.Position)))
                     {
-                        Sprite Relic = gameVisual.board.InstanciateVisualCard(gameEngine.Settings.player1.hand[i]);
+                        Sprite Relic = gameVisual.board.InstanciateVisualCard(gameVisual.SelectPlayer.Inventary.player1.hand[i]);
                         AddChild(Relic);
                         Relic.Scale = new Vector2((float)0.14, (float)0.15);
                         Relic.Position = new Vector2(170, 500);
                     }
                 }
-                if (gameEngine.Settings.player1.userVisualBattleField.Length != 0)
+                if (gameVisual.SelectPlayer.Inventary.player1.battleField.userVisualBattleField.Length != 0)
                 {
-                    for (int i = 0; i < gameEngine.Settings.player1.userVisualBattleField.Length; i++)
+                    for (int i = 0; i < gameVisual.SelectPlayer.Inventary.player1.battleField.userVisualBattleField.Length; i++)
                     {
-                        if (gameEngine.Settings.player1.userVisualBattleField[i] != null)
+                        if (gameVisual.SelectPlayer.Inventary.player1.battleField.userVisualBattleField[i] != null)
                         {
-                            if(gameEngine.Settings.player1.userVisualBattleField[i].GetRect().HasPoint(gameEngine.Settings.player1.userVisualBattleField[i].ToLocal(mouseMove.Position)))
+                            if(gameVisual.SelectPlayer.Inventary.player1.battleField.userVisualBattleField[i].GetRect().HasPoint(gameVisual.SelectPlayer.Inventary.player1.battleField.userVisualBattleField[i].ToLocal(mouseMove.Position)))
                             {
-                                Sprite Relic = gameVisual.board.InstanciateVisualCard(gameEngine.Settings.player1.userBattleField[i]);
+                                Sprite Relic = gameVisual.board.InstanciateVisualCard(gameVisual.SelectPlayer.Inventary.player1.battleField.userBattleField[i]);
                                 AddChild(Relic);
                                 Relic.Scale = new Vector2((float)0.14, (float)0.15);
                                 Relic.Position = new Vector2(170, 500);
@@ -468,15 +453,15 @@ namespace gameVisual
                     }
                 }
                 
-                if (gameEngine.Settings.player2.userVisualBattleField.Length != 0)
+                if (gameVisual.SelectPlayer.Inventary.player2.battleField.userVisualBattleField.Length != 0)
                 {
-                    for (int i = 0; i < gameEngine.Settings.player2.userVisualBattleField.Length; i++)
+                    for (int i = 0; i < gameVisual.SelectPlayer.Inventary.player2.battleField.userVisualBattleField.Length; i++)
                     {
-                        if (gameEngine.Settings.player2.userVisualBattleField[i] != null)
+                        if (gameVisual.SelectPlayer.Inventary.player2.battleField.userVisualBattleField[i] != null)
                         {
-                            if(gameEngine.Settings.player2.userVisualBattleField[i].GetRect().HasPoint(gameEngine.Settings.player2.userVisualBattleField[i].ToLocal(mouseMove.Position)))
+                            if(gameVisual.SelectPlayer.Inventary.player2.battleField.userVisualBattleField[i].GetRect().HasPoint(gameVisual.SelectPlayer.Inventary.player2.battleField.userVisualBattleField[i].ToLocal(mouseMove.Position)))
                             {
-                                Sprite Relic = gameVisual.board.InstanciateVisualCard(gameEngine.Settings.player2.userBattleField[i]);
+                                Sprite Relic = gameVisual.board.InstanciateVisualCard(gameVisual.SelectPlayer.Inventary.player2.battleField.userBattleField[i]);
                                 AddChild(Relic);
                                 Relic.Scale = new Vector2((float)0.14, (float)0.15);
                                 Relic.Position = new Vector2(170, 500);

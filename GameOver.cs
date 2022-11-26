@@ -12,17 +12,17 @@ namespace gameVisual
         public override void _Ready()
         {
             string winner;
-            if (gameEngine.Settings.PlayersInventary[0].life == 0 && gameEngine.Settings.PlayersInventary[0].life == 0)
+            if (SelectPlayer.Inventary.player1.life == 0 && SelectPlayer.Inventary.player1.life == 0)
             {
                 winner = "Empate";
             }
-            else if (gameEngine.Settings.PlayersInventary[0].life == 0)
+            else if (SelectPlayer.Inventary.player1.life == 0)
             {
-                winner = gameEngine.Settings.PlayersInventary[0].nick+" wins";
+                winner = SelectPlayer.Inventary.player1.nick+" wins";
             }
             else
             {
-                winner = gameEngine.Settings.PlayersInventary[1].nick+" wins";
+                winner = SelectPlayer.Inventary.player2.nick+" wins";
             }
             Label winnerLabel = GetNode<Label>("Tree/wins");
             winnerLabel.Text = winner;
