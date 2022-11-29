@@ -10,8 +10,8 @@ size = 86
 font_data = ExtResource( 3 )
 
 [node name="Relic" type="Sprite"]
-position = Vector2( 379.184, 321.49 )
-scale = Vector2( 0.460205, 0.48613 )
+position = Vector2( 297.684, 197.49 )
+scale = Vector2( 0.239338, 0.2565 )
 texture = ExtResource( 4 )
 normal_map = SubResource( 1 )
 

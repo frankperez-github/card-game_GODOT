@@ -7,7 +7,7 @@ namespace gameEngine
     {
         public Player player1;
         public Player player2;
-        public List<Character> CharactersInventary;
+        public List<CharacterProperties> CharactersInventary;
         public List<Relics> CardsInventary;
         public List<Relics> GraveYard;
 
@@ -18,20 +18,7 @@ namespace gameEngine
             GraveYard = new List<Relics>();
             
             turn = 1;
-
-
-            CharactersInventary = new List<Character>()
-            {
-                new Character(1000, "CharacterDefault", 0, 0, "imgpathdefault", "", "Soy Sefault xd", 0, 0),
-                new Character(1001, "El dragón indiferente", 1, 0, "imgpath1", "", "", 10, 3),
-                new Character(1002, "El toro alado", 3, 0, "imgpath2","", "", 0, 5),
-                new Character(1003, "La serpiente truhana", 1, 0, "imgpath3", "", "", 5, 0),
-                new Character(1004, "El tigre recursivo", 1, 0, "imgpath4", "", "", 8, 0),
-                new Character(1005, "El leon amistoso", 2, 0, "imgpath", "", "", 0, 1)
-            };
-
-            GD.Print("nombre:"+CharactersInventary[0].name);
-            Player defaultPlayer = new Player(CharactersInventary[0], "default");
+            Player defaultPlayer = new Player("default");
             
             CardsInventary = new List<Relics>()
             {
@@ -76,8 +63,18 @@ namespace gameEngine
                 new Relics(defaultPlayer, defaultPlayer, 10, "El ojo negro", 0, 2, "imgpath4", false, "show", "(Enemy.Show.2)", "Muestra 2 cartas de la mano del enemigo")
             };
             
-            this.player1 = new Player(CharactersInventary[0], "Player1");
-            this.player2 = new Player(CharactersInventary[0], "Player2");
+            this.player1 = new Player("Player1");
+            this.player2 = new Player("Player2");
+            
+            CharactersInventary = new List<CharacterProperties>()
+            {
+                new CharacterProperties(1001, "El dragón indiferente", 1, 0, "imgpath1", "", "", 10, 3),
+                new CharacterProperties(1002, "El toro alado", 3, 0, "imgpath2","", "", 0, 5),
+                new CharacterProperties(1003, "La serpiente truhana", 1, 0, "imgpath3", "", "", 5, 0),
+                new CharacterProperties(1004, "El tigre recursivo", 1, 0, "imgpath4", "", "", 8, 0),
+                new CharacterProperties(1005, "El leon amistoso", 2, 0, "imgpath", "", "", 0, 1)
+            };
+
         }
     }
 }

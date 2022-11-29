@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using gameEngine;
 using System.Collections.Generic;
 
 namespace gameVisual
@@ -7,6 +8,7 @@ namespace gameVisual
     public class mainMenu : Node2D
     {
         public static string gameType = "virtual";
+        public static Inventary Inventary = new Inventary();
 
         public override void _Ready()
         {

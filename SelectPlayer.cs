@@ -15,27 +15,23 @@ namespace gameVisual
             new Vector2(1400,400)
         };
 
-        gameEngine.Character character1;
+        gameEngine.CharacterProperties character1;
         List<Sprite> characters = new List<Sprite>();
         TextEdit Nick;
         Label choose;
 
-        public static gameEngine.Inventary Inventary = new gameEngine.Inventary();
-
         public override void _Ready()
         {
-            int index = 0;
-            foreach(var character in Inventary.CharactersInventary)
+            for (var i = 0; i < mainMenu.Inventary.CharactersInventary.Count; i++)
             {
-                Sprite Character = gameVisual.board.InstanciateVisualCard(character);
+                Sprite Character = gameVisual.board.InstanciateVisualCharact(mainMenu.Inventary.CharactersInventary[i]);
                 AddChild(Character);
                 characters.Add(Character);
-                Character.Position = charactPositions[index];
-                index++;
+                Character.Position = charactPositions[i];
             }
             foreach (var charact in characters)
             {
-                charact.Scale = new Vector2((float)0.097,(float)0.097);
+                charact.Scale = new Vector2((float)0.25,(float)0.26);
             }
         }
        
@@ -55,13 +51,13 @@ namespace gameVisual
                 {
                     if  (mainMenu.gameType.ToLower() == "virtual")
                     {
-                        Inventary.player2.character = character1;
-                        Inventary.player2.nick = Nick.Text;
+                        mainMenu.Inventary.player2.SetCharacter(character1);
+                        mainMenu.Inventary.player2.nick = Nick.Text;
                     }
                     else
                     {
-                        Inventary.player1.character = character1;
-                        Inventary.player1.nick = Nick.Text;
+                        mainMenu.Inventary.player1.SetCharacter(character1);
+                        mainMenu.Inventary.player1.nick = Nick.Text;
                     }
 
                     if (mainMenu.gameType.ToLower() == "human")
@@ -90,11 +86,11 @@ namespace gameVisual
                             {
                                 foreach (var charact in characters)
                                 {
-                                    charact.Scale = new Vector2((float)0.097,(float)0.097);
+                                    charact.Scale = new Vector2((float)0.24,(float)0.25);
                                 }
                                 
-                                characters[i].Scale = new Vector2((float)0.12,(float)0.12);
-                                character1 = Inventary.CharactersInventary[i];
+                                characters[i].Scale = new Vector2((float)0.40,(float)0.41);
+                                character1 = mainMenu.Inventary.CharactersInventary[i];
                             }
                         }
                         break;
