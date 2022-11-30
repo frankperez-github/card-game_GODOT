@@ -7,11 +7,13 @@ namespace gameVisual
 {
     public class mainMenu : Node2D
     {
-        public static string gameType = "virtual";
-        public static Inventary Inventary = new Inventary();
+        public static string gameType;
+        public static Inventary Inventary;
 
         public override void _Ready()
         {
+            gameType = "virtual";
+            Inventary = new Inventary();
             GetTree().SetScreenStretch(SceneTree.StretchMode.Mode2d, SceneTree.StretchAspect.Keep, new Vector2(1920, 1080), 1);
         }
 

@@ -1,27 +1,31 @@
 using Godot;
 using System.Collections.Generic;
-
+using gameEngine;
 namespace gameVisual
 {
     public class SelectPlayer : Node
     {
         // Called when the node enters the scene tree for the first time.
-        Vector2[] charactPositions = new Vector2[5]
-        {
-            new Vector2(400,400),
-            new Vector2(650, 400),
-            new Vector2(900,400),
-            new Vector2(1150,400),
-            new Vector2(1400,400)
-        };
-
+        
         gameEngine.CharacterProperties character1;
-        List<Sprite> characters = new List<Sprite>();
-        TextEdit Nick;
+        List<Sprite> characters; 
         Label choose;
+        public static Player player1;
+        public static Player player2;
+        
 
         public override void _Ready()
         {
+            Vector2[] charactPositions = new Vector2[5]
+            {
+                new Vector2(400,400),
+                new Vector2(650, 400),
+                new Vector2(900,400),
+                new Vector2(1150,400),
+                new Vector2(1400,400)
+            };
+            characters = new List<Sprite>();
+
             for (var i = 0; i < mainMenu.Inventary.CharactersInventary.Count; i++)
             {
                 Sprite Character = gameVisual.board.InstanciateVisualCharact(mainMenu.Inventary.CharactersInventary[i]);
@@ -37,6 +41,11 @@ namespace gameVisual
        
         public override void _Process(float delta)
         {
+            
+            player1 = new Player("Player1");
+            player2 = new Player("Player2");
+
+            TextEdit Nick;
             Button Continue = GetNode<Button>("Tree/Continue"); 
             Nick = GetNode<TextEdit>("Tree/Label/Nick");
             choose = GetNode<Label>("Tree/Choose");
@@ -49,15 +58,15 @@ namespace gameVisual
             {
                 if (Nick.Text != "")
                 {
-                    if  (mainMenu.gameType.ToLower() == "virtual")
+                    if (mainMenu.gameType.ToLower() == "virtual")
                     {
-                        mainMenu.Inventary.player2.SetCharacter(character1);
-                        mainMenu.Inventary.player2.nick = Nick.Text;
+                        player2.SetCharacter(character1);
+                        player2.nick = Nick.Text;
                     }
                     else
                     {
-                        mainMenu.Inventary.player1.SetCharacter(character1);
-                        mainMenu.Inventary.player1.nick = Nick.Text;
+                        player1.SetCharacter(character1);
+                        player1.nick = Nick.Text;
                     }
 
                     if (mainMenu.gameType.ToLower() == "human")

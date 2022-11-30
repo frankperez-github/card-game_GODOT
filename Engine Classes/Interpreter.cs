@@ -3,6 +3,7 @@ using Godot;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using gameVisual; 
 namespace gameEngine
 {
     public class EditExpression
@@ -349,11 +350,11 @@ namespace gameEngine
                         case "Battlefield":
                             return AddForType(condition.Substring(i + 1, condition.Length - (i + 1)), player.battleField.userBattleField.ToList());
                         case "Graveyard":
-                            return AddForType(condition.Substring(i + 1, condition.Length - (i + 1)), gameVisual.mainMenu.Inventary.GraveYard);
+                            return AddForType(condition.Substring(i + 1, condition.Length - (i + 1)), board.Game.GraveYard);
                         case "Hand":
                             return AddForType(condition.Substring(i + 1, condition.Length - (i + 1)), player.hand);
                         case "Deck":
-                            return AddForType(condition.Substring(i + 1, condition.Length - (i + 1)), gameVisual.mainMenu.Inventary.CardsInventary);
+                            return AddForType(condition.Substring(i + 1, condition.Length - (i + 1)), mainMenu.Inventary.CardsInventary);
                         default:
                             Console.WriteLine("Place not found xd");
                             return new List<Relics>();
@@ -472,7 +473,7 @@ namespace gameEngine
                 case "OwnerBattleField":
                     return this.Relic.Owner.battleField.userBattleField.Length;
                 case "Graveyard":
-                    return gameVisual.mainMenu.Inventary.GraveYard.Count();
+                    return board.Game.GraveYard.Count();
                 default:
                     return 1;
             }
@@ -557,7 +558,7 @@ namespace gameEngine
                                 int random = rnd.Next(0, this.Relic.Enemy.hand.Count() - 1);
                                 int cardId = this.Relic.Enemy.hand[random].id;
                                 this.Relic.Enemy.hand.RemoveAt(random);
-                                foreach (var card in gameVisual.mainMenu.Inventary.CardsInventary)
+                                foreach (var card in mainMenu.Inventary.CardsInventary)
                                 {
                                     if (card.id == cardId)
                                     {
@@ -589,7 +590,7 @@ namespace gameEngine
                             if (this.Relic.Owner.battleField.userBattleField[i] == relics)
                             {
                                 int cardId = this.Relic.Owner.battleField.userBattleField[i].id;
-                                foreach (var card in gameVisual.mainMenu.Inventary.CardsInventary)
+                                foreach (var card in mainMenu.Inventary.CardsInventary)
                                 {
                                     if (card.id == cardId)
                                     {
@@ -607,11 +608,11 @@ namespace gameEngine
                     affectedCards = FullList.FullList(this.expressionA, this.Relic.Enemy);
                     foreach (var card in affectedCards)
                     {
-                        foreach (var Relic in gameVisual.mainMenu.Inventary.GraveYard)
+                        foreach (var Relic in board.Game.GraveYard)
                         {
                             if (Relic.id == card.id)
                             {
-                                foreach (var cards in gameVisual.mainMenu.Inventary.CardsInventary)
+                                foreach (var cards in mainMenu.Inventary.CardsInventary)
                                 {
                                     if (cards.id == card.id)
                                     {
@@ -620,7 +621,7 @@ namespace gameEngine
                                         break;
                                     }
                                 }
-                                gameVisual.mainMenu.Inventary.GraveYard.Remove(Relic);
+                                board.Game.GraveYard.Remove(Relic);
                                 break;
                             }
                         }
@@ -633,8 +634,8 @@ namespace gameEngine
                         for (int i = 0; i < cards; i++)
                         {
                             Random rnd = new Random();
-                            int random = rnd.Next(1, gameVisual.mainMenu.Inventary.CardsInventary.Count() + 1);
-                            foreach (var card in gameVisual.mainMenu.Inventary.CardsInventary)
+                            int random = rnd.Next(1, mainMenu.Inventary.CardsInventary.Count() + 1);
+                            foreach (var card in mainMenu.Inventary.CardsInventary)
                             {
                                 if (card.id == random)
                                 {
@@ -650,7 +651,7 @@ namespace gameEngine
                         affectedCards = FullList.FullList(this.expressionA, this.Relic.Enemy);
                         foreach (var card in affectedCards)
                         {
-                            foreach (var cardInventary in gameVisual.mainMenu.Inventary.CardsInventary)
+                            foreach (var cardInventary in mainMenu.Inventary.CardsInventary)
                             {
                                 if (card.id == cardInventary.id)
                                 {
