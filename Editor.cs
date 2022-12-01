@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Editor : Node
 {
@@ -20,7 +21,6 @@ public class Editor : Node
 
         if (Compile.Pressed)
         {
-
             name.Text = Name.Text;
             description.Text = Description.Text;
         }
@@ -31,12 +31,36 @@ public class Editor : Node
         {
             GetTree().ChangeScene("res://mainMenu.tscn");
         }
+
+        List<string> operators = new List<string>()
+        {
+            ">",
+            ">=",
+            "<",
+            "<=",
+            "==",
+            "&&",
+            "| |",
+            "+" ,
+            "-" ,
+            "*" ,
+            "/" ,
+            "%",
+            "(",
+            ")",
+            "}",
+        };
+        
         TextEdit Effect = GetNode<TextEdit>("Code/Label4/Effect");
+        
         Label Options = GetNode<Label>("Options/Operators");
+        TextEdit number = GetNode<TextEdit>("Options/Operators/Button22/TextEdit");
+        //Operators buttons
         for (int i = 0; i < Options.GetChildCount(); i++)
         {
             try  // Options has children that are not buttons
             {
+                
                 Button child = Options.GetChild<Button>(i);
                 child.Disabled = false;
                 if (child.Pressed)
@@ -62,13 +86,24 @@ public class Editor : Node
                     {
                         effect = Effect.Text + " " +child.Text;
                     }
-                    else if (child.Text == ">" || child.Text == ">=" || child.Text == "<" || child.Text == "<=" || child.Text == "=="  || child.Text == "&&" || child.Text == "| |" ||child.Text == "+" || child.Text == "-" || child.Text == "*" || child.Text == "/" || child.Text == "%")
+                    else if (operators.Contains(child.Text))
                     {
                         effect = Effect.Text +" "+child.Text+" ";
                     }
                     else
                     {
                         effect = Effect.Text + child.Text;
+                    }
+                    if (child.Text == "type number:")
+                    {
+                        if (number.Text != "number")
+                        {
+                            effect = Effect.Text + " " +number.Text;
+                        }
+                        else
+                        {
+                            effect = Effect.Text;
+                        }
                     }
                     Effect.Text = effect;
                     lastPressed = child.Text;
@@ -79,6 +114,7 @@ public class Editor : Node
         }
 
         Label Properties = GetNode<Label>("Options/Properties");
+        // Properties buttons
         for (int i = 0; i < Properties.GetChildCount(); i++)
         {
             try  // Properties has children that are not buttons
@@ -92,13 +128,17 @@ public class Editor : Node
                     {
                         effect = " "+child.Text;
                     }
-                    else if (lastPressed == ">" || lastPressed == ">=" || lastPressed == "<" || lastPressed == "<=" || lastPressed == "=="  || lastPressed == "&&" || lastPressed == "| |" ||lastPressed == "+" || lastPressed == "-" || lastPressed == "*" || lastPressed == "/" || lastPressed == "%")
+                    else if (operators.Contains(lastPressed))
                     {
                         effect = Effect.Text +" "+ child.Text;
                     }
                     else if (lastPressed == "}")
                     {
                         effect = Effect.Text + child.Text;
+                    }
+                    else if (lastPressed == "{")
+                    {
+                        effect = Effect.Text + "   "+child.Text;
                     }
                     else 
                     {
@@ -111,5 +151,11 @@ public class Editor : Node
             }
             catch (System.InvalidCastException){}
         }
+    
+        if (Compile.Pressed)
+        {
+            gameVisual.mainMenu.Inventary.CardsInventary.Add(Relic);
+        }
+    
     }
 }
