@@ -151,25 +151,37 @@ public class Editor : Node
         // Trap Card
         CheckBox IsTrap = GetNode<CheckBox>("Code/IsTrap");
 
+        // Select Image
+        Button SelectFile = GetNode<Button>("Code/Label5");
+        FileDialog SelectWindow = GetNode<FileDialog>("Code/Label5/FileDialog");
+        string imgPath = "";
+        if (SelectFile.Pressed)
+        {
+            SelectWindow.Popup_();
+            imgPath = SelectWindow.CurrentPath;
+        }
+
+
         // Compile Button
         Button Compile = GetNode<Button>("Code/Compile");
+        Sprite PreviewRelic = GetNode<Sprite>("Preview/Relic");
+        TextEdit Name = GetNode<TextEdit>("Code/Label/Name");
+        TextEdit Description = GetNode<TextEdit>("Code/Label2/Description");
+
         if (Compile.Pressed)
         {
             // Updating preview
-            Sprite PreviewRelic = GetNode<Sprite>("Preview/Relic");
-            TextEdit Name = GetNode<TextEdit>("Code/Label/Name");
-            TextEdit Description = GetNode<TextEdit>("Code/Label2/Description");
             Label name = (Label)PreviewRelic.GetChild(0);
-            Label description = (Label)PreviewRelic.GetChild(1);
-            name.Text = Name.Text;
-            description.Text = Description.Text;
+            Sprite img = (Sprite)PreviewRelic.GetChild(1);
+            img.Scale = new Vector2((float)0.40, (float)0.40);
+            Label description = (Label)PreviewRelic.GetChild(2);
 
-            //Creating card in game's logic
-            gameEngine.Player defaultplayer = new gameEngine.Player(default);
-            gameEngine.Relics Relic =new gameEngine.Relics(defaultplayer, defaultplayer, gameVisual.mainMenu.Inventary.CardsInventary.Count, 
-                                                            Name.Text, 0, 0,"img", IsTrap.Pressed, Type, Effect.Text, Description.Text);
-            gameVisual.mainMenu.Inventary.CardsInventary.Add(Relic);
-            Compile.Disabled = true;
+            ImageTexture image = new ImageTexture();
+            image.Load(SelectWindow.CurrentPath);
+
+            img.Texture = image;
+            name.Text = Name.Text;
+            description.Text = Description.Text;  
         }
         Compile.Disabled = false;
 
@@ -178,6 +190,13 @@ public class Editor : Node
         if (Save.Pressed)
         {
             GetTree().ChangeScene("res://mainMenu.tscn");
+
+            //Creating card in game's logic
+            gameEngine.Player defaultplayer = new gameEngine.Player(default);
+            gameEngine.Relics Relic =new gameEngine.Relics(defaultplayer, defaultplayer, gameVisual.mainMenu.Inventary.CardsInventary.Count, 
+                                                            Name.Text, 0, 0, imgPath, IsTrap.Pressed, Type, Effect.Text, Description.Text);
+            gameVisual.mainMenu.Inventary.CardsInventary.Add(Relic);
+            Compile.Disabled = true;
         }
 
     }

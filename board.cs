@@ -39,6 +39,7 @@ namespace gameVisual
         public static Game Game;
         public override void _Ready()
         {
+            GD.Print(mainMenu.Inventary.CardsInventary.Count);
             Game = new Game(SelectPlayer.player1, SelectPlayer.player2);
             
             Player1FieldPositions = new Vector2[4]
@@ -262,10 +263,20 @@ namespace gameVisual
         {
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
             Relic = (Sprite)relic.Instance();
+
             Label name = (Label)Relic.GetChild(0);
-            Label Description = (Label)Relic.GetChild(1);
+
+            Sprite img = (Sprite)Relic.GetChild(1);
+            ImageTexture image = new ImageTexture();
+            image.Load(card.imgAddress);
+
+            Label description = (Label)Relic.GetChild(2);
+
             name.Text = card.name;
-            Description.Text = card.description;
+            img.Texture = image;
+            img.Scale = new Vector2((float)0.40, (float)0.40);
+            description.Text = card.description;
+
             return Relic;
         }
         public static Sprite InstanciateVisualCharact(gameEngine.CharacterProperties character)
@@ -273,9 +284,17 @@ namespace gameVisual
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
             Relic = (Sprite)relic.Instance();
             Label name = (Label)Relic.GetChild(0);
-            Label Description = (Label)Relic.GetChild(1);
+
+            Sprite img = (Sprite)Relic.GetChild(1);
+            ImageTexture image = new ImageTexture();
+            image.Load(character.imgAddress);
+
+            Label description = (Label)Relic.GetChild(2);
+
             name.Text = character.name;
-            Description.Text = character.description;
+            img.Texture = image;
+            img.Scale = new Vector2((float)0.40, (float)0.40);
+            description.Text = character.description;
             return Relic;
         }
         public static Sprite InstanciateVisualBackCard(gameEngine.Relics card)
