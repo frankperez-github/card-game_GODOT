@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections.Generic;
+using gameEngine;
 namespace gameVisual
 {
     public class board : Godot.Node2D
@@ -35,8 +36,10 @@ namespace gameVisual
         public static Vector2 Player2VisualHandPosition;
         #endregion
 
+        public static Game Game;
         public override void _Ready()
         {
+            Game = new Game(SelectPlayer.player1, SelectPlayer.player2);
             
             Player1FieldPositions = new Vector2[4]
             {
@@ -57,12 +60,9 @@ namespace gameVisual
             // setting virtual player's character and nick
             if (mainMenu.gameType.ToLower() == "virtual")
             {
-                mainMenu.Inventary.player1.SetCharacter(mainMenu.Inventary.CharactersInventary[0]);
-                mainMenu.Inventary.player1.nick = "el otro";
+                Game.player1.SetCharacter(mainMenu.Inventary.CharactersInventary[0]);
+                Game.player1.nick = "el otro";
             }
-            
-            mainMenu.Inventary.player1.TakeFromDeck(5);
-            mainMenu.Inventary.player2.TakeFromDeck(5);
 
             RefreshBoard();
         }
@@ -75,7 +75,7 @@ namespace gameVisual
             Label Turnlabel = GetNode<Label>("TurnLabel");
 
             // Checking end of game
-            if (!(mainMenu.Inventary.player1.life > 0 && mainMenu.Inventary.player2.life > 0))
+            if (!(Game.player1.life > 0 && Game.player2.life > 0))
             {
                 GetTree().ChangeScene("res://GameOver.tscn");
             }
@@ -86,76 +86,84 @@ namespace gameVisual
             
             #region Updating visualy playerInfo
             Label PlayerNick = GetNode<Label>("PlayerInfo/Player's Nick");
-            PlayerNick.Text = mainMenu.Inventary.player1.nick;
+            PlayerNick.Text = Game.player1.nick;
             Label PlayerLife = GetNode<Label>("PlayerInfo/Player's Life");
-            PlayerLife.Text = "Life : "+ mainMenu.Inventary.player1.life.ToString();
+            PlayerLife.Text = "Life : "+ Game.player1.life.ToString();
             Label PlayerShield = GetNode<Label>("PlayerInfo/Player's Shield");
-            PlayerShield.Text = "Shield : "+ mainMenu.Inventary.player1.character.defense.ToString();
+            PlayerShield.Text = "Shield : "+ Game.player1.character.defense.ToString();
             Label PlayerAttack = GetNode<Label>("PlayerInfo/Player's Attack");
-            PlayerAttack.Text = "Attack : "+ mainMenu.Inventary.player1.character.attack.ToString();
+            PlayerAttack.Text = "Attack : "+ Game.player1.character.attack.ToString();
             Label Player1State = GetNode<Label>("PlayerInfo/Player's State");
-            Player1State.Text = "State : "+ mainMenu.Inventary.player1.state.ToString();
+            Player1State.Text = "State : "+ Game.player1.state.ToString();
 
             Label Player2Nick = GetNode<Label>("Player2Info/Player2's Nick");
-            Player2Nick.Text = mainMenu.Inventary.player2.nick;
+            Player2Nick.Text = Game.player2.nick;
             Label Player2Life = GetNode<Label>("Player2Info/Player2's Life");
-            Player2Life.Text = "Life : "+ mainMenu.Inventary.player2.life.ToString();
+            Player2Life.Text = "Life : "+ Game.player2.life.ToString();
             Label Player2Shield = GetNode<Label>("Player2Info/Player2's Shield");
-            Player2Shield.Text = "Shield : "+ mainMenu.Inventary.player2.character.defense.ToString();
+            Player2Shield.Text = "Shield : "+ Game.player2.character.defense.ToString();
             Label Player2Attack = GetNode<Label>("Player2Info/Player2's Attack");
-            Player2Attack.Text = "Attack : "+ mainMenu.Inventary.player2.character.attack.ToString();
+            Player2Attack.Text = "Attack : "+ Game.player2.character.attack.ToString();
             Label Player2State = GetNode<Label>("Player2Info/Player2's State");
-            Player2State.Text = "State : "+ mainMenu.Inventary.player2.state.ToString();
+            Player2State.Text = "State : "+ Game.player2.state.ToString();
             #endregion
 
             // ATTACK BUTTON
             Attack.Disabled = false;
-            if (Attack.Pressed)
-            {
-                if (mainMenu.Inventary.turn % 2 == 0 && !player1Attack) // Player1's Turn
-                {
-                    mainMenu.Inventary.player2.life -= mainMenu.Inventary.player1.character.attack;
-                    player1Attack = true;
-                    player2Attack = false; // Enabling attack button to next turn 
-                    Attack.Disabled = true;
-                }
-                if (mainMenu.Inventary.turn % 2 != 0 && !player2Attack)// Player2's Turn
-                {
-                    mainMenu.Inventary.player1.life -= mainMenu.Inventary.player2.character.attack;
-                    player2Attack = true;
-                    player1Attack = false; // Enabling attack button to next turn 
-                    Attack.Disabled = true;
-                }
-            }
+            AttackButtonFuntion(Attack);
 
 
             //Change Turn (END BUTTON)
+            EndButtonFuntion(endButton, Turnlabel);
+        }
+        public void EndButtonFuntion(Button endButton, Label Turnlabel)
+        {
             if (endButton.Pressed)
             {
-                if (mainMenu.Inventary.turn % 2 == 0) // Player1's turn
+                if (Game.turn % 2 == 0) // Player1's turn
                 {
                     // Next Player takes a card
-                    mainMenu.Inventary.player1.TakeFromDeck(1);
-                    UpdateBattleField(mainMenu.Inventary.player1);
+                    Game.player1.TakeFromDeck(1);
+                    UpdateBattleField(Game.player1);
                 }
                 else // Player2's turn
                 {
                     // Next Player takes a card
-                    mainMenu.Inventary.player2.TakeFromDeck(1);
-                    UpdateBattleField(mainMenu.Inventary.player2);
+                    Game.player2.TakeFromDeck(1);
+                    UpdateBattleField(Game.player2);
                 }
                 RefreshBoard();
-                mainMenu.Inventary.turn++;
-                Turnlabel.Text = "Turno: " + mainMenu.Inventary.turn;
+                Game.turn++;
+                Turnlabel.Text = "Turno: " + Game.turn;
                 endButton.Disabled = true; // Disabling button, increment turn just one time
             }
             endButton.Disabled = false;
         }
 
+        public void AttackButtonFuntion(Button Attack)
+        {
+            if (Attack.Pressed)
+            {
+                if (Game.turn % 2 == 0 && !player1Attack) // Player1's Turn
+                {
+                    Game.player2.life -= Game.player1.character.attack;
+                    player1Attack = true;
+                    player2Attack = false; // Enabling attack button to next turn 
+                    Attack.Disabled = true;
+                }
+                if (Game.turn % 2 != 0 && !player2Attack)// Player2's Turn
+                {
+                    Game.player1.life -= Game.player2.character.attack;
+                    player2Attack = true;
+                    player1Attack = false; // Enabling attack button to next turn 
+                    Attack.Disabled = true;
+                }
+            }
+        }
         public void RefreshBoard()
         {
-            Player1VisualHandPosition = new Vector2(500 - (mainMenu.Inventary.player1.hand.Count * 5), 1000);
-            Player2VisualHandPosition = new Vector2(500 - (mainMenu.Inventary.player2.hand.Count * 5), 50);
+            Player1VisualHandPosition = new Vector2(500 - (Game.player1.hand.Count * 5), 1000);
+            Player2VisualHandPosition = new Vector2(500 - (Game.player2.hand.Count * 5), 50);
             
             // Erasing old data
             if  (Player1VisualHand.Count != 0)
@@ -173,10 +181,10 @@ namespace gameVisual
             catch (System.NullReferenceException){}
                 
             // Updating cards in board
-            UpdateVisualHand(mainMenu.Inventary.player1);
-            UpdateVisualHand(mainMenu.Inventary.player2);
-            CheckAndDiscard(mainMenu.Inventary.player1);
-            CheckAndDiscard(mainMenu.Inventary.player2);
+            UpdateVisualHand(Game.player1);
+            UpdateVisualHand(Game.player2);
+            CheckAndDiscard(Game.player1);
+            CheckAndDiscard(Game.player2);
             
         }
         void UpdateVisualHand(gameEngine.Player player)
@@ -184,7 +192,7 @@ namespace gameVisual
             List<Sprite> PlayerVisualHand;
             Vector2 PlayerVisualHandPosition;
 
-            if (player == mainMenu.Inventary.player1)
+            if (player == Game.player1)
             {
                 PlayerVisualHand = Player1VisualHand;
                 PlayerVisualHandPosition = Player1VisualHandPosition;
@@ -272,12 +280,12 @@ namespace gameVisual
             Relic = (Sprite)relic.Instance();
             return Relic;
         }
-        public static void UpdateBattleField(gameEngine.Player player)
+        public void UpdateBattleField(gameEngine.Player player)
         {
             bool[] boolPlayerField;
             int PlayerEmptySlots;
 
-            if (player == mainMenu.Inventary.player1)
+            if (player == Game.player1)
             {
                 boolPlayerField = boolPlayer1Field;
                 PlayerEmptySlots = Player1emptySlots;
@@ -300,7 +308,7 @@ namespace gameVisual
                         boolPlayerField[index] = false;
                         player.battleField.userVisualBattleField[index].QueueFree();
                         player.battleField.userVisualBattleField[index] = null;
-                        mainMenu.Inventary.GraveYard.Add(player.battleField.userBattleField[index]);
+                        Game.GraveYard.Add(player.battleField.userBattleField[index]);
                         player.battleField.userBattleField[index] = null; 
                     }
                     else
@@ -321,7 +329,7 @@ namespace gameVisual
             }
 
 
-            if (player == mainMenu.Inventary.player1)
+            if (player == Game.player1)
             {
                 Player1emptySlots = PlayerEmptySlots;
             }
@@ -344,7 +352,7 @@ namespace gameVisual
                             {
                                 if (discardButtons[i].GetRect().HasPoint(ToLocal(mouseEvent.Position)))
                                 {
-                                    mainMenu.Inventary.GraveYard.Add(discardPlayer.hand[i]);
+                                    Game.GraveYard.Add(discardPlayer.hand[i]);
                                     discardPlayer.hand.Remove(discardPlayer.hand[i]);
                                 }
 
@@ -371,7 +379,7 @@ namespace gameVisual
 
                         bool news = false;
 
-                        if(mainMenu.Inventary.turn % 2 == 0)
+                        if(Game.turn % 2 == 0)
                         {
                             // Player 1 is clicking
                             for(int i = 0; i < Player1VisualHand.Count; i++)
@@ -379,7 +387,7 @@ namespace gameVisual
                                 if (Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseEvent.Position)) && Player1emptySlots > 0)
                                 {
                                     // Add to player's battlefield logicaly and visualy
-                                    mainMenu.Inventary.player1.hand[i].Effect(); // Activating effect of card
+                                    Game.player1.hand[i].Effect(); // Activating effect of card
                                     Player1emptySlots--;
                                     news = true;
                                 }
@@ -387,12 +395,12 @@ namespace gameVisual
                             }
 
                             // Fulling (visualy) battlefield
-                            for (int slot = 0; slot < mainMenu.Inventary.player1.battleField.userBattleField.Length; slot++)
+                            for (int slot = 0; slot < Game.player1.battleField.userBattleField.Length; slot++)
                             {
-                                if (!boolPlayer1Field[slot] && news && mainMenu.Inventary.player1.battleField.userVisualBattleField[slot] != null)
+                                if (!boolPlayer1Field[slot] && news && Game.player1.battleField.userVisualBattleField[slot] != null)
                                 {
-                                    AddChild(mainMenu.Inventary.player1.battleField.userVisualBattleField[slot]);
-                                    mainMenu.Inventary.player1.battleField.userVisualBattleField[slot].Position = Player1FieldPositions[slot];
+                                    AddChild(Game.player1.battleField.userVisualBattleField[slot]);
+                                    Game.player1.battleField.userVisualBattleField[slot].Position = Player1FieldPositions[slot];
                                     boolPlayer1Field[slot] = true;
                                 }
                             }
@@ -406,19 +414,19 @@ namespace gameVisual
                                 if (Player2VisualHand[i].GetRect().HasPoint(Player2VisualHand[i].ToLocal(mouseEvent.Position)) && Player2emptySlots > 0)
                                 {
                                     // Add to player's battlefield
-                                    mainMenu.Inventary.player2.hand[i].Effect(); // Activating effect of card
+                                    Game.player2.hand[i].Effect(); // Activating effect of card
                                     Player2emptySlots--;
                                     news = true;
                                 }
                             }
 
                             // Fulling (visualy) battlefield
-                            for (int slot = 0; slot < mainMenu.Inventary.player2.battleField.userBattleField.Length; slot++)
+                            for (int slot = 0; slot < Game.player2.battleField.userBattleField.Length; slot++)
                             {
-                                if (!boolPlayer2Field[slot] && news && mainMenu.Inventary.player2.battleField.userVisualBattleField[slot] != null)
+                                if (!boolPlayer2Field[slot] && news && Game.player2.battleField.userVisualBattleField[slot] != null)
                                 {
-                                    AddChild(mainMenu.Inventary.player2.battleField.userVisualBattleField[slot]);
-                                    mainMenu.Inventary.player2.battleField.userVisualBattleField[slot].Position = Player2FieldPositions[slot];
+                                    AddChild(Game.player2.battleField.userVisualBattleField[slot]);
+                                    Game.player2.battleField.userVisualBattleField[slot].Position = Player2FieldPositions[slot];
                                     boolPlayer2Field[slot] = true;
                                 }
                             }
@@ -435,21 +443,21 @@ namespace gameVisual
                 {
                     if(Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseMove.Position)))
                     {
-                        Sprite Relic = board.InstanciateVisualCard(mainMenu.Inventary.player1.hand[i]);
+                        Sprite Relic = board.InstanciateVisualCard(Game.player1.hand[i]);
                         AddChild(Relic);
                         Relic.Scale = new Vector2((float)0.44, (float)0.45);
                         Relic.Position = new Vector2(170, 500);
                     }
                 }
-                if (mainMenu.Inventary.player1.battleField.userVisualBattleField.Length != 0)
+                if (Game.player1.battleField.userVisualBattleField.Length != 0)
                 {
-                    for (int i = 0; i < mainMenu.Inventary.player1.battleField.userVisualBattleField.Length; i++)
+                    for (int i = 0; i < Game.player1.battleField.userVisualBattleField.Length; i++)
                     {
-                        if (mainMenu.Inventary.player1.battleField.userVisualBattleField[i] != null)
+                        if (Game.player1.battleField.userVisualBattleField[i] != null)
                         {
-                            if(mainMenu.Inventary.player1.battleField.userVisualBattleField[i].GetRect().HasPoint(mainMenu.Inventary.player1.battleField.userVisualBattleField[i].ToLocal(mouseMove.Position)))
+                            if(Game.player1.battleField.userVisualBattleField[i].GetRect().HasPoint(Game.player1.battleField.userVisualBattleField[i].ToLocal(mouseMove.Position)))
                             {
-                                Sprite Relic = board.InstanciateVisualCard(mainMenu.Inventary.player1.battleField.userBattleField[i]);
+                                Sprite Relic = board.InstanciateVisualCard(Game.player1.battleField.userBattleField[i]);
                                 AddChild(Relic);
                                 Relic.Scale = new Vector2((float)0.14, (float)0.15);
                                 Relic.Position = new Vector2(170, 500);
@@ -458,15 +466,15 @@ namespace gameVisual
                     }
                 }
                 
-                if (mainMenu.Inventary.player2.battleField.userVisualBattleField.Length != 0)
+                if (Game.player2.battleField.userVisualBattleField.Length != 0)
                 {
-                    for (int i = 0; i < mainMenu.Inventary.player2.battleField.userVisualBattleField.Length; i++)
+                    for (int i = 0; i < Game.player2.battleField.userVisualBattleField.Length; i++)
                     {
-                        if (mainMenu.Inventary.player2.battleField.userVisualBattleField[i] != null)
+                        if (Game.player2.battleField.userVisualBattleField[i] != null)
                         {
-                            if(mainMenu.Inventary.player2.battleField.userVisualBattleField[i].GetRect().HasPoint(mainMenu.Inventary.player2.battleField.userVisualBattleField[i].ToLocal(mouseMove.Position)))
+                            if(Game.player2.battleField.userVisualBattleField[i].GetRect().HasPoint(Game.player2.battleField.userVisualBattleField[i].ToLocal(mouseMove.Position)))
                             {
-                                Sprite Relic = board.InstanciateVisualCard(mainMenu.Inventary.player2.battleField.userBattleField[i]);
+                                Sprite Relic = board.InstanciateVisualCard(Game.player2.battleField.userBattleField[i]);
                                 AddChild(Relic);
                                 Relic.Scale = new Vector2((float)0.14, (float)0.15);
                                 Relic.Position = new Vector2(170, 500);

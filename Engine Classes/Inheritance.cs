@@ -2,6 +2,7 @@
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
+using gameVisual;
 namespace gameEngine
 {
     public class Relics
@@ -255,7 +256,7 @@ namespace gameEngine
                 case CardState.Activated:
                     return this.battleField.userBattleField.Length;
                 case CardState.OnGraveyard:
-                    return gameVisual.mainMenu.Inventary.GraveYard.Count();
+                    return board.Game.GraveYard.Count();
             }
             return 0;
         }

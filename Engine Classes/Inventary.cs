@@ -5,21 +5,11 @@ namespace gameEngine
 {
     public class Inventary
     {
-        public Player player1;
-        public Player player2;
         public List<CharacterProperties> CharactersInventary;
         public List<Relics> CardsInventary;
-        public List<Relics> GraveYard;
-
-        public int turn;
-
         public Inventary()
         {
-            GraveYard = new List<Relics>();
-            
-            turn = 1;
             Player defaultPlayer = new Player("default");
-            
             CardsInventary = new List<Relics>()
             {
                 //Espada del Destino
@@ -62,9 +52,6 @@ namespace gameEngine
                 // Muestra 2 cartas de la mano del enemigo
                 new Relics(defaultPlayer, defaultPlayer, 10, "El ojo negro", 0, 2, "imgpath4", false, "show", "(Enemy.Show.2)", "Muestra 2 cartas de la mano del enemigo")
             };
-            
-            this.player1 = new Player("Player1");
-            this.player2 = new Player("Player2");
             
             CharactersInventary = new List<CharacterProperties>()
             {

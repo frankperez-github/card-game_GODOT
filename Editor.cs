@@ -12,26 +12,6 @@ public class Editor : Node
     }
     public override void _Process(float delta)
     {
-        Button Compile = GetNode<Button>("Code/Compile");
-        Sprite PreviewRelic = GetNode<Sprite>("Preview/Relic");
-        TextEdit Name = GetNode<TextEdit>("Code/Label/Name");
-        TextEdit Description = GetNode<TextEdit>("Code/Label2/Description");
-        Label name = (Label)PreviewRelic.GetChild(0);
-        Label description = (Label)PreviewRelic.GetChild(1);
-
-        if (Compile.Pressed)
-        {
-            name.Text = Name.Text;
-            description.Text = Description.Text;
-        }
-
-
-        Button Save = GetNode<Button>("Code/Compile/Save");
-        if (Save.Pressed)
-        {
-            GetTree().ChangeScene("res://mainMenu.tscn");
-        }
-
         List<string> operators = new List<string>()
         {
             ">",
@@ -53,15 +33,15 @@ public class Editor : Node
         
         TextEdit Effect = GetNode<TextEdit>("Code/Label4/Effect");
         
-        Label Options = GetNode<Label>("Options/Operators");
-        TextEdit number = GetNode<TextEdit>("Options/Operators/Button22/TextEdit");
         //Operators buttons
-        for (int i = 0; i < Options.GetChildCount(); i++)
+        Label Operators = GetNode<Label>("Options/Operators");
+        TextEdit number = GetNode<TextEdit>("Options/Operators/Button22/TextEdit");
+        for (int i = 0; i < Operators.GetChildCount(); i++)
         {
             try  // Options has children that are not buttons
             {
                 
-                Button child = Options.GetChild<Button>(i);
+                Button child = Operators.GetChild<Button>(i);
                 child.Disabled = false;
                 if (child.Pressed)
                 {
@@ -113,8 +93,8 @@ public class Editor : Node
             catch (System.InvalidCastException){}
         }
 
-        Label Properties = GetNode<Label>("Options/Properties");
         // Properties buttons
+        Label Properties = GetNode<Label>("Options/Properties");
         for (int i = 0; i < Properties.GetChildCount(); i++)
         {
             try  // Properties has children that are not buttons
@@ -151,11 +131,54 @@ public class Editor : Node
             }
             catch (System.InvalidCastException){}
         }
-    
+        
+        // Type of card
+        Label Types = GetNode<Label>("Code/Types");
+        string Type = "";
+        for (int i = 0; i < Types.GetChildCount(); i++)
+        {
+            try
+            {
+                CheckBox type = Properties.GetChild<CheckBox>(i);
+                if (type.Pressed)
+                {
+                    Type = type.Text;
+                }
+            }
+            catch (System.InvalidCastException){}
+        }
+
+        // Trap Card
+        CheckBox IsTrap = GetNode<CheckBox>("Code/IsTrap");
+
+        // Compile Button
+        Button Compile = GetNode<Button>("Code/Compile");
         if (Compile.Pressed)
         {
+            // Updating preview
+            Sprite PreviewRelic = GetNode<Sprite>("Preview/Relic");
+            TextEdit Name = GetNode<TextEdit>("Code/Label/Name");
+            TextEdit Description = GetNode<TextEdit>("Code/Label2/Description");
+            Label name = (Label)PreviewRelic.GetChild(0);
+            Label description = (Label)PreviewRelic.GetChild(1);
+            name.Text = Name.Text;
+            description.Text = Description.Text;
+
+            //Creating card in game's logic
+            gameEngine.Player defaultplayer = new gameEngine.Player(default);
+            gameEngine.Relics Relic =new gameEngine.Relics(defaultplayer, defaultplayer, gameVisual.mainMenu.Inventary.CardsInventary.Count, 
+                                                            Name.Text, 0, 0,"img", IsTrap.Pressed, Type, Effect.Text, Description.Text);
             gameVisual.mainMenu.Inventary.CardsInventary.Add(Relic);
+            Compile.Disabled = true;
         }
-    
+        Compile.Disabled = false;
+
+        // Save Button
+        Button Save = GetNode<Button>("Code/Compile/Save");
+        if (Save.Pressed)
+        {
+            GetTree().ChangeScene("res://mainMenu.tscn");
+        }
+
     }
 }

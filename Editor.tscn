@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Editor.cs" type="Script" id=2]
@@ -10,12 +10,20 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=2]
 
+[sub_resource type="DynamicFont" id=12]
+size = 31
+font_data = ExtResource( 1 )
+
 [sub_resource type="DynamicFont" id=8]
 size = 60
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 44
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 31
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
@@ -55,24 +63,25 @@ margin_bottom = 1074.0
 rect_pivot_offset = Vector2( 202, 193 )
 
 [node name="Label" type="Label" parent="Code"]
-margin_left = 59.0
+margin_left = 30.0
 margin_top = 61.0
-margin_right = 137.0
+margin_right = 108.0
 margin_bottom = 100.0
 custom_fonts/font = SubResource( 1 )
 text = "Name:"
 
 [node name="Name" type="TextEdit" parent="Code/Label"]
 margin_left = 96.0
-margin_top = 5.0
+margin_top = 3.0
 margin_right = 435.0
-margin_bottom = 45.0
+margin_bottom = 43.0
 theme = SubResource( 2 )
+custom_fonts/font = SubResource( 12 )
 
 [node name="Label2" type="Label" parent="Code"]
-margin_left = 53.0
+margin_left = 28.0
 margin_top = 118.0
-margin_right = 222.0
+margin_right = 197.0
 margin_bottom = 157.0
 rect_pivot_offset = Vector2( 60, 71 )
 custom_fonts/font = SubResource( 1 )
@@ -83,20 +92,21 @@ margin_left = 12.0
 margin_top = 53.0
 margin_right = 451.0
 margin_bottom = 144.0
+custom_fonts/font = SubResource( 12 )
 
 [node name="Label4" type="Label" parent="Code"]
-margin_left = 64.0
+margin_left = 32.0
 margin_top = 286.0
-margin_right = 139.0
-margin_bottom = 310.0
+margin_right = 607.0
+margin_bottom = 325.0
 rect_pivot_offset = Vector2( 148, 12 )
 custom_fonts/font = SubResource( 1 )
-text = "Effect:"
+text = "Effect: (select options to create effect)"
 
 [node name="Effect" type="TextEdit" parent="Code/Label4"]
 margin_top = 50.0
-margin_right = 446.0
-margin_bottom = 552.0
+margin_right = 459.0
+margin_bottom = 361.0
 custom_fonts/font = SubResource( 8 )
 readonly = true
 
@@ -115,6 +125,39 @@ margin_right = 396.0
 margin_bottom = 71.0
 custom_fonts/font = SubResource( 3 )
 text = "Guardar"
+
+[node name="IsTrap" type="CheckBox" parent="Code"]
+margin_left = 73.0
+margin_top = 670.0
+margin_right = 101.0
+margin_bottom = 698.0
+custom_fonts/font = SubResource( 13 )
+text = "Trap Card"
+
+[node name="Types" type="Label" parent="Code"]
+margin_left = 77.0
+margin_top = 724.0
+margin_right = 174.0
+margin_bottom = 763.0
+rect_pivot_offset = Vector2( 148, 12 )
+custom_fonts/font = SubResource( 1 )
+text = "Type of card:"
+
+[node name="IsTrap" type="CheckBox" parent="Code/Types"]
+margin_left = -1.0
+margin_top = 44.0
+margin_right = 27.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 13 )
+text = "Un tipo"
+
+[node name="IsTrap2" type="CheckBox" parent="Code/Types"]
+margin_left = -1.0
+margin_top = 69.0
+margin_right = 27.0
+margin_bottom = 97.0
+custom_fonts/font = SubResource( 13 )
+text = "Otro tipo"
 
 [node name="Options" type="Tree" parent="."]
 margin_left = 627.0
