@@ -27,7 +27,7 @@ namespace gameVisual
 
 
         public static bool discarding = false;
-        public static gameEngine.Player discardPlayer = default;
+        public static Player discardPlayer = default;
         public static List<Button> discardButtons = new List<Button>();
         static PackedScene DiscardScene = (PackedScene)GD.Load("res://DiscardLabel.tscn");
 
