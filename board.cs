@@ -288,7 +288,6 @@ namespace gameVisual
             Sprite img = (Sprite)Relic.GetChild(1);
             ImageTexture image = new ImageTexture();
             image.Load(character.imgAddress);
-
             Label description = (Label)Relic.GetChild(2);
 
             name.Text = character.name;
