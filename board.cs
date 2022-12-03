@@ -27,7 +27,7 @@ namespace gameVisual
 
 
         public static bool discarding = false;
-        public static gameEngine.Player discardPlayer = default;
+        public static gameEngine.Player discardPlayer = new Player("default");
         public static List<Button> discardButtons = new List<Button>();
         static PackedScene DiscardScene = (PackedScene)GD.Load("res://DiscardLabel.tscn");
 
@@ -82,7 +82,6 @@ namespace gameVisual
 
             Button Attack = GetNode<Button>("Attack");
             Button endButton = GetNode<Button>("endButton");
-
             
             #region Updating visualy playerInfo
             Label PlayerNick = GetNode<Label>("PlayerInfo/Player's Nick");
@@ -110,13 +109,12 @@ namespace gameVisual
 
             // ATTACK BUTTON
             Attack.Disabled = false;
-            AttackButtonFuntion(Attack);
-
+            AttackButtonFunction(Attack);
 
             //Change Turn (END BUTTON)
-            EndButtonFuntion(endButton, Turnlabel);
+            EndButtonFunction(endButton, Turnlabel);
         }
-        public void EndButtonFuntion(Button endButton, Label Turnlabel)
+        public void EndButtonFunction(Button endButton, Label Turnlabel)
         {
             if (endButton.Pressed)
             {
@@ -139,8 +137,7 @@ namespace gameVisual
             }
             endButton.Disabled = false;
         }
-
-        public void AttackButtonFuntion(Button Attack)
+        public void AttackButtonFunction(Button Attack)
         {
             if (Attack.Pressed)
             {
@@ -183,8 +180,14 @@ namespace gameVisual
             // Updating cards in board
             UpdateVisualHand(Game.player1);
             UpdateVisualHand(Game.player2);
-            CheckAndDiscard(Game.player1);
-            CheckAndDiscard(Game.player2);
+            if (Game.player1.hand.Count > maxinHand)
+            {
+                CheckAndDiscard(Game.player1);
+            }
+            if (Game.player2.hand.Count > maxinHand)
+            {
+                CheckAndDiscard(Game.player2);
+            }
             
         }
         void UpdateVisualHand(gameEngine.Player player)
@@ -213,7 +216,7 @@ namespace gameVisual
                 Label name = (Label) Relic.GetChild(0);
                 name.Text = player.hand[i].name;
 
-                if (i > maxinHand)
+                if (i >= maxinHand)
                 {
                     discarding = true;
                     CheckAndDiscard(player);
@@ -224,32 +227,29 @@ namespace gameVisual
         {
             Vector2 FirstDiscardPosition = new Vector2(180, 450);
 
-            if (player.hand.Count > 6)
-            {
-                discardPlayer = player;
-                Tree DiscardTscn = (Tree)DiscardScene.Instance();
-                Label label = DiscardTscn.GetNode<Label>("DiscardLabel");
-                label.Text = player.nick+" must discard:  "+(player.hand.Count - 6).ToString();
-                AddChild(DiscardTscn);
-                DiscardTscn.AddToGroup("discardGroup");
+            discardPlayer = player;
+            Tree DiscardTscn = (Tree)DiscardScene.Instance();
+            Label label = DiscardTscn.GetNode<Label>("DiscardLabel");
+            label.Text = player.nick+" must discard:  "+(player.hand.Count - maxinHand).ToString();
+            AddChild(DiscardTscn);
+            DiscardTscn.AddToGroup("discardGroup");
 
-                int index = 1;
-                foreach (var card in player.hand)
-                {
-                    Sprite relic = InstanciateVisualCard(card);
-                    Button button = InstanciateButton();
-                    relic.Scale = new Vector2((float)0.08,(float)0.09);
-                    AddChild(relic);
-                    relic.AddToGroup("discardGroup");
-                    AddChild(button);
-                    button.AddToGroup("discardGroup");
-                    discardButtons.Add(button);
-                    button.SetPosition(new Vector2( 200 * index - 40, FirstDiscardPosition.y + 120) ,false);
-                    relic.Position = new Vector2( 200 * index, FirstDiscardPosition.y); 
-                    Label name = (Label)Relic.GetChild(0);
-                    name.Text = card.name;
-                    index++;
-                }
+            int index = 1;
+            foreach (var card in player.hand)
+            {
+                Sprite relic = InstanciateVisualCard(card);
+                Button button = InstanciateButton();
+                relic.Scale = new Vector2((float)0.20,(float)0.20);
+                AddChild(relic);
+                relic.AddToGroup("discardGroup");
+                AddChild(button);
+                button.AddToGroup("discardGroup");
+                discardButtons.Add(button);
+                button.SetPosition(new Vector2( 200 * index - 40, FirstDiscardPosition.y + 120) ,false);
+                relic.Position = new Vector2( 200 * index, FirstDiscardPosition.y); 
+                Label name = (Label)Relic.GetChild(0);
+                name.Text = card.name;
+                index++;
             }
         }
         public static Button InstanciateButton()
@@ -263,7 +263,9 @@ namespace gameVisual
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
             Relic = (Sprite)relic.Instance();
             Label name = (Label)Relic.GetChild(0);
+            Label Description = (Label)Relic.GetChild(1);
             name.Text = card.name;
+            Description.Text = card.description;
             return Relic;
         }
         public static Sprite InstanciateVisualCharact(gameEngine.CharacterProperties character)
@@ -271,7 +273,9 @@ namespace gameVisual
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
             Relic = (Sprite)relic.Instance();
             Label name = (Label)Relic.GetChild(0);
+            Label Description = (Label)Relic.GetChild(1);
             name.Text = character.name;
+            Description.Text = character.description;
             return Relic;
         }
         public static Sprite InstanciateVisualBackCard(gameEngine.Relics card)
@@ -357,8 +361,8 @@ namespace gameVisual
                                 }
 
                                 // Discarding finished
-                                // Removing all instances
-                                if (discardPlayer.hand.Count <= 6)
+                                // Removing all instances of visual card
+                                if (discardPlayer.hand.Count <= maxinHand)
                                 {
                                     foreach (Node item in GetTree().GetNodesInGroup("discardGroup"))
                                     {
@@ -371,7 +375,6 @@ namespace gameVisual
                                     // We don't need to discard for now
                                     discarding = false;
                                     
-                                    //Update Conditions
                                 }
                             }
                         }
@@ -459,7 +462,7 @@ namespace gameVisual
                             {
                                 Sprite Relic = board.InstanciateVisualCard(Game.player1.battleField.userBattleField[i]);
                                 AddChild(Relic);
-                                Relic.Scale = new Vector2((float)0.14, (float)0.15);
+                                Relic.Scale = new Vector2((float)0.44, (float)0.45);
                                 Relic.Position = new Vector2(170, 500);
                             }
                         }  
@@ -476,7 +479,7 @@ namespace gameVisual
                             {
                                 Sprite Relic = board.InstanciateVisualCard(Game.player2.battleField.userBattleField[i]);
                                 AddChild(Relic);
-                                Relic.Scale = new Vector2((float)0.14, (float)0.15);
+                                Relic.Scale = new Vector2((float)0.44, (float)0.45);
                                 Relic.Position = new Vector2(170, 500);
                             }
                         }  
