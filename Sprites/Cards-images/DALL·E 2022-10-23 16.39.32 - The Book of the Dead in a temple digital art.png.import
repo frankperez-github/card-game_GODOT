@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/DALL·E 2022-10-23 16.39.32 - The Book of the Dead in a temple digital art.png-84612ed0a270c23dddbae183fc8927f5.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://Sprites/Cards-images/DALL·E 2022-10-23 16.39.32 - The Book of the Dead in a temple digital art.png"
+dest_files=[ "res://.import/DALL·E 2022-10-23 16.39.32 - The Book of the Dead in a temple digital art.png-84612ed0a270c23dddbae183fc8927f5.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

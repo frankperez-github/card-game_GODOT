@@ -265,17 +265,38 @@ namespace gameVisual
             Relic = (Sprite)relic.Instance();
 
             Label name = (Label)Relic.GetChild(0);
+            Label description = (Label)Relic.GetChild(2);
+            Label duration = (Label)Relic.GetChild(4);
 
             Sprite img = (Sprite)Relic.GetChild(1);
             ImageTexture image = new ImageTexture();
             image.Load(card.imgAddress);
 
-            Label description = (Label)Relic.GetChild(2);
+            Sprite type = (Sprite)Relic.GetChild(3);
+            ImageTexture TypeImg = new ImageTexture();
+            switch (card.type)
+            {
+                case "algo":
+                    TypeImg.Load("algo");
+                    break;
+                default:
+                    TypeImg.Load("algo");
+                    break;
+            }
+
 
             name.Text = card.name;
+
             img.Texture = image;
-            img.Scale = new Vector2((float)0.40, (float)0.40);
+            img.Scale = new Vector2((float)0.60, (float)0.50);
+
             description.Text = card.description;
+
+            duration.Text = card.activeDuration.ToString();
+
+            type.Texture = TypeImg;
+            img.Scale = new Vector2((float)0.60, (float)0.50);
+            
 
             return Relic;
         }
@@ -292,7 +313,7 @@ namespace gameVisual
 
             name.Text = character.name;
             img.Texture = image;
-            img.Scale = new Vector2((float)0.40, (float)0.40);
+            img.Scale = new Vector2((float)0.64, (float)0.52);
             description.Text = character.description;
             return Relic;
         }

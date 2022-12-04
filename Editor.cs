@@ -182,6 +182,7 @@ public class Editor : Node
             img.Texture = image;
             name.Text = Name.Text;
             description.Text = Description.Text;  
+            Compile.Disabled = true;
         }
         Compile.Disabled = false;
 
@@ -196,8 +197,7 @@ public class Editor : Node
             gameEngine.Relics Relic =new gameEngine.Relics(defaultplayer, defaultplayer, gameVisual.mainMenu.Inventary.CardsInventary.Count, 
                                                             Name.Text, 0, 0, imgPath, IsTrap.Pressed, Type, Effect.Text, Description.Text);
             gameVisual.mainMenu.Inventary.CardsInventary.Add(Relic);
-            Compile.Disabled = true;
+            GD.Print();
         }
-
     }
 }
