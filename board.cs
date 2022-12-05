@@ -210,6 +210,7 @@ namespace gameVisual
             for (int i = 0; i < player.hand.Count; i++)
             {
                 Relic = InstanciateVisualCard(player.hand[i]);
+                GD.Print(player.hand[i].name);
                 Relic.AddToGroup("VisibleCards");
                 PlayerVisualHand.Add(Relic);
                 Relic.Position = new Vector2(PlayerVisualHandPosition.x + 200*i,  PlayerVisualHandPosition.y);
@@ -259,7 +260,7 @@ namespace gameVisual
             Button button = (Button)relic.Instance();
             return button;
         }
-        public static Sprite InstanciateVisualCard(gameEngine.Relics card)
+        public static Sprite InstanciateVisualCard(Relics card)
         {
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
             Relic = (Sprite)relic.Instance();

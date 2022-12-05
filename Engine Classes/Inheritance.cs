@@ -21,7 +21,7 @@ namespace gameEngine
         public string description{get;}
         public List<InterpretAction> Actions;
 
-        public Relics(Player Owner, Player Enemy, int id, string Name, int passiveDuration, int activeDuration, string imgAddress, bool isTrap, string type, string effect, string description)
+        public Relics(Player Owner, Player Enemy, int id, string name, int passiveDuration, int activeDuration, string imgAddress, bool isTrap, string type, string effect, string description)
         {
             this.id = id;
             this.name = name;
