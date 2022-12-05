@@ -384,6 +384,18 @@ namespace gameVisual
         {
             Sprite GraveYard = GetNode<Sprite>("");
         }
+        public List<Relics> SelectRelics(List<Relics> place, int quant)
+        {
+            List<Relics> Selected = new List<Relics>();
+            DiscardScene.Instance();
+
+            // Instanciating visual Place
+            foreach (var relic in place)
+            {
+                Sprite card = InstanciateVisualCard(relic); 
+            }
+            return Selected;
+        }
         public override void _Input(InputEvent @event)
         {
             if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed)
