@@ -380,10 +380,10 @@ namespace gameVisual
                 Player2emptySlots = PlayerEmptySlots;
             }
         }
-        public void showVisualGraveYard ()
-        {
-            Sprite GraveYard = GetNode<Sprite>("");
-        }
+        // public void showVisualGraveYard ()
+        // {
+        //     Sprite GraveYard = GetNode<Sprite>("");
+        // }
         public List<Relics> SelectRelics(List<Relics> place, int quant)
         {
             List<Relics> Selected = new List<Relics>();
