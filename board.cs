@@ -39,7 +39,6 @@ namespace gameVisual
         public static Game Game;
         public override void _Ready()
         {
-            GD.Print(mainMenu.Inventary.CardsInventary.Count);
             Game = new Game(SelectPlayer.player1, SelectPlayer.player2);
             
             Player1FieldPositions = new Vector2[4]
@@ -276,11 +275,11 @@ namespace gameVisual
             ImageTexture TypeImg = new ImageTexture();
             switch (card.type)
             {
-                case "algo":
-                    TypeImg.Load("algo");
+                case "daño":
+                    TypeImg.Load("res://Sprites/Cards-images/photo_2022-12-05_08-38-52.jpg");
                     break;
                 default:
-                    TypeImg.Load("algo");
+                    TypeImg.Load("res://Sprites/Cards-images/photo_2022-12-05_08-38-52.jpg");
                     break;
             }
 
@@ -295,8 +294,7 @@ namespace gameVisual
             duration.Text = card.activeDuration.ToString();
 
             type.Texture = TypeImg;
-            type.Scale = new Vector2((float)0.10, (float)0.10);
-            
+            type.Scale = new Vector2((float)0.15, (float)0.15);
 
             return Relic;
         }
@@ -417,7 +415,6 @@ namespace gameVisual
                                 }
                             }
                         }
-
 
                         bool news = false;
 

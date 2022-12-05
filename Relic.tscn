@@ -41,8 +41,8 @@ text = "Description"
 autowrap = true
 
 [node name="Type" type="Sprite" parent="."]
-position = Vector2( 218.586, 182.3 )
-scale = Vector2( 1.43626, 1.3097 )
+position = Vector2( 215.453, 185.224 )
+scale = Vector2( 1.20776, 1.18787 )
 texture = ExtResource( 1 )
 
 [node name="Duration" type="Label" parent="."]
