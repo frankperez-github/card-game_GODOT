@@ -235,16 +235,10 @@ namespace gameEngine
             for (int i = 0; i < cards; i++)
             {
                 Random rnd = new Random();
-                int random = rnd.Next(1, gameVisual.mainMenu.Inventary.CardsInventary.Count()+1);
-                foreach (var card in gameVisual.mainMenu.Inventary.CardsInventary)
-                {
-                    if(card.id == random)
-                    {
-                        this.hand.Add( new Relics(this, this.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration, 
-                                        card.imgAddress,card.isTrap, card.type, card.effect, card.description));
-                        break;
-                    }
-                }
+                int random = rnd.Next(1, mainMenu.Inventary.CardsInventary.Count());
+                Relics card = mainMenu.Inventary.CardsInventary[random];
+                this.hand.Add( new Relics(this, this.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration, 
+                            card.imgAddress,card.isTrap, card.type, card.effect, card.description));
             }
         }
         public int getCardType(CardState cardState)
