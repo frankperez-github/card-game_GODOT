@@ -219,38 +219,33 @@ margin_bottom = 46.0
 custom_fonts/font = SubResource( 5 )
 text = "Attack"
 
-[node name="Card-back4" type="Sprite" parent="."]
-position = Vector2( 1786, 869 )
-scale = Vector2( 0.732282, 0.701957 )
-texture = ExtResource( 4 )
-
-[node name="Graveyard" type="Sprite" parent="."]
-position = Vector2( 1788, 501 )
-scale = Vector2( 0.732282, 0.701957 )
-texture = ExtResource( 4 )
-
-[node name="Card-placeholder(2)3" type="Sprite" parent="Graveyard"]
-position = Vector2( 1.36597, -2.84918 )
-scale = Vector2( 0.759164, 0.805386 )
+[node name="GraveYard" type="Sprite" parent="."]
+position = Vector2( 1789, 499 )
+scale = Vector2( 0.555922, 0.565346 )
 texture = ExtResource( 3 )
 
 [node name="Deck" type="Sprite" parent="."]
-position = Vector2( 173, 504 )
-scale = Vector2( 1.01166, 0.930015 )
+position = Vector2( 1773, 867 )
+scale = Vector2( 0.732282, 0.701957 )
+texture = ExtResource( 4 )
+
+[node name="Card-back1" type="Sprite" parent="Deck"]
+position = Vector2( -2202.7, -519.975 )
+scale = Vector2( 1.38152, 1.32489 )
 texture = ExtResource( 4 )
 region_rect = Rect2( 87.206, 232, 23, 0 )
 
-[node name="Card-back2" type="Sprite" parent="Deck"]
+[node name="Card-back2" type="Sprite" parent="Deck/Card-back1"]
 position = Vector2( 1604.29, 386.015 )
 scale = Vector2( 0.732775, 0.744081 )
 texture = ExtResource( 4 )
 
-[node name="Card-back2" type="Sprite" parent="Deck/Card-back2"]
+[node name="Card-back2" type="Sprite" parent="Deck/Card-back1/Card-back2"]
 position = Vector2( 10.7913, -8.67041 )
 scale = Vector2( 0.989109, 0.997377 )
 texture = ExtResource( 4 )
 
-[node name="Card-back2" type="Sprite" parent="Deck/Card-back2/Card-back2"]
+[node name="Card-back2" type="Sprite" parent="Deck/Card-back1/Card-back2/Card-back2"]
 position = Vector2( 12.2744, -10.1422 )
 scale = Vector2( 1.00093, 0.992845 )
 texture = ExtResource( 4 )
