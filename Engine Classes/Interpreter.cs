@@ -336,67 +336,55 @@ namespace gameEngine
         //He can ask for an specifics cards or specifics property of card  
         public List<Relics> FullList(string condition, Player player)
         {
+            EditExpression edit = new EditExpression();
+
             this.condition = condition;
-            for (int i = 0; i < condition.Length; i++)
+            if (condition == "deck")
             {
-                if (condition == "deck")
-                {
-                    return new List<Relics>();
-                }
-                if (condition[i] == '.')
-                {
-                    switch (condition.Substring(0, i))
-                    {
-                        case "Battlefield":
-                            return AddForType(condition.Substring(i + 1, condition.Length - (i + 1)), player.battleField.userBattleField.ToList());
-                        case "Graveyard":
-                            return AddForType(condition.Substring(i + 1, condition.Length - (i + 1)), board.Game.GraveYard);
-                        case "Hand":
-                            return AddForType(condition.Substring(i + 1, condition.Length - (i + 1)), player.hand);
-                        case "Deck":
-                            return AddForType(condition.Substring(i + 1, condition.Length - (i + 1)), mainMenu.Inventary.CardsInventary);
-                        default:
-                            Console.WriteLine("Place not found xd");
-                            return new List<Relics>();
-                    }
-                }
+                return new List<Relics>();
             }
-            Console.WriteLine("Error: List condition not found");
-            return new List<Relics>();
+            switch (edit.NextWord(condition))
+            {
+                case "Battlefield":
+                    return AddForType(edit.CutExpression(condition), player.battleField.userBattleField.ToList());
+                case "Graveyard":
+                    return AddForType(edit.CutExpression(condition), board.Game.GraveYard);
+                case "Hand":
+                    return AddForType(edit.CutExpression(condition), player.hand);
+                case "Deck":
+                    return AddForType(edit.CutExpression(condition), mainMenu.Inventary.CardsInventary);
+                default:
+                    GD.Print("Place not found xd");
+                    return new List<Relics>();
+            }
         }
         public List<Relics> AddForType(string condition, List<Relics> list)
         {
-            for (int i = 0; i < condition.Length; i++)
+            EditExpression edit = new EditExpression();
+            switch (edit.NextWord(condition))
             {
-                if (condition[i] == '.')
-                {
-                    switch (condition.Substring(0, i))
-                    {
-                        case "trap":
-                            return AddFinal(condition.Substring(i + 1, condition.Length - (i + 1)), list, "trap");
-                        case "cure":
-                            return AddFinal(condition.Substring(i + 1, condition.Length - (i + 1)), list, "cure");
-                        case "damage":
-                            return AddFinal(condition.Substring(i + 1, condition.Length - (i + 1)), list, "damage");
-                        case "defense":
-                            return AddFinal(condition.Substring(i + 1, condition.Length - (i + 1)), list, "defense");
-                        case "draw":
-                            return AddFinal(condition.Substring(i + 1, condition.Length - (i + 1)), list, "draw");
-                        case "state":
-                            return AddFinal(condition.Substring(i + 1, condition.Length - (i + 1)), list, "state");
-                        case "random":
-                            return AddFinal(condition.Substring(i + 1, condition.Length - (i + 1)), list, "random");
-                        default:
-                            Console.WriteLine("type not found xd");
-                            return new List<Relics>();
-                    }
-                }
+                case "trap":
+                    return AddFinal(edit.CutExpression(condition), list, "trap");
+                case "cure":
+                    return AddFinal(edit.CutExpression(condition), list, "cure");
+                case "damage":
+                    return AddFinal(edit.CutExpression(condition), list, "damage");
+                case "defense":
+                    return AddFinal(edit.CutExpression(condition), list, "defense");
+                case "draw":
+                    return AddFinal(edit.CutExpression(condition), list, "draw");
+                case "state":
+                    return AddFinal(edit.CutExpression(condition), list, "state");
+                case "random":
+                    return AddFinal(edit.CutExpression(condition), list, "random");
+                default:
+                    GD.Print("type not found xd");
+                    return new List<Relics>();
             }
-            Console.WriteLine("Type not found xd");
-            return new List<Relics>();
         }
         public List<Relics> AddFinal(string condition, List<Relics> list, string type)
         {
+            EditExpression edit = new EditExpression();
             List<Relics> result = new List<Relics>();
             if (condition == "all")
             {
@@ -416,29 +404,26 @@ namespace gameEngine
                 }
                 return result;
             }
-            Console.Clear();
-            List<Relics> Cache = new List<Relics>();
-            foreach (var Relic in list)
-            {
-                if (Relic != null)
-                {
-                    if (type == "random")
-                    {
-                        Cache.Add(Relic);
-                        Console.WriteLine(Relic.name);
-                    }
-                    else if (Relic.type == type)
-                    {
-                        Cache.Add(Relic);
-                    }
-                }
-            }
-            if (Cache.Count() != 0)
+            // foreach (var Relic in list)
+            // {
+            //     if (Relic != null)
+            //     {
+            //         if (type == "random")
+            //         {
+            //             result.Add(Relic);
+            //         }
+            //         else if (Relic.type == type)
+            //         {
+            //             result.Add(Relic);
+            //         }
+            //     }
+            // }
+            if (result.Count() != 0)
             {
                 Console.WriteLine("Seleccione las cartas que desee:");
                 for (int i = 0; i < int.Parse(condition); i++)
                 {
-                    result.Add(Cache.ElementAt(int.Parse(Console.ReadLine())));
+                    result.Add(result.ElementAt(int.Parse(Console.ReadLine())));
                 }
             }
 
@@ -649,6 +634,7 @@ namespace gameEngine
                     else
                     {
                         affectedCards = FullList.FullList(this.expressionA, this.Relic.Enemy);
+                        
                         foreach (var card in affectedCards)
                         {
                             foreach (var cardInventary in mainMenu.Inventary.CardsInventary)
