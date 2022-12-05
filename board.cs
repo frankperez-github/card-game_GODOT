@@ -380,6 +380,10 @@ namespace gameVisual
                 Player2emptySlots = PlayerEmptySlots;
             }
         }
+        public void showVisualGraveYard ()
+        {
+            Sprite GraveYard = GetNode<Sprite>("");
+        }
         public override void _Input(InputEvent @event)
         {
             if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed)

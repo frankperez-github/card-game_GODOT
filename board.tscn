@@ -36,10 +36,10 @@ position = Vector2( 5, 37 )
 script = ExtResource( 1 )
 
 [node name="Board-texture" type="Sprite" parent="."]
-position = Vector2( 1825, 838 )
+position = Vector2( 1945, 755 )
 scale = Vector2( 7.58333, 6.40164 )
 texture = ExtResource( 6 )
-offset = Vector2( -110.308, -49.9481 )
+offset = Vector2( -126.132, -36.9827 )
 
 [node name="TurnLabel" type="Label" parent="."]
 margin_left = 124.0
@@ -220,7 +220,7 @@ custom_fonts/font = SubResource( 5 )
 text = "Attack"
 
 [node name="Card-back4" type="Sprite" parent="."]
-position = Vector2( 1784, 864 )
+position = Vector2( 1786, 869 )
 scale = Vector2( 0.732282, 0.701957 )
 texture = ExtResource( 4 )
 
@@ -234,3 +234,18 @@ position = Vector2( 173, 504 )
 scale = Vector2( 1.01166, 0.930015 )
 texture = ExtResource( 4 )
 region_rect = Rect2( 87.206, 232, 23, 0 )
+
+[node name="Card-back2" type="Sprite" parent="Card-back3"]
+position = Vector2( 1585.51, 386.015 )
+scale = Vector2( 0.732775, 0.744081 )
+texture = ExtResource( 4 )
+
+[node name="Card-back2" type="Sprite" parent="Card-back3/Card-back2"]
+position = Vector2( -10.7915, -8.67053 )
+scale = Vector2( 0.989109, 0.997377 )
+texture = ExtResource( 4 )
+
+[node name="Card-back2" type="Sprite" parent="Card-back3/Card-back2/Card-back2"]
+position = Vector2( -12.2744, -8.69318 )
+scale = Vector2( 1.00093, 0.992845 )
+texture = ExtResource( 4 )
