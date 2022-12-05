@@ -295,7 +295,7 @@ namespace gameVisual
             duration.Text = card.activeDuration.ToString();
 
             type.Texture = TypeImg;
-            img.Scale = new Vector2((float)0.60, (float)0.50);
+            type.Scale = new Vector2((float)0.10, (float)0.10);
             
 
             return Relic;
