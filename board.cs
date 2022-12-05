@@ -34,6 +34,8 @@ namespace gameVisual
 
         public static Vector2 Player1VisualHandPosition;
         public static Vector2 Player2VisualHandPosition;
+
+        public static Node PauseMenu;
         #endregion
 
         public static Game Game;
@@ -209,7 +211,6 @@ namespace gameVisual
             for (int i = 0; i < player.hand.Count; i++)
             {
                 Relic = InstanciateVisualCard(player.hand[i]);
-                GD.Print(player.hand[i].name);
                 Relic.AddToGroup("VisibleCards");
                 PlayerVisualHand.Add(Relic);
                 Relic.Position = new Vector2(PlayerVisualHandPosition.x + 200*i,  PlayerVisualHandPosition.y);
@@ -380,10 +381,10 @@ namespace gameVisual
                 Player2emptySlots = PlayerEmptySlots;
             }
         }
-        // public void showVisualGraveYard ()
-        // {
-        //     Sprite GraveYard = GetNode<Sprite>("");
-        // }
+        public void showVisualGraveYard ()
+        {
+            Sprite GraveYard = GetNode<Sprite>("");
+        }
         public List<Relics> SelectRelics(List<Relics> place, int quant)
         {
             List<Relics> Selected = new List<Relics>();
@@ -398,6 +399,15 @@ namespace gameVisual
         }
         public override void _Input(InputEvent @event)
         {
+            // Pause Menu
+            if (@event is InputEventKey eventKey)
+                if (eventKey.Pressed && eventKey.Scancode == (int)KeyList.Escape)
+                {
+                    PackedScene EscMenu = (PackedScene)GD.Load("res://PauseMenu.tscn");
+                    PauseMenu = (Node)EscMenu.Instance();
+                    AddChild(PauseMenu);
+                }
+
             if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed)
             {
                 switch ((ButtonList)mouseEvent.ButtonIndex)

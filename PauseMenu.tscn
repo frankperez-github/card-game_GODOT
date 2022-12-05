@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://PauseMenu.cs" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 57
+font_data = ExtResource( 1 )
+
+[node name="PauseMenu" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Tree" type="Tree" parent="."]
+margin_left = 393.0
+margin_top = 181.0
+margin_right = 1497.0
+margin_bottom = 853.0
+rect_pivot_offset = Vector2( 627, 284 )
+
+[node name="Continue" type="Button" parent="Tree"]
+anchor_left = 0.00543915
+anchor_top = 1.57275
+anchor_right = 0.00543915
+anchor_bottom = 1.57275
+margin_left = 363.995
+margin_top = -953.888
+margin_right = 702.995
+margin_bottom = -866.888
+custom_fonts/font = SubResource( 1 )
+text = "Continuar"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Capitulation" type="Button" parent="Tree/Continue"]
+anchor_left = 0.00543915
+anchor_top = 5.65322
+anchor_right = 0.00543915
+anchor_bottom = 5.65322
+margin_left = -1.84387
+margin_top = -301.829
+margin_right = 337.156
+margin_bottom = -214.829
+custom_fonts/font = SubResource( 1 )
+text = "Salir de la partida"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Quit" type="Button" parent="Tree/Continue"]
+anchor_left = 0.00543915
+anchor_top = 3.83712
+anchor_right = 0.00543915
+anchor_bottom = 3.83712
+margin_left = -1.84387
+margin_top = 45.1711
+margin_right = 337.156
+margin_bottom = 132.171
+custom_fonts/font = SubResource( 1 )
+text = "Salir del juego"
+__meta__ = {
+"_edit_use_anchors_": true
+}
