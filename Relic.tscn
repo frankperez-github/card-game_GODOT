@@ -7,7 +7,7 @@
 [sub_resource type="AnimatedTexture" id=1]
 
 [sub_resource type="DynamicFont" id=2]
-size = 92
+size = 78
 font_data = ExtResource( 3 )
 
 [node name="Relic" type="Sprite"]

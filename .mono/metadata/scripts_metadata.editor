@@ -1,9 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 {"res://Editor.cs":{"modified_time":"1670263030","class":{"namespace":"","class_name":"Editor","nested":false}},"res://GameOver.cs":{"modified_time":"1670231455","class":{"namespace":"gameVisual","class_name":"GameOver","nested":false}},"res://mainMenu.cs":{"modified_time":"1670231458","class":{"namespace":"gameVisual","class_name":"mainMenu","nested":false}},"res://PauseMenu.cs":{"modified_time":"1670266706","class":{"namespace":"gameVisual","class_name":"PauseMenu","nested":false}},"res://SelectPlayer.cs":{"modified_time":"1670276059","class":{"namespace":"gameVisual","class_name":"SelectPlayer","nested":false}},"res://board.cs":{"modified_time":"1670279182","class":{"namespace":"gameVisual","class_name":"board","nested":false}}}
 =======
-<<<<<<< HEAD
-{"res://PauseMenu.cs":{"modified_time":"1670266494","class":{"namespace":"gameVisual","class_name":"PauseMenu","nested":false}},"res://Editor.cs":{"modified_time":"1670234869","class":{"namespace":"","class_name":"Editor","nested":false}},"res://mainMenu.cs":{"modified_time":"1670228957","class":{"namespace":"gameVisual","class_name":"mainMenu","nested":false}},"res://SelectPlayer.cs":{"modified_time":"1670269586","class":{"namespace":"gameVisual","class_name":"SelectPlayer","nested":false}},"res://GameOver.cs":{"modified_time":"1670228957","class":{"namespace":"gameVisual","class_name":"GameOver","nested":false}},"res://board.cs":{"modified_time":"1670278974","class":{"namespace":"gameVisual","class_name":"board","nested":false}}}
 =======
+>>>>>>> a2bbf3d6443fcec8d3989ac4953e3b3b891ad6a8
+<<<<<<< HEAD
+{"res://PauseMenu.cs":{"modified_time":"1670266494","class":{"namespace":"gameVisual","class_name":"PauseMenu","nested":false}},"res://Editor.cs":{"modified_time":"1670234869","class":{"namespace":"","class_name":"Editor","nested":false}},"res://mainMenu.cs":{"modified_time":"1670228957","class":{"namespace":"gameVisual","class_name":"mainMenu","nested":false}},"res://SelectPlayer.cs":{"modified_time":"1670269586","class":{"namespace":"gameVisual","class_name":"SelectPlayer","nested":false}},"res://GameOver.cs":{"modified_time":"1670228957","class":{"namespace":"gameVisual","class_name":"GameOver","nested":false}},"res://board.cs":{"modified_time":"1670281157","class":{"namespace":"gameVisual","class_name":"board","nested":false}}}
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
 {"res://board.cs":{"modified_time":"1670276065","class":{"namespace":"gameVisual","class_name":"board","nested":false}},"res://Editor.cs":{"modified_time":"1670263030","class":{"namespace":"","class_name":"Editor","nested":false}},"res://GameOver.cs":{"modified_time":"1670231455","class":{"namespace":"gameVisual","class_name":"GameOver","nested":false}},"res://mainMenu.cs":{"modified_time":"1670231458","class":{"namespace":"gameVisual","class_name":"mainMenu","nested":false}},"res://PauseMenu.cs":{"modified_time":"1670266706","class":{"namespace":"gameVisual","class_name":"PauseMenu","nested":false}},"res://SelectPlayer.cs":{"modified_time":"1670276059","class":{"namespace":"gameVisual","class_name":"SelectPlayer","nested":false}}}
 =======
@@ -11,3 +15,7 @@
 >>>>>>> a0f7fc597e5f6cc9db89ffc0f4f8d71901a79dfe
 >>>>>>> 3ec1e95dd14b216d69ecd922dd41a1ce3e4e4236
 >>>>>>> 1f591c0bace21183d5d3b5eb924acfcf080e38fb
+=======
+{"res://Editor.cs":{"modified_time":"1670263030","class":{"namespace":"","class_name":"Editor","nested":false}},"res://GameOver.cs":{"modified_time":"1670231455","class":{"namespace":"gameVisual","class_name":"GameOver","nested":false}},"res://mainMenu.cs":{"modified_time":"1670231458","class":{"namespace":"gameVisual","class_name":"mainMenu","nested":false}},"res://PauseMenu.cs":{"modified_time":"1670266706","class":{"namespace":"gameVisual","class_name":"PauseMenu","nested":false}},"res://SelectPlayer.cs":{"modified_time":"1670276059","class":{"namespace":"gameVisual","class_name":"SelectPlayer","nested":false}},"res://board.cs":{"modified_time":"1670279182","class":{"namespace":"gameVisual","class_name":"board","nested":false}}}
+>>>>>>> f25fde6793274f6a845e375583f417a25da06f21
+>>>>>>> a2bbf3d6443fcec8d3989ac4953e3b3b891ad6a8
