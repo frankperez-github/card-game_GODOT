@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://board.cs" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Sprites/card-back.png" type="Texture" id=4]
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Sprites/board-texture.jpeg" type="Texture" id=6]
+[ext_resource path="res://Relic.tscn" type="PackedScene" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 77
@@ -224,28 +225,36 @@ position = Vector2( 1789, 499 )
 scale = Vector2( 0.555922, 0.565346 )
 texture = ExtResource( 3 )
 
+[node name="Relic" parent="GraveYard" instance=ExtResource( 7 )]
+position = Vector2( -5.39648, 5.3064 )
+scale = Vector2( 0.448485, 0.471083 )
+
 [node name="Deck" type="Sprite" parent="."]
 position = Vector2( 1773, 867 )
 scale = Vector2( 0.732282, 0.701957 )
 texture = ExtResource( 4 )
 
-[node name="Card-back1" type="Sprite" parent="Deck"]
-position = Vector2( -2202.7, -519.975 )
-scale = Vector2( 1.38152, 1.32489 )
-texture = ExtResource( 4 )
-region_rect = Rect2( 87.206, 232, 23, 0 )
-
-[node name="Card-back2" type="Sprite" parent="Deck/Card-back1"]
-position = Vector2( 1604.29, 386.015 )
-scale = Vector2( 0.732775, 0.744081 )
+[node name="Card-back2" type="Sprite" parent="Deck"]
+position = Vector2( 13.6589, -8.54749 )
+scale = Vector2( 1.01234, 0.985826 )
 texture = ExtResource( 4 )
 
-[node name="Card-back2" type="Sprite" parent="Deck/Card-back1/Card-back2"]
+[node name="Card-back2" type="Sprite" parent="Deck/Card-back2"]
 position = Vector2( 10.7913, -8.67041 )
 scale = Vector2( 0.989109, 0.997377 )
 texture = ExtResource( 4 )
 
-[node name="Card-back2" type="Sprite" parent="Deck/Card-back1/Card-back2/Card-back2"]
+[node name="Card-back2" type="Sprite" parent="Deck/Card-back2/Card-back2"]
 position = Vector2( 12.2744, -10.1422 )
 scale = Vector2( 1.00093, 0.992845 )
 texture = ExtResource( 4 )
+
+[node name="Preview" type="Sprite" parent="."]
+position = Vector2( 160.003, 502 )
+scale = Vector2( 1.01166, 0.930016 )
+texture = ExtResource( 4 )
+region_rect = Rect2( 87.206, 232, 23, 0 )
+
+[node name="Relic" parent="Preview" instance=ExtResource( 7 )]
+position = Vector2( 5.26322, 6.0126 )
+scale = Vector2( 0.374154, 0.450825 )
