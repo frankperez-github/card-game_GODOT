@@ -771,6 +771,7 @@ namespace gameEngine
             {
                 Random rnd = new Random();
                 int random = rnd.Next(1, Place.Count());
+                gameVisual.board.Game.GraveYard.Add(Place[random]);
                 Place.RemoveAt(random);
             }
         }

@@ -38,6 +38,7 @@ namespace gameVisual
         public static Node PauseMenu;
 
         Sprite GraveYardCard = new Sprite();
+        Sprite Preview = new Sprite();
 
         #endregion
 
@@ -45,6 +46,10 @@ namespace gameVisual
         public override void _Ready()
         {
             Game = new Game(SelectPlayer.player1, SelectPlayer.player2);
+            Preview = GetNode<Sprite>("Preview/Relic");
+            GraveYardCard = GetNode<Sprite>("GraveYard/Relic");
+            GraveYardCard.Visible = false;
+            Preview.Visible = false;
             
             Player1FieldPositions = new Vector2[4]
             {
@@ -125,22 +130,10 @@ namespace gameVisual
             {
                 showGraveYard();
             }
-            else
-            {
-                hideGraveYard();
-            }
         }
         public void showGraveYard()
         {
-            GraveYardCard.Visible = true;
-            GraveYardCard = InstanciateVisualCard(Game.GraveYard[Game.GraveYard.Count-1]);
-            AddChild(GraveYardCard);
-            GraveYardCard.Position = new Vector2(1785, 475);
-            GraveYardCard.Scale = new Vector2((float)0.30, (float)0.30);
-        }
-        public void hideGraveYard()
-        {
-            GraveYardCard.Visible = false;
+            GraveyardPropierties(Game.GraveYard[Game.GraveYard.Count-1]);
         }
         public void EndButtonFunction(Button endButton, Label Turnlabel)
         {
@@ -223,10 +216,10 @@ namespace gameVisual
                 PlayerVisualHandPosition = Player2VisualHandPosition;
             }
 
-            if (PlayerVisualHand.Count - player.hand.Count > 0)
+            if (PlayerVisualHand.Count - player.hand.Count >= 0)
             {
                 // Delete old relics
-                for(int i = 0; i < player.hand.Count; i++)
+                for(int i = 0; i < PlayerVisualHand.Count; i++)
                 {
                     try
                     {
@@ -240,8 +233,8 @@ namespace gameVisual
                     {
                         if (PlayerVisualHand.Count != 0)
                         {
-                            PlayerVisualHand.RemoveAt(PlayerVisualHand.Count-1);
-                            ((Node)GetTree().GetNodesInGroup(group)[PlayerVisualHand.Count-1]).QueueFree();
+                            PlayerVisualHand.RemoveAt(i);
+                            ((Node)GetTree().GetNodesInGroup(group)[i]).QueueFree();
                         }
                     }
                     
@@ -254,7 +247,6 @@ namespace gameVisual
             }
             else if (PlayerVisualHand.Count - player.hand.Count < 0)
             {
-                
                 //Create new relics
                 for(int i = PlayerVisualHand.Count; i < player.hand.Count; i++)
                 {
@@ -262,13 +254,17 @@ namespace gameVisual
                     PlayerVisualHand.Add(Relic);
                     AddChild(relic);
                     relic.AddToGroup(group);
-                    Relic.Position = new Vector2(PlayerVisualHandPosition.x + 200*i, PlayerVisualHandPosition.y);
-                   
                     if (i >= maxinHand)
                     {
                         discarding = true;
                         showVisually(player.hand, false);
                     }
+                }
+
+                PlayerVisualHandPosition.x = (1920/2) - PlayerVisualHand.Count*(float)73.5;
+                for(int i = 0; i < PlayerVisualHand.Count; i++)
+                {
+                    PlayerVisualHand[i].Position = new Vector2(PlayerVisualHandPosition.x + 200*i, PlayerVisualHandPosition.y);
                 }
             }            
         }
@@ -309,6 +305,7 @@ namespace gameVisual
 
             img.Texture = image;
             img.Scale = new Vector2((float)0.60, (float)0.50);
+
 
             description.Text = card.description;
 
@@ -450,6 +447,43 @@ namespace gameVisual
             }
             return Selected;
         }
+       
+        public void PreviewPropierties(Relics relic)
+        {
+            if (((Label)Preview.GetChild(0)).Text != relic.name)
+            {
+                Sprite Relic = board.InstanciateVisualCard(relic);
+                Preview.Visible = true;
+                ((Label)Preview.GetChild(0)).Text = ((Label)Relic.GetChild(0)).Text;
+                ((Sprite)Preview.GetChild(1)).Texture = ((Sprite)Relic.GetChild(1)).Texture;
+                ((Label)Preview.GetChild(2)).Text = ((Label)Relic.GetChild(2)).Text;
+                ((Sprite)Preview.GetChild(3)).Texture = ((Sprite)Relic.GetChild(3)).Texture;
+                ((Label)Preview.GetChild(4)).Text = ((Label)Relic.GetChild(4)).Text;
+
+
+                ((Sprite)Preview.GetChild(1)).Scale = new Vector2((float)0.60, (float)0.50);
+                ((Sprite)Preview.GetChild(3)).Scale = new Vector2((float)0.15, (float)0.15);
+            }
+        }
+        
+        public void GraveyardPropierties(Relics relic)
+        {
+            if (((Label)GraveYardCard.GetChild(0)).Text != relic.name)
+            {
+                Sprite Relic = board.InstanciateVisualCard(relic);
+                GraveYardCard.Visible = true;
+                ((Label)GraveYardCard.GetChild(0)).Text = ((Label)Relic.GetChild(0)).Text;
+                ((Sprite)GraveYardCard.GetChild(1)).Texture = ((Sprite)Relic.GetChild(1)).Texture;
+                ((Label)GraveYardCard.GetChild(2)).Text = ((Label)Relic.GetChild(2)).Text;
+                ((Sprite)GraveYardCard.GetChild(3)).Texture = ((Sprite)Relic.GetChild(3)).Texture;
+                ((Label)GraveYardCard.GetChild(4)).Text = ((Label)Relic.GetChild(4)).Text;
+
+
+                ((Sprite)GraveYardCard.GetChild(1)).Scale = new Vector2((float)0.60, (float)0.50);
+                ((Sprite)GraveYardCard.GetChild(3)).Scale = new Vector2((float)0.15, (float)0.15);
+            }
+        }
+        
         public override void _Input(InputEvent @event)  
         {
             // Pause Menu
@@ -500,11 +534,13 @@ namespace gameVisual
                             {
                                 if (Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseEvent.Position)) && Player1emptySlots > 0)
                                 {
-                                    // Add to player's battlefield logicaly and visualy
+                                    // Add to player's battlefield logically and visually
                                     Game.player1.hand[i].Effect(); // Activating effect of card
                                     Player1emptySlots--;
                                     news = true;
+                                    GetTree().Paused = true;
                                     RefreshBoard();
+                                    GetTree().Paused = false;
                                 }
                                 
                             }
@@ -532,7 +568,10 @@ namespace gameVisual
                                     Game.player2.hand[i].Effect(); // Activating effect of card
                                     Player2emptySlots--;
                                     news = true;
+                                    GetTree().Paused = true;
                                     RefreshBoard();
+                                    GetTree().Paused = false;
+
                                 }
                             }
 
@@ -547,7 +586,6 @@ namespace gameVisual
                                 }
                             }
                         }
-                        
                         break;
                 }
             }
@@ -560,28 +598,19 @@ namespace gameVisual
                 {
                     if(Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseMove.Position)))
                     {
-                        Sprite Relic = board.InstanciateVisualCard(Game.player1.hand[i]);
-                        AddChild(Relic);
-                        Relic.Scale = new Vector2((float)0.44, (float)0.45);
-                        Relic.Position = new Vector2(170, 500);
+                        PreviewPropierties(Game.player1.hand[i]);
                     }
                 }
 
                 // Preview player1 Field
-                if (Game.player1.battleField.userVisualBattleField.Length != 0)
+                for (int i = 0; i < Game.player1.battleField.userVisualBattleField.Length; i++)
                 {
-                    for (int i = 0; i < Game.player1.battleField.userVisualBattleField.Length; i++)
+                    if (Game.player1.battleField.userVisualBattleField[i] != null)
                     {
-                        if (Game.player1.battleField.userVisualBattleField[i] != null)
+                        if(Game.player1.battleField.userVisualBattleField[i].GetRect().HasPoint(Game.player1.battleField.userVisualBattleField[i].ToLocal(mouseMove.Position)))
                         {
-                            if(Game.player1.battleField.userVisualBattleField[i].GetRect().HasPoint(Game.player1.battleField.userVisualBattleField[i].ToLocal(mouseMove.Position)))
-                            {
-                                Sprite Relic = board.InstanciateVisualCard(Game.player1.battleField.userBattleField[i]);
-                                AddChild(Relic);
-                                Relic.Scale = new Vector2((float)0.44, (float)0.45);
-                                Relic.Position = new Vector2(170, 500);
-                            }
-                        }  
+                            PreviewPropierties(Game.player1.battleField.userBattleField[i]);
+                        }
                     }
                 }
                 
@@ -597,23 +626,18 @@ namespace gameVisual
                 // }
 
                 // Preview player2 Field
-                if (Game.player2.battleField.userVisualBattleField.Length != 0)
+                for (int i = 0; i < Game.player2.battleField.userVisualBattleField.Length; i++)
                 {
-                    for (int i = 0; i < Game.player2.battleField.userVisualBattleField.Length; i++)
+                    if (Game.player2.battleField.userVisualBattleField[i] != null)
                     {
-                        if (Game.player2.battleField.userVisualBattleField[i] != null)
+                        if(Game.player2.battleField.userVisualBattleField[i].GetRect().HasPoint(Game.player2.battleField.userVisualBattleField[i].ToLocal(mouseMove.Position)))
                         {
-                            if(Game.player2.battleField.userVisualBattleField[i].GetRect().HasPoint(Game.player2.battleField.userVisualBattleField[i].ToLocal(mouseMove.Position)))
-                            {
-                                Sprite Relic = board.InstanciateVisualCard(Game.player2.battleField.userBattleField[i]);
-                                AddChild(Relic);
-                                Relic.Scale = new Vector2((float)0.44, (float)0.45);
-                                Relic.Position = new Vector2(170, 500);
-                            }
-                        }  
+                            PreviewPropierties(Game.player2.battleField.userBattleField[i]);
+                        }
                     }
                 }
             }
+        
         }
     }       
 }
