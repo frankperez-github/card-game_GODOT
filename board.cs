@@ -70,6 +70,7 @@ namespace gameVisual
             }
 
             RefreshBoard();
+            GD.Print("1");
         }
 
         bool player1Attack = false;
@@ -208,6 +209,7 @@ namespace gameVisual
             // Updating cards in board
             UpdateVisualHand(Game.player1);
             UpdateVisualHand(Game.player2);
+
             if (Game.player1.hand.Count > maxinHand)
             {
                 showVisually(Game.player1.hand, true);
@@ -483,6 +485,7 @@ namespace gameVisual
                                     Game.player1.hand[i].Effect(); // Activating effect of card
                                     Player1emptySlots--;
                                     news = true;
+                                    RefreshBoard();
                                 }
                                 
                             }
@@ -510,6 +513,7 @@ namespace gameVisual
                                     Game.player2.hand[i].Effect(); // Activating effect of card
                                     Player2emptySlots--;
                                     news = true;
+                                    RefreshBoard();
                                 }
                             }
 
@@ -523,10 +527,8 @@ namespace gameVisual
                                     boolPlayer2Field[slot] = true;
                                 }
                             }
-
                         }
                         
-                        RefreshBoard();
                         break;
                 }
             }
