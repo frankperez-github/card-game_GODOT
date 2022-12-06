@@ -70,7 +70,6 @@ namespace gameVisual
             }
 
             RefreshBoard();
-            GD.Print("1");
         }
 
         bool player1Attack = false;
@@ -190,21 +189,6 @@ namespace gameVisual
         {
             Player1VisualHandPosition = new Vector2(500 - (Game.player1.hand.Count * 5), 1000);
             Player2VisualHandPosition = new Vector2(500 - (Game.player2.hand.Count * 5), 50);
-            
-            // Erasing old data
-            if  (Player1VisualHand.Count != 0)
-                Player1VisualHand.Clear();
-            if  (Player2VisualHand.Count != 0)
-                Player2VisualHand.Clear();
-
-            try
-            {
-                foreach (Node node in GetTree().GetNodesInGroup("VisibleCards"))
-                {
-                    node.QueueFree();
-                } 
-            }
-            catch (System.NullReferenceException){}
                 
             // Updating cards in board
             UpdateVisualHand(Game.player1);
@@ -222,36 +206,71 @@ namespace gameVisual
         }
         void UpdateVisualHand(gameEngine.Player player)
         {
-            List<Sprite> PlayerVisualHand;
+            List<Sprite> PlayerVisualHand = new List<Sprite>();
             Vector2 PlayerVisualHandPosition;
+            string group = "";
 
             if (player == Game.player1)
             {
+                group = "RelicsNodes1";
                 PlayerVisualHand = Player1VisualHand;
                 PlayerVisualHandPosition = Player1VisualHandPosition;
             }
             else
             {
+                group = "RelicsNodes2";
                 PlayerVisualHand = Player2VisualHand;
                 PlayerVisualHandPosition = Player2VisualHandPosition;
             }
 
-            for (int i = 0; i < player.hand.Count; i++)
+            if (PlayerVisualHand.Count - player.hand.Count > 0)
             {
-                Relic = InstanciateVisualCard(player.hand[i]);
-                Relic.AddToGroup("VisibleCards");
-                PlayerVisualHand.Add(Relic);
-                Relic.Position = new Vector2(PlayerVisualHandPosition.x + 200*i,  PlayerVisualHandPosition.y);
-                AddChild(Relic);
-                Label name = (Label) Relic.GetChild(0);
-                name.Text = player.hand[i].name;
-
-                if (i >= maxinHand)
+                // Delete old relics
+                for(int i = 0; i < player.hand.Count; i++)
                 {
-                    discarding = true;
-                    showVisually(player.hand, false);
+                    try
+                    {
+                        if (((Label)PlayerVisualHand[i].GetChild(0)).Text != player.hand[i].name)
+                        {
+                            ((Node)GetTree().GetNodesInGroup(group)[i]).QueueFree();
+                            PlayerVisualHand.RemoveAt(i);
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        if (PlayerVisualHand.Count != 0)
+                        {
+                            PlayerVisualHand.RemoveAt(PlayerVisualHand.Count-1);
+                            ((Node)GetTree().GetNodesInGroup(group)[PlayerVisualHand.Count-1]).QueueFree();
+                        }
+                    }
+                    
+                    if (i >= maxinHand)
+                    {
+                        discarding = true;
+                        showVisually(player.hand, false);
+                    }
                 }
             }
+            else if (PlayerVisualHand.Count - player.hand.Count < 0)
+            {
+                
+                //Create new relics
+                for(int i = PlayerVisualHand.Count; i < player.hand.Count; i++)
+                {
+                    Sprite relic = InstanciateVisualCard(player.hand[i]);
+                    PlayerVisualHand.Add(Relic);
+                    AddChild(relic);
+                    relic.AddToGroup(group);
+                    Relic.Position = new Vector2(PlayerVisualHandPosition.x + 200*i, PlayerVisualHandPosition.y);
+                   
+                    if (i >= maxinHand)
+                    {
+                        discarding = true;
+                        showVisually(player.hand, false);
+                    }
+                }
+            }            
         }
         public static Button InstanciateButton()
         {
@@ -412,7 +431,6 @@ namespace gameVisual
         
             if(EndButton.Pressed)
             {
-                GD.Print("Pressed");
                 foreach (Node node in GetTree().GetNodesInGroup("discardGroup"))
                 {
                     node.QueueFree();
@@ -432,7 +450,7 @@ namespace gameVisual
             }
             return Selected;
         }
-        public override void _Input(InputEvent @event)
+        public override void _Input(InputEvent @event)  
         {
             // Pause Menu
             if (@event is InputEventKey eventKey)
@@ -443,6 +461,7 @@ namespace gameVisual
                     AddChild(PauseMenu);
                 }
 
+            // Click
             if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed)
             {
                 switch ((ButtonList)mouseEvent.ButtonIndex)
@@ -532,8 +551,11 @@ namespace gameVisual
                         break;
                 }
             }
+
+            // Hover
             if (@event is InputEventMouse mouseMove)
             {
+                // Preview player1 hand
                 for (int i = 0; i < Player1VisualHand.Count; i++)
                 {
                     if(Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseMove.Position)))
@@ -544,6 +566,8 @@ namespace gameVisual
                         Relic.Position = new Vector2(170, 500);
                     }
                 }
+
+                // Preview player1 Field
                 if (Game.player1.battleField.userVisualBattleField.Length != 0)
                 {
                     for (int i = 0; i < Game.player1.battleField.userVisualBattleField.Length; i++)
@@ -561,6 +585,18 @@ namespace gameVisual
                     }
                 }
                 
+                // for (int i = 0; i < Player2VisualHand.Count; i++)
+                // {
+                //     if(Player2VisualHand[i].GetRect().HasPoint(Player2VisualHand[i].ToLocal(mouseMove.Position)))
+                //     {
+                //         Sprite Relic = board.InstanciateVisualCard(Game.player2.hand[i]);
+                //         AddChild(Relic);
+                //         Relic.Scale = new Vector2((float)0.44, (float)0.45);
+                //         Relic.Position = new Vector2(170, 500);
+                //     }
+                // }
+
+                // Preview player2 Field
                 if (Game.player2.battleField.userVisualBattleField.Length != 0)
                 {
                     for (int i = 0; i < Game.player2.battleField.userVisualBattleField.Length; i++)
