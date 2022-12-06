@@ -74,6 +74,7 @@ namespace gameVisual
 
         bool player1Attack = false;
         bool player2Attack = false;
+
         public override void _Process(float delta)
         {
 
@@ -250,7 +251,6 @@ namespace gameVisual
                 }
             }
         }
-        
         public static Button InstanciateButton()
         {
             PackedScene relic = (PackedScene)GD.Load("res://DiscardButton.tscn");
@@ -268,17 +268,18 @@ namespace gameVisual
 
             Sprite img = (Sprite)Relic.GetChild(1);
             ImageTexture image = new ImageTexture();
-            image.Load(card.imgAddress);
+            image.Load(ProjectSettings.GlobalizePath(card.imgAddress));
+
 
             Sprite type = (Sprite)Relic.GetChild(3);
-            ImageTexture TypeImg = new ImageTexture();
+            ImageTexture Type = new ImageTexture();
             switch (card.type)
             {
                 case "daño":
-                    TypeImg.Load("res://Sprites/Cards-images/photo_2022-12-05_08-38-52.jpg");
+                    Type.Load(ProjectSettings.GlobalizePath("res://Sprites/Cards-images/photo_2022-12-05_08-38-52.jpg"));
                     break;
                 default:
-                    TypeImg.Load("res://Sprites/Cards-images/photo_2022-12-05_08-38-52.jpg");
+                    Type.Load(ProjectSettings.GlobalizePath("res://Sprites/Cards-images/photo_2022-12-05_08-38-52.jpg"));
                     break;
             }
 
@@ -292,7 +293,7 @@ namespace gameVisual
 
             duration.Text = card.activeDuration.ToString();
 
-            type.Texture = TypeImg;
+            type.Texture = Type;
             type.Scale = new Vector2((float)0.15, (float)0.15);
 
             return Relic;
@@ -305,7 +306,7 @@ namespace gameVisual
 
             Sprite img = (Sprite)Relic.GetChild(1);
             ImageTexture image = new ImageTexture();
-            image.Load(character.imgAddress);
+            image.Load(ProjectSettings.GlobalizePath(character.imgAddress));
             Label description = (Label)Relic.GetChild(2);
 
             name.Text = character.name;
@@ -410,6 +411,7 @@ namespace gameVisual
         
             if(EndButton.Pressed)
             {
+                GD.Print("Pressed");
                 foreach (Node node in GetTree().GetNodesInGroup("discardGroup"))
                 {
                     node.QueueFree();
