@@ -51,6 +51,22 @@ namespace gameEngine
                 // // El ojo negro
                 // // Muestra 2 cartas de la mano del enemigo
                 // new Relics(defaultPlayer, defaultPlayer, 10, "El ojo negro", 0, 2, "imgpath4", false, "show", "(Enemy.Show.2)", "Muestra 2 cartas de la mano del enemigo")
+
+                // La lanza de la muerte
+                // Suma 25 de ataque
+                new Relics(defaultPlayer, defaultPlayer, 11, "La lanza de la muerte", 0, 1, "", false, "damage", "(Owner.Attack.25)", "Suma 25 de ataque"),
+
+                // Token
+                // Reunir 3 tokens activa el efecto especial de tu personaje
+                new Relics(defaultPlayer, defaultPlayer, 12, "Token", 0, 1, "", false, "random", "", "Reunir 3 tokens activa el efecto especial de tu personaje"),
+
+                // Espejo de impaciencia
+                // Evita el ataque del enemigo
+                new Relics(defaultPlayer, defaultPlayer, 13, "Espejo de impaciencia", 0, 1, "", true, "defense", "(Owner.Defense.1.1)", "Se activa cuando el adversario ataca y evita el ataque"),
+
+                // El arco del último momento
+                // Devuelve el ataque del enemigo
+                new Relics(defaultPlayer, defaultPlayer, 14, "El arco del último momento", 0, 1, "", true, "defense", "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)", "Devuelve el ataque del enemigo"),
             };
             
             CharactersInventary = new List<CharacterProperties>()
