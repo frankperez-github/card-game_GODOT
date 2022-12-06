@@ -38,7 +38,6 @@ namespace gameVisual
         public static Node PauseMenu;
 
         Sprite GraveYardCard = new Sprite();
-        Relics GraveYardCardLogic;
 
         #endregion
 
@@ -63,9 +62,6 @@ namespace gameVisual
                 new Vector2(1430, 275)
             };
             
-            // Visual GraveYard
-            GraveYardCardLogic = new Relics(Game.player1, Game.player2, 0, "", 0, 0, "", false, "", "", "");
-
             // setting virtual player's character and nick
             if (mainMenu.gameType.ToLower() == "virtual")
             {
@@ -136,8 +132,7 @@ namespace gameVisual
         public void showGraveYard()
         {
             GraveYardCard.Visible = true;
-            GraveYardCardLogic = Game.GraveYard[Game.GraveYard.Count-1];
-            GraveYardCard = InstanciateVisualCard(GraveYardCardLogic);
+            GraveYardCard = InstanciateVisualCard(Game.GraveYard[Game.GraveYard.Count-1]);
             AddChild(GraveYardCard);
             GraveYardCard.Position = new Vector2(1785, 475);
             GraveYardCard.Scale = new Vector2((float)0.30, (float)0.30);
@@ -214,11 +209,11 @@ namespace gameVisual
             UpdateVisualHand(Game.player2);
             if (Game.player1.hand.Count > maxinHand)
             {
-                showVisually(Game.player1.hand, false);
+                showVisually(Game.player1.hand, true);
             }
             if (Game.player2.hand.Count > maxinHand)
             {
-                showVisually(Game.player2.hand, false);
+                showVisually(Game.player2.hand, true);
             }
             
         }
@@ -387,30 +382,11 @@ namespace gameVisual
         {
             Tree SelectMenu = (Tree)SelectCards.Instance();
             AddChild(SelectMenu);
-            Label placeName = new Label();
-            Button EndButton = new Button();
-            
-            // foreach (var child in SelectMenu.GetChildren())
-            // {
-            //     try
-            //     {
-            //         placeName = (Label)GetChild(0);
-            //         AddChild(placeName);
-            //     }
-            //     catch (System.InvalidCastException){}
-            // }
-            // foreach (var child in SelectMenu.GetChildren())
-            // {
-            //     try
-            //     {
-            //         EndButton = (Button)GetChild(1);
-            //         AddChild(EndButton);
-            //     }
-            //     catch (System.InvalidCastException){}
-            // }
+            Button EndButton = InstanciateButton();
+            EndButton.SetPosition(new Vector2(875, 745));
+            AddChild(EndButton);
                     
             
-            placeName.Text = "";
             Vector2 FirstPosition = new Vector2(180, 450);
 
             int index = 1;
@@ -474,12 +450,6 @@ namespace gameVisual
                         {
                             for (int i = 0; i < discardButtons.Count; i++)
                             {
-                                if (discardButtons[i].GetRect().HasPoint(ToLocal(mouseEvent.Position)))
-                                {
-                                    Game.GraveYard.Add(discardPlayer.hand[i]);
-                                    discardPlayer.hand.Remove(discardPlayer.hand[i]);
-                                }
-
                                 // Discarding finished
                                 // Removing all instances of visual card
                                 if (discardPlayer.hand.Count <= maxinHand)
