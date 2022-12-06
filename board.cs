@@ -29,13 +29,17 @@ namespace gameVisual
         public static bool discarding = false;
         public static gameEngine.Player discardPlayer = new Player("default");
         public static List<Button> discardButtons = new List<Button>();
-        static PackedScene DiscardScene = (PackedScene)GD.Load("res://DiscardLabel.tscn");
+        public static PackedScene SelectCards = (PackedScene)GD.Load("res://SelectCards.tscn");
 
 
         public static Vector2 Player1VisualHandPosition;
         public static Vector2 Player2VisualHandPosition;
 
         public static Node PauseMenu;
+
+        Sprite GraveYardCard = new Sprite();
+        Relics GraveYardCardLogic;
+
         #endregion
 
         public static Game Game;
@@ -59,6 +63,9 @@ namespace gameVisual
                 new Vector2(1430, 275)
             };
             
+            // Visual GraveYard
+            GraveYardCardLogic = new Relics(Game.player1, Game.player2, 0, "", 0, 0, "", false, "", "", "");
+
             // setting virtual player's character and nick
             if (mainMenu.gameType.ToLower() == "virtual")
             {
@@ -115,6 +122,29 @@ namespace gameVisual
 
             //Change Turn (END BUTTON)
             EndButtonFunction(endButton, Turnlabel);
+
+            // SHOW GRAVEYARD
+            if (Game.GraveYard.Count != 0)
+            {
+                showGraveYard();
+            }
+            else
+            {
+                hideGraveYard();
+            }
+        }
+        public void showGraveYard()
+        {
+            GraveYardCard.Visible = true;
+            GraveYardCardLogic = Game.GraveYard[Game.GraveYard.Count-1];
+            GraveYardCard = InstanciateVisualCard(GraveYardCardLogic);
+            AddChild(GraveYardCard);
+            GraveYardCard.Position = new Vector2(1785, 475);
+            GraveYardCard.Scale = new Vector2((float)0.30, (float)0.30);
+        }
+        public void hideGraveYard()
+        {
+            GraveYardCard.Visible = false;
         }
         public void EndButtonFunction(Button endButton, Label Turnlabel)
         {
@@ -184,11 +214,11 @@ namespace gameVisual
             UpdateVisualHand(Game.player2);
             if (Game.player1.hand.Count > maxinHand)
             {
-                CheckAndDiscard(Game.player1);
+                showVisually(Game.player1.hand, false);
             }
             if (Game.player2.hand.Count > maxinHand)
             {
-                CheckAndDiscard(Game.player2);
+                showVisually(Game.player2.hand, false);
             }
             
         }
@@ -221,39 +251,11 @@ namespace gameVisual
                 if (i >= maxinHand)
                 {
                     discarding = true;
-                    CheckAndDiscard(player);
+                    showVisually(player.hand, false);
                 }
             }
         }
-        public void CheckAndDiscard(gameEngine.Player player)
-        {
-            Vector2 FirstDiscardPosition = new Vector2(180, 450);
-
-            discardPlayer = player;
-            Tree DiscardTscn = (Tree)DiscardScene.Instance();
-            Label label = DiscardTscn.GetNode<Label>("DiscardLabel");
-            label.Text = player.nick+" must discard:  "+(player.hand.Count - maxinHand).ToString();
-            AddChild(DiscardTscn);
-            DiscardTscn.AddToGroup("discardGroup");
-
-            int index = 1;
-            foreach (var card in player.hand)
-            {
-                Sprite relic = InstanciateVisualCard(card);
-                Button button = InstanciateButton();
-                relic.Scale = new Vector2((float)0.20,(float)0.20);
-                AddChild(relic);
-                relic.AddToGroup("discardGroup");
-                AddChild(button);
-                button.AddToGroup("discardGroup");
-                discardButtons.Add(button);
-                button.SetPosition(new Vector2( 200 * index - 40, FirstDiscardPosition.y + 120) ,false);
-                relic.Position = new Vector2( 200 * index, FirstDiscardPosition.y); 
-                Label name = (Label)Relic.GetChild(0);
-                name.Text = card.name;
-                index++;
-            }
-        }
+        
         public static Button InstanciateButton()
         {
             PackedScene relic = (PackedScene)GD.Load("res://DiscardButton.tscn");
@@ -381,14 +383,57 @@ namespace gameVisual
                 Player2emptySlots = PlayerEmptySlots;
             }
         }
-        public void showVisualGraveYard ()
+        public void showVisually(List<Relics> Source, bool ShowEndButton)
         {
-            Sprite GraveYard = GetNode<Sprite>("");
+            Tree SelectMenu = (Tree)SelectCards.Instance();
+            AddChild(SelectMenu);
+            Label placeName = new Label();
+            Button EndButton = new Button();
+            foreach (var child in SelectMenu.GetChildren())
+            {
+                try
+                {
+                    placeName = (Label)GetChild(0);
+                    EndButton = (Button)GetChild(1);
+                }
+                catch (System.InvalidCastException){}
+            }
+            
+            placeName.Text = "";
+            Vector2 FirstPosition = new Vector2(180, 450);
+
+            int index = 1;
+            foreach (var card in Source)
+            {
+                Sprite Card = InstanciateVisualCard(card);
+                AddChild(Card);
+                Card.Position = new Vector2( 200 * index + 20, FirstPosition.y); 
+                Card.AddToGroup("discardGroup");
+                index++;
+            }
+
+            if (ShowEndButton)
+            {
+                EndButton.Visible = true;
+            }
+            else
+            {
+                EndButton.Visible = false;
+            }
+        
+            if(EndButton.Pressed)
+            {
+                foreach (Node node in GetTree().GetNodesInGroup("discardGroup"))
+                {
+                    node.QueueFree();
+                }
+                SelectMenu.QueueFree();
+            }
         }
         public List<Relics> SelectRelics(List<Relics> place, int quant)
         {
             List<Relics> Selected = new List<Relics>();
-            DiscardScene.Instance();
+            SelectCards.Instance();
 
             // Instanciating visual Place
             foreach (var relic in place)
