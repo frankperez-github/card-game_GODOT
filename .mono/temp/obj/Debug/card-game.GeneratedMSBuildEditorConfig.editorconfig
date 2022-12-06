@@ -1,3 +1,7 @@
 is_global = true
 build_property.RootNamespace = cardgame
+<<<<<<< HEAD
+build_property.ProjectDir = C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\
+=======
 build_property.ProjectDir = /home/frankperez/Documents/card-game/
+>>>>>>> a0f7fc597e5f6cc9db89ffc0f4f8d71901a79dfe
