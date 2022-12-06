@@ -389,24 +389,25 @@ namespace gameVisual
             AddChild(SelectMenu);
             Label placeName = new Label();
             Button EndButton = new Button();
-            foreach (var child in SelectMenu.GetChildren())
-            {
-                try
-                {
-                    placeName = (Label)GetChild(0);
-                    AddChild(placeName);
-                }
-                catch (System.InvalidCastException){}
-            }
-            foreach (var child in SelectMenu.GetChildren())
-            {
-                try
-                {
-                    EndButton = (Button)GetChild(1);
-                    AddChild(EndButton);
-                }
-                catch (System.InvalidCastException){}
-            }
+            
+            // foreach (var child in SelectMenu.GetChildren())
+            // {
+            //     try
+            //     {
+            //         placeName = (Label)GetChild(0);
+            //         AddChild(placeName);
+            //     }
+            //     catch (System.InvalidCastException){}
+            // }
+            // foreach (var child in SelectMenu.GetChildren())
+            // {
+            //     try
+            //     {
+            //         EndButton = (Button)GetChild(1);
+            //         AddChild(EndButton);
+            //     }
+            //     catch (System.InvalidCastException){}
+            // }
                     
             
             placeName.Text = "";
