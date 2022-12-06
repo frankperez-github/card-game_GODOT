@@ -404,20 +404,32 @@ namespace gameEngine
                 }
                 return result;
             }
-            // foreach (var Relic in list)
-            // {
-            //     if (Relic != null)
-            //     {
-            //         if (type == "random")
-            //         {
-            //             result.Add(Relic);
-            //         }
-            //         else if (Relic.type == type)
-            //         {
-            //             result.Add(Relic);
-            //         }
-            //     }
-            // }
+            if(type == "random")
+            {
+                if(edit.IsDigit(condition))
+                {
+                    for (int i = 0; i < int.Parse(condition); i++)
+                    {
+                        Random rnd = new Random();
+                        result.Add(list.ElementAt(rnd.Next(1, list.Count)));
+                    }
+                    return result;
+                }
+            }
+            foreach (var Relic in list)
+            {
+                if (Relic != null)
+                {
+                    if (type == "random")
+                    {
+                        result.Add(Relic);
+                    }
+                    else if (Relic.type == type)
+                    {
+                        result.Add(Relic);
+                    }
+                }
+            }
             if (result.Count() != 0)
             {
                 Console.WriteLine("Seleccione las cartas que desee:");

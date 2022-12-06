@@ -30,7 +30,7 @@ namespace gameEngine
 
                 //Libro de los secretos 
                 //Robas 2 cartas del deck
-                new Relics(defaultPlayer, defaultPlayer, 5, "Libro de los secretos", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-23 16.39.14 - The Book of the Dead in a temple digital art.png", false, "draw", "(Owner.Draw.Deck.random.2)", "Robas 2 cartas del deck"),
+                new Relics(defaultPlayer, defaultPlayer, 5, "Libro de los secretos", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-23 16.39.14 - The Book of the Dead in a temple digital art.png", false, "draw", "(Owner.Draw.Deck.random.5)", "Robas 2 cartas del deck"),
                 
                 //Caliz de la Venganza
                 //Tu adversario descarta 2 cartas de su mano
