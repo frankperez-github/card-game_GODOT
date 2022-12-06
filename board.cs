@@ -384,9 +384,8 @@ namespace gameVisual
             Tree SelectMenu = (Tree)SelectCards.Instance();
             AddChild(SelectMenu);
             Button EndButton = InstanciateButton();
-            EndButton.SetPosition(new Vector2(875, 745));
+            EndButton.SetPosition(new Vector2(875, 720));
             AddChild(EndButton);
-                    
             
             Vector2 FirstPosition = new Vector2(180, 450);
 

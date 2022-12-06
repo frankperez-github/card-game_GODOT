@@ -54,19 +54,19 @@ namespace gameEngine
 
                 // La lanza de la muerte
                 // Suma 25 de ataque
-                new Relics(defaultPlayer, defaultPlayer, 11, "La lanza de la muerte", 0, 1, "", false, "damage", "(Owner.Attack.25)", "Suma 25 de ataque"),
+                new Relics(defaultPlayer, defaultPlayer, 11, "La lanza de la muerte", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-10 14.50.46 - mystic dagger of revenge in a magic envoirment digital art.png", false, "damage", "(Owner.Attack.25)", "Suma 25 de ataque"),
 
                 // Token
                 // Reunir 3 tokens activa el efecto especial de tu personaje
-                new Relics(defaultPlayer, defaultPlayer, 12, "Token", 0, 1, "", false, "random", "", "Reunir 3 tokens activa el efecto especial de tu personaje"),
+                new Relics(defaultPlayer, defaultPlayer, 12, "Token", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-23 17.05.15 - the talisman invocation in a ritual digital art.png", false, "random", "", "Reunir 3 tokens activa el efecto especial de tu personaje"),
 
                 // Espejo de impaciencia
                 // Evita el ataque del enemigo
-                new Relics(defaultPlayer, defaultPlayer, 13, "Espejo de impaciencia", 0, 1, "", true, "defense", "(Owner.Defense.1.1)", "Se activa cuando el adversario ataca y evita el ataque"),
+                new Relics(defaultPlayer, defaultPlayer, 13, "Espejo de impaciencia", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-10 14.47.44 - magic mirror reflecting powerfull attack of sauron.png", true, "defense", "(Owner.Defense.1.1)", "Se activa cuando el adversario ataca y evita el ataque"),
 
                 // El arco del último momento
                 // Devuelve el ataque del enemigo
-                new Relics(defaultPlayer, defaultPlayer, 14, "El arco del último momento", 0, 1, "", true, "defense", "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)", "Devuelve el ataque del enemigo"),
+                new Relics(defaultPlayer, defaultPlayer, 14, "El arco del último momento", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-23 16.55.31 - revenge crossbow with a lake behind digital art.png", true, "defense", "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)", "Devuelve el ataque del enemigo"),
             };
             
             CharactersInventary = new List<CharacterProperties>()
