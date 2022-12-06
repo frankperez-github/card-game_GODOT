@@ -394,10 +394,20 @@ namespace gameVisual
                 try
                 {
                     placeName = (Label)GetChild(0);
-                    EndButton = (Button)GetChild(1);
+                    AddChild(placeName);
                 }
                 catch (System.InvalidCastException){}
             }
+            foreach (var child in SelectMenu.GetChildren())
+            {
+                try
+                {
+                    EndButton = (Button)GetChild(1);
+                    AddChild(EndButton);
+                }
+                catch (System.InvalidCastException){}
+            }
+                    
             
             placeName.Text = "";
             Vector2 FirstPosition = new Vector2(180, 450);
@@ -407,7 +417,7 @@ namespace gameVisual
             {
                 Sprite Card = InstanciateVisualCard(card);
                 AddChild(Card);
-                Card.Position = new Vector2( 200 * index + 20, FirstPosition.y); 
+                Card.Position = new Vector2( 210 * index, FirstPosition.y); 
                 Card.AddToGroup("discardGroup");
                 index++;
             }
