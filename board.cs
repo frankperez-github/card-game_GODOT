@@ -123,13 +123,13 @@ namespace gameVisual
                 if (Game.turn % 2 == 0) // Player1's turn
                 {
                     // Next Player takes a card
-                    Game.player1.TakeFromDeck(1);
+                    Game.player2.TakeFromDeck(1);
                     UpdateBattleField(Game.player1);
                 }
                 else // Player2's turn
                 {
                     // Next Player takes a card
-                    Game.player2.TakeFromDeck(1);
+                    Game.player1.TakeFromDeck(1);
                     UpdateBattleField(Game.player2);
                 }
                 RefreshBoard();

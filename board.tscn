@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://board.cs" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Sprites/card-back.png" type="Texture" id=4]
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Sprites/board-texture.jpeg" type="Texture" id=6]
+[ext_resource path="res://Relic.tscn" type="PackedScene" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 77
@@ -223,6 +224,10 @@ text = "Attack"
 position = Vector2( 1789, 499 )
 scale = Vector2( 0.555922, 0.565346 )
 texture = ExtResource( 3 )
+
+[node name="Relic" parent="GraveYard" instance=ExtResource( 7 )]
+position = Vector2( -5.39673, -7.07532 )
+scale = Vector2( 0.480406, 0.516159 )
 
 [node name="Deck" type="Sprite" parent="."]
 position = Vector2( 1773, 867 )
