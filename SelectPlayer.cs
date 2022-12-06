@@ -37,13 +37,14 @@ namespace gameVisual
             {
                 charact.Scale = new Vector2((float)0.25,(float)0.26);
             }
+
+            player1 = new Player("Player1");
+            player2 = new Player("Player2");
         }
        
         public override void _Process(float delta)
         {
             
-            player1 = new Player("Player1");
-            player2 = new Player("Player2");
 
             TextEdit Nick;
             Button Continue = GetNode<Button>("Tree/Continue"); 
