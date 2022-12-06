@@ -16,6 +16,7 @@ margin_right = 1915.0
 margin_bottom = 797.0
 
 [node name="DiscardLabel" type="Label" parent="."]
+visible = false
 margin_left = 16.0
 margin_top = 21.0
 margin_right = 475.0
@@ -24,6 +25,7 @@ custom_fonts/font = SubResource( 1 )
 text = "You must discard"
 
 [node name="Button" type="Button" parent="."]
+visible = false
 margin_left = 827.0
 margin_top = 494.0
 margin_right = 1094.0
