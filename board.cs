@@ -26,7 +26,7 @@ namespace gameVisual
         static int Player2emptySlots = 4;
 
 
-        public static bool discarding = false;
+        public static bool selecting = false;
         public static gameEngine.Player discardPlayer = new Player("default");
         public static List<Button> discardButtons = new List<Button>();
         public static PackedScene SelectCards = (PackedScene)GD.Load("res://SelectCards.tscn");
@@ -40,6 +40,9 @@ namespace gameVisual
         Sprite GraveYardCard = new Sprite();
         Sprite Preview = new Sprite();
 
+        public static List<Sprite> selectCards;
+        public static int selectQuant = 1;
+        public static List<Relics> SelectedCards;
         #endregion
 
         public static Game Game;
@@ -53,18 +56,18 @@ namespace gameVisual
             
             Player1FieldPositions = new Vector2[4]
             {
-                new Vector2(570, 740),
-                new Vector2(860, 740),
-                new Vector2(1145, 740),
-                new Vector2(1430, 740)
+                new Vector2(570, 720),
+                new Vector2(860, 720),
+                new Vector2(1145, 720),
+                new Vector2(1430, 720)
             };
              
             Player2FieldPositions = new Vector2[4]
             {
-                new Vector2(570, 275),
-                new Vector2(860, 275),
-                new Vector2(1145, 275),
-                new Vector2(1430, 275)
+                new Vector2(570, 310),
+                new Vector2(860, 310),
+                new Vector2(1145, 310),
+                new Vector2(1430, 310)
             };
             
             // setting virtual player's character and nick
@@ -189,11 +192,11 @@ namespace gameVisual
 
             if (Game.player1.hand.Count > maxinHand)
             {
-                showVisually(Game.player1.hand, true);
+                selectVisually(Game.player1.hand, Game.player1.hand.Count-maxinHand);
             }
             if (Game.player2.hand.Count > maxinHand)
             {
-                showVisually(Game.player2.hand, true);
+                selectVisually(Game.player2.hand, Game.player2.hand.Count-maxinHand);
             }
             
         }
@@ -240,8 +243,8 @@ namespace gameVisual
                     
                     if (i >= maxinHand)
                     {
-                        discarding = true;
-                        showVisually(player.hand, false);
+                        selecting = true;
+                        selectVisually(player.hand, player.hand.Count - maxinHand);
                     }
                 }
             }
@@ -256,8 +259,8 @@ namespace gameVisual
                     relic.AddToGroup(group);
                     if (i >= maxinHand)
                     {
-                        discarding = true;
-                        showVisually(player.hand, false);
+                        selecting = true;
+                        selectVisually(player.hand, player.hand.Count - maxinHand);
                     }
                 }
 
@@ -397,8 +400,13 @@ namespace gameVisual
                 Player2emptySlots = PlayerEmptySlots;
             }
         }
-        public void showVisually(List<Relics> Source, bool ShowEndButton)
+
+        public void selectVisually(List<Relics> Source, int quant)
         {
+            SelectedCards = new List<Relics>();
+            selectCards = new List<Sprite>();
+            selectQuant = quant;
+
             Tree SelectMenu = (Tree)SelectCards.Instance();
             AddChild(SelectMenu);
             Button EndButton = InstanciateButton();
@@ -407,47 +415,40 @@ namespace gameVisual
             
             Vector2 FirstPosition = new Vector2(180, 450);
 
+            // Showing cards to select
             int index = 1;
             foreach (var card in Source)
             {
                 Sprite Card = InstanciateVisualCard(card);
+                selectCards.Add(Card);
                 AddChild(Card);
                 Card.Position = new Vector2( 210 * index, FirstPosition.y); 
                 Card.AddToGroup("discardGroup");
                 index++;
             }
+            
 
-            if (ShowEndButton)
+            selecting = true;
+            if (selectQuant == 0)
             {
                 EndButton.Visible = true;
+                selecting = false;
             }
             else
             {
                 EndButton.Visible = false;
             }
-        
+
             if(EndButton.Pressed)
             {
-                foreach (Node node in GetTree().GetNodesInGroup("discardGroup"))
+                foreach (Node node in selectCards)
                 {
                     node.QueueFree();
                 }
                 SelectMenu.QueueFree();
             }
         }
-        public List<Relics> SelectRelics(List<Relics> place, int quant)
-        {
-            List<Relics> Selected = new List<Relics>();
-            SelectCards.Instance();
 
-            // Instanciating visual Place
-            foreach (var relic in place)
-            {
-                Sprite card = InstanciateVisualCard(relic); 
-            }
-            return Selected;
-        }
-       
         public void PreviewPropierties(Relics relic)
         {
             if (((Label)Preview.GetChild(0)).Text != relic.name)
@@ -465,7 +466,6 @@ namespace gameVisual
                 ((Sprite)Preview.GetChild(3)).Scale = new Vector2((float)0.15, (float)0.15);
             }
         }
-        
         public void GraveyardPropierties(Relics relic)
         {
             if (((Label)GraveYardCard.GetChild(0)).Text != relic.name)
@@ -501,26 +501,23 @@ namespace gameVisual
                 switch ((ButtonList)mouseEvent.ButtonIndex)
                 {
                     case ButtonList.Left:
-                        
-                        if (discarding)
+
+                        if (selecting)
                         {
-                            for (int i = 0; i < discardButtons.Count; i++)
+                            for(int i = 0; i < selectCards.Count; i++)
                             {
-                                // Discarding finished
-                                // Removing all instances of visual card
-                                if (discardPlayer.hand.Count <= maxinHand)
+                                if (selectCards[i].GetRect().HasPoint(selectCards[i].ToLocal(mouseEvent.Position)))
                                 {
-                                    foreach (Node item in GetTree().GetNodesInGroup("discardGroup"))
+                                    if (selectCards[i].Scale == new Vector2((float)0.30,(float)0.30))
                                     {
-                                        item.QueueFree();
+                                        selectQuant++;
+                                        selectCards[i].Scale = new Vector2((float)0.25,(float)0.25);
                                     }
-
-                                    // Cleaning discardButtons List after discard all we need
-                                    discardButtons.Clear();
-
-                                    // We don't need to discard for now
-                                    discarding = false;
-                                    
+                                    else if (selectQuant != 0)
+                                    {
+                                        selectQuant--;
+                                        selectCards[i].Scale = new Vector2((float)0.30,(float)0.30);
+                                    }
                                 }
                             }
                         }
