@@ -43,6 +43,8 @@ namespace gameVisual
         public static List<Sprite> selectCards;
         public static int selectQuant = 1;
         public static List<Relics> SelectedCards;
+
+        Button AcceptButton = InstanciateButton();
         #endregion
 
         public static Game Game;
@@ -85,7 +87,6 @@ namespace gameVisual
 
         public override void _Process(float delta)
         {
-
             Label Turnlabel = GetNode<Label>("TurnLabel");
 
             // Checking end of game
@@ -132,6 +133,23 @@ namespace gameVisual
             if (Game.GraveYard.Count != 0)
             {
                 showGraveYard();
+            }
+
+            if(selectQuant == 0)
+            {
+                if (AcceptButton.GetParent() == null)
+                {
+                    AddChild(AcceptButton);
+                }
+                AcceptButton.Visible = true;
+            }
+            else
+            {
+                if (AcceptButton.GetParent() != null)
+                {
+                    RemoveChild(AcceptButton);
+                }
+                AcceptButton.Visible = false;
             }
         }
         public void showGraveYard()
@@ -409,9 +427,8 @@ namespace gameVisual
 
             Tree SelectMenu = (Tree)SelectCards.Instance();
             AddChild(SelectMenu);
-            Button EndButton = InstanciateButton();
-            EndButton.SetPosition(new Vector2(875, 720));
-            AddChild(EndButton);
+            
+            AcceptButton.SetPosition(new Vector2(875, 720));
             
             Vector2 FirstPosition = new Vector2(180, 450);
 
@@ -431,15 +448,11 @@ namespace gameVisual
             selecting = true;
             if (selectQuant == 0)
             {
-                EndButton.Visible = true;
                 selecting = false;
             }
-            else
-            {
-                EndButton.Visible = false;
-            }
+            
 
-            if(EndButton.Pressed)
+            if(AcceptButton.Pressed)
             {
                 foreach (Node node in selectCards)
                 {
