@@ -346,7 +346,7 @@ namespace gameEngine
             switch (edit.NextWord(condition))
             {
                 case "Battlefield":
-                    return AddForType(edit.CutExpression(condition), player.battleField.userBattleField.ToList());
+                    return AddForType(edit.CutExpression(condition), player.BattleField.ToList());
                 case "Graveyard":
                     return AddForType(edit.CutExpression(condition), board.Game.GraveYard);
                 case "Hand":
@@ -466,9 +466,9 @@ namespace gameEngine
                 case "OwnerHand":
                     return this.Relic.Owner.hand.Count();
                 case "EnemyBattleField":
-                    return this.Relic.Enemy.battleField.userBattleField.Length;
+                    return this.Relic.Enemy.BattleField.Length;
                 case "OwnerBattleField":
-                    return this.Relic.Owner.battleField.userBattleField.Length;
+                    return this.Relic.Owner.BattleField.Length;
                 case "Graveyard":
                     return board.Game.GraveYard.Count();
                 default:
@@ -582,11 +582,11 @@ namespace gameEngine
                     affectedCards = FullList.FullList(this.expressionA, this.Relic.Enemy);
                     foreach (var relics in affectedCards)
                     {
-                        for (int i = 0; i < this.Relic.Owner.battleField.userBattleField.Length; i++)
+                        for (int i = 0; i < this.Relic.Owner.BattleField.Length; i++)
                         {
-                            if (this.Relic.Owner.battleField.userBattleField[i] == relics)
+                            if (this.Relic.Owner.BattleField[i] == relics)
                             {
-                                int cardId = this.Relic.Owner.battleField.userBattleField[i].id;
+                                int cardId = this.Relic.Owner.BattleField[i].id;
                                 foreach (var card in mainMenu.Inventary.CardsInventary)
                                 {
                                     if (card.id == cardId)
@@ -596,7 +596,7 @@ namespace gameEngine
                                         break;
                                     }
                                 }
-                                this.Relic.Owner.battleField.userBattleField[i] = null;
+                                this.Relic.Owner.BattleField[i] = null;
                             }
                         }
                     }
@@ -751,10 +751,10 @@ namespace gameEngine
                     RemoveForList(this.Relic.Enemy.hand);
                     break;
                 case "OwnerBattlefield":
-                    RemoveForBattlefiel(this.Relic.Owner.battleField.userBattleField);
+                    RemoveForBattlefiel(this.Relic.Owner.BattleField);
                     break;
                 case "EnemyBattlefield":
-                    RemoveForBattlefiel(this.Relic.Enemy.battleField.userBattleField);
+                    RemoveForBattlefiel(this.Relic.Enemy.BattleField);
                     break;
             }
         }
