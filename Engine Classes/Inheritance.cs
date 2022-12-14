@@ -58,6 +58,7 @@ namespace gameEngine
                 field = board.VisualBoard.visualBattleField2.visualBattleField;
                 position = board.Player2FieldPositions;
             }
+
             for (int i = 0; i < field.Length; i++)
             {
                 if(field[i] == null)

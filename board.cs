@@ -152,15 +152,16 @@ namespace gameVisual
                 new Vector2(1430, 350)
             };
 
-            RefreshBoard();
+            RefreshVisualHands();
         }
 
         bool player1Attack = false;
         bool player2Attack = false;
+        public static Label Turnlabel;
 
         public override void _Process(float delta)
         {
-            Label Turnlabel = GetNode<Label>("TurnLabel");
+            Turnlabel = GetNode<Label>("TurnLabel");
 
             // Checking end of game
             if (!(Game.player1.life > 0 && Game.player2.life > 0))
@@ -169,7 +170,7 @@ namespace gameVisual
             }
 
             
-            #region Updating visualy playerInfo
+            #region Updating visually playerInfo
             Label PlayerNick = GetNode<Label>("PlayerInfo/Player's Nick");
             PlayerNick.Text = Game.player1.nick;
             Label PlayerLife = GetNode<Label>("PlayerInfo/Player's Life");
@@ -196,10 +197,7 @@ namespace gameVisual
             if (Game.turn % 2 == 0) // Player1's turn
             {
                 // Next Player takes a card
-                Game.player2.TakeFromDeck(1);
                 ((RandomVirtPlayer)(Game.player1)).Play();
-                UpdateBattleField(Game.player1);
-                RefreshBoard();
                 Turnlabel.Text = "Turno: " + Game.turn;
             }
 
@@ -211,8 +209,13 @@ namespace gameVisual
             AttackButtonFunction(Attack);
 
             //Change Turn (END BUTTON)
-            EndButtonFunction(endButton, Turnlabel);
-
+            if (endButton.Pressed)
+            {
+                EndButtonFunction();
+                endButton.Disabled = true; // Disabling button, increment turn just one time
+            }
+            endButton.Disabled = false;
+            
             // SHOW SELECT CARDS SCENE
             if (Game.GraveYard.Count != 0)
             {
@@ -236,22 +239,25 @@ namespace gameVisual
             }
 
         }
-        public void EndButtonFunction(Button endButton, Label Turnlabel)
+        public void EndButtonFunction()
         {
-            if (endButton.Pressed)
+            if (Game.turn % 2 != 0) // Player2's turn
             {
-                if (Game.turn % 2 != 0) // Player2's turn
-                {
-                     // Next Player takes a card
-                    Game.player1.TakeFromDeck(1);
-                    UpdateBattleField(Game.player2);
-                    RefreshBoard();
-                    Game.turn++;
-                }
-                Turnlabel.Text = "Turno: " + Game.turn;
-                endButton.Disabled = true; // Disabling button, increment turn just one time
+                // Next Player takes a card
+                Game.player2.TakeFromDeck(1);
+                UpdateBattleField(Game.player2);
+                RefreshVisualHands();
             }
-            endButton.Disabled = false;
+            else
+            {
+                // Next Player takes a card
+                Game.player1.TakeFromDeck(1);
+                PauseGame(3);
+                UpdateBattleField(Game.player1);
+                RefreshVisualHands();
+            }
+            Game.turn++;
+            Turnlabel.Text = "Turno: " + Game.turn;
         }
         public void AttackButtonFunction(Button Attack)
         {
@@ -273,7 +279,7 @@ namespace gameVisual
                 }
             }
         }
-        public void RefreshBoard()
+        public void RefreshVisualHands()
         {
             Player2VisualHandPosition = new Vector2(500 - (Game.player1.hand.Count * 5), 1000);
             Player1VisualHandPosition = new Vector2(500 - (Game.player2.hand.Count * 5), 50);
@@ -604,20 +610,20 @@ namespace gameVisual
 
                         if(Game.turn % 2 == 0)
                         {
-                            // Player 1 is clicking
-                            for(int i = 0; i < Player1VisualHand.Count; i++)
-                            {
-                                if (Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseEvent.Position)) && Player1emptySlots > 0)
-                                {
-                                    // Add to player's battlefield logically and visually
-                                    Game.player1.hand[i].Effect(); // Activating effect of card
-                                    Player1emptySlots--;
-                                    GetTree().Paused = true;
-                                    RefreshBoard();
-                                    GetTree().Paused = false;
-                                }
+                            // // Player 1 is clicking
+                            // for(int i = 0; i < Player1VisualHand.Count; i++)
+                            // {
+                            //     if (Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseEvent.Position)) && Player1emptySlots > 0)
+                            //     {
+                            //         // Add to player's battlefield logically and visually
+                            //         Game.player1.hand[i].Effect(); // Activating effect of card
+                            //         Player1emptySlots--;
+                            //         GetTree().Paused = true;
+                            //         RefreshBoard();
+                            //         GetTree().Paused = false;
+                            //     }
                                 
-                            }
+                            // }
                         }
                         else // Player 2 is clicking
                         {
@@ -628,22 +634,9 @@ namespace gameVisual
                                     // Add to player's battlefield
                                     Game.player2.hand[i].Effect(); // Activating effect of card
                                     Player2emptySlots--;
-                                    GetTree().Paused = true;
-                                    RefreshBoard();
-                                    GetTree().Paused = false;
-
+                                    RefreshVisualHands();
                                 }
                             }
-                            // // Fulling (visually) battlefield
-                            // for (int slot = 0; slot < VisualBoard.visualBattleField2.BattleField.Length; slot++)
-                            // {
-                            //     if (VisualBoard.visualBattleField2.visualBattleField[slot] != null)
-                            //     {
-                            //         AddChild(VisualBoard.visualBattleField2.visualBattleField[slot]);
-                            //         VisualBoard.visualBattleField2.visualBattleField[slot].Position = Player2FieldPositions[slot];
-                            //         boolPlayer2Field[slot] = true;
-                            //     }
-                            // }
                         }
                         break;
                 }
