@@ -19,7 +19,6 @@ namespace gameEngine
             System.Random rnd = new System.Random();
             int random = rnd.Next(1, hand.Count-1);
             this.hand[random].Effect();
-            gameVisual.board.EndButtonFunction();
         }
     }
 }

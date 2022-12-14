@@ -198,7 +198,7 @@ namespace gameVisual
             {
                 // Next Player takes a card
                 ((RandomVirtPlayer)(Game.player1)).Play();
-                Turnlabel.Text = "Turno: " + Game.turn;
+                EndButtonFunction();
             }
 
             Button Attack = GetNode<Button>("Attack");
@@ -252,7 +252,6 @@ namespace gameVisual
             {
                 // Next Player takes a card
                 Game.player1.TakeFromDeck(1);
-                PauseGame(3);
                 UpdateBattleField(Game.player1);
                 RefreshVisualHands();
             }
@@ -561,11 +560,15 @@ namespace gameVisual
                 ((Sprite)Preview.GetChild(3)).Scale = new Vector2((float)0.15, (float)0.15);
             }
         }
-        public static void PauseGame(int time)
+        public void PauseGame(int time)
         {
             System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
             watch.Start();
-            while (watch.ElapsedMilliseconds < time*1000){}
+            while (watch.ElapsedMilliseconds < time*1000)
+            {
+                GetTree().Paused = true;
+            }
+            GetTree().Paused = false;
             watch.Stop();
         }
         public override void _Input(InputEvent @event)  

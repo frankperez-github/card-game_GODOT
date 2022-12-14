@@ -67,6 +67,7 @@ namespace gameEngine
                     break;
                 }
             }
+            
             // Fulling (visually) battlefield
             for (int slot = 0; slot < field.Length; slot++)
             {
