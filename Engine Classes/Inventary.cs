@@ -58,7 +58,7 @@ namespace gameEngine
 
                 // Token
                 // Reunir 3 tokens activa el efecto especial de tu personaje
-                new Relics(defaultPlayer, defaultPlayer, 12, "Token", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-23 17.05.15 - the talisman invocation in a ritual digital art.png", false, "random", "", "Reunir 3 tokens activa el efecto especial de tu personaje"),
+                // new Relics(defaultPlayer, defaultPlayer, 12, "Token", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-23 17.05.15 - the talisman invocation in a ritual digital art.png", false, "random", "", "Reunir 3 tokens activa el efecto especial de tu personaje"),
 
                 // Espejo de impaciencia
                 // Evita el ataque del enemigo

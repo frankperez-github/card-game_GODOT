@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "e+7/oqM7P7mSwoGexewncYYIKtwEhbr110ApBEepqWeBcDHLttiXkCZWwaEsxjzmBIuL1o6wIeP5xNLkF2wGqw==",
+=======
+  "dgSpecHash": "7lVrp5xDubMID9MBqlfT22hFCmRWjhH177IMqOfv9YdrniMZgiIUfw+6QN/1JVG/NvJa9J/nu/ALNznXv6zaBg==",
+>>>>>>> c6316b8ffdf106cb297d625b25646ed228e356d0
   "success": true,
   "projectFilePath": "C:\\Users\\bathr\\OneDrive\\Desktop\\Juego de Cartas GitHub\\card-game_GODOT\\card-game.csproj",
   "expectedPackageFiles": [],

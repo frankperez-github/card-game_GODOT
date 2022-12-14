@@ -157,7 +157,7 @@ margin_right = 1657.0
 margin_bottom = 1049.0
 
 [node name="Card-placeholder(2)" type="Sprite" parent="battleField"]
-position = Vector2( 229, 311 )
+position = Vector2( 229, 350 )
 scale = Vector2( 0.543796, 0.549676 )
 texture = ExtResource( 3 )
 
@@ -175,7 +175,7 @@ scale = Vector2( 1, 1.00208 )
 texture = ExtResource( 3 )
 
 [node name="Card-placeholder(2)3" type="Sprite" parent="battleField"]
-position = Vector2( 225, 776 )
+position = Vector2( 229, 758 )
 scale = Vector2( 0.543796, 0.549676 )
 texture = ExtResource( 3 )
 

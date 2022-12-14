@@ -11,6 +11,7 @@ namespace gameVisual
         List<Sprite> characters; 
         Label choose;
         public static Player player1;
+        public static RandomVirtPlayer virtualPlayer1;
         public static Player player2;
         
 
@@ -45,7 +46,6 @@ namespace gameVisual
         public override void _Process(float delta)
         {
             
-
             TextEdit Nick;
             Button Continue = GetNode<Button>("Tree/Continue"); 
             Nick = GetNode<TextEdit>("Tree/Label/Nick");
@@ -61,13 +61,11 @@ namespace gameVisual
                 {
                     if (mainMenu.gameType.ToLower() == "virtual")
                     {
+                        player1 = new RandomVirtPlayer("virtualPl");
+                        player1.SetCharacter(character1);
+
                         player2.SetCharacter(character1);
                         player2.nick = Nick.Text;
-                    }
-                    else
-                    {
-                        player1.SetCharacter(character1);
-                        player1.nick = Nick.Text;
                     }
 
                     if (mainMenu.gameType.ToLower() == "human")

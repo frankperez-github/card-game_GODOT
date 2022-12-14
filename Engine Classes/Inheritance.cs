@@ -43,6 +43,40 @@ namespace gameEngine
             AddtoVisualBattleField();
             Scan(effect);
         }
+        public void AddtoVisualBattleField()
+        {
+            Sprite[] field = new Sprite[4];
+            Vector2[] position = new Vector2[4];
+
+            if (Owner == board.Game.player1)
+            {
+                field = board.VisualBoard.visualBattleField1.visualBattleField;
+                position = board.Player1FieldPositions;
+            }
+            else
+            {
+                field = board.VisualBoard.visualBattleField2.visualBattleField;
+                position = board.Player2FieldPositions;
+            }
+
+            for (int i = 0; i < field.Length; i++)
+            {
+                if(field[i] == null)
+                {
+                    field[i] = gameVisual.board.InstanciateVisualCard(this);
+                    break;
+                }
+            }
+            // Fulling (visually) battlefield
+            for (int slot = 0; slot < field.Length; slot++)
+            {
+                if (field[slot] != null)
+                {
+                    board.hijo.AddChild(field[slot]);
+                    field[slot].Position = position[slot];
+                }
+            }
+        }
         public void Scan(string effect)
         {
             string[] expression = effect.Split('\n');
@@ -103,23 +137,12 @@ namespace gameEngine
         }
         public void AddtoBattleField()
         {
-            for (int i = 0; i < Owner.battleField.userBattleField.Length; i++)
+            for (int i = 0; i < Owner.BattleField.Length; i++)
             {
-                if(Owner.battleField.userBattleField[i] == null)
+                if(Owner.BattleField[i] == null)
                 {
-                    this.Owner.battleField.userBattleField[i] = this;
+                    this.Owner.BattleField[i] = this;
                     this.Owner.hand.Remove(this);
-                    break;
-                }
-            }
-        }       
-        public void AddtoVisualBattleField()
-        {
-            for (int i = 0; i < Owner.battleField.userVisualBattleField.Length; i++)
-            {
-                if(Owner.battleField.userVisualBattleField[i] == null)
-                {
-                    this.Owner.battleField.userVisualBattleField[i] = gameVisual.board.InstanciateVisualCard(this);
                     break;
                 }
             }
@@ -216,15 +239,15 @@ namespace gameEngine
         public List<Relics> hand{get;}
         public Character character;
         public State state{get;set;}
-        public BattleField battleField{get; set;}
+        public Relics[] BattleField {get; set;}
 
         public Player(string nick)
         {
             this.nick = nick;
             this.life = 100;
             this.hand = new List<Relics>();
-            this.battleField = new BattleField();
             this.state = State.Safe;
+            this.BattleField = new Relics[4];
         }
         public void SetCharacter(CharacterProperties character)
         {
@@ -248,7 +271,7 @@ namespace gameEngine
                 case CardState.OnHand:
                     return this.hand.Count();
                 case CardState.Activated:
-                    return this.battleField.userBattleField.Length;
+                    return this.BattleField.Length;
                 case CardState.OnGraveyard:
                     return board.Game.GraveYard.Count();
             }
@@ -264,16 +287,6 @@ namespace gameEngine
                 }
             }
             return false;
-        }
-    }
-    public class BattleField
-    {
-        public Sprite[] userVisualBattleField;
-        public Relics[] userBattleField {get; set;}
-        public BattleField()
-        {
-            this.userBattleField = new Relics[4];
-            this.userVisualBattleField = new Sprite[4];
         }
     }
     #region auxiliar classes
