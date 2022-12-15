@@ -15,7 +15,6 @@ namespace gameEngine
         public List<Relics> CardsInventory;
         public Inventory()
         {
-            
             CharactersInventory = new List<CharacterProperties>()
             {
                 new CharacterProperties(1001, "El dragón indiferente", 1, 0, "res://Sprites/Cards-images/DALL·E 2022-10-10 15.21.44 - The lost dragon of Argea sleeping over a city digital art.png", "", "Intimida al oponente dando golpes en el pecho y lo hace perder 2 turnos", 10, 3),
@@ -26,6 +25,7 @@ namespace gameEngine
             };
 
         }
+        
         public void addToJson(Relics card)
         {
             gameVisual.mainMenu.Inventory.CardsInventory.Add(card);
