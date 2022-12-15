@@ -487,7 +487,7 @@ namespace gameVisual
                         }
                         else
                         {
-                            int Defaultpassive = mainMenu.Inventary.CardsInventary[player.BattleField[index].id].passiveDuration;
+                            int Defaultpassive = mainMenu.Inventory.CardsInventory[player.BattleField[index].id].passiveDuration;
                             player.BattleField[index].passiveDuration = Defaultpassive;
                             player.BattleField[index].activeDuration--;
                         }

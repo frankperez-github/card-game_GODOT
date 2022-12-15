@@ -352,7 +352,7 @@ namespace gameEngine
                 case "Hand":
                     return AddForType(edit.CutExpression(condition), player.hand);
                 case "Deck":
-                    return AddForType(edit.CutExpression(condition), mainMenu.Inventary.CardsInventary);
+                    return AddForType(edit.CutExpression(condition), mainMenu.Inventory.CardsInventory);
                 default:
                     GD.Print("Place not found xd");
                     return new List<Relics>();
@@ -555,7 +555,7 @@ namespace gameEngine
                                 int random = rnd.Next(0, this.Relic.Enemy.hand.Count() - 1);
                                 int cardId = this.Relic.Enemy.hand[random].id;
                                 this.Relic.Enemy.hand.RemoveAt(random);
-                                foreach (var card in mainMenu.Inventary.CardsInventary)
+                                foreach (var card in mainMenu.Inventory.CardsInventory)
                                 {
                                     if (card.id == cardId)
                                     {
@@ -587,7 +587,7 @@ namespace gameEngine
                             if (this.Relic.Owner.BattleField[i] == relics)
                             {
                                 int cardId = this.Relic.Owner.BattleField[i].id;
-                                foreach (var card in mainMenu.Inventary.CardsInventary)
+                                foreach (var card in mainMenu.Inventory.CardsInventory)
                                 {
                                     if (card.id == cardId)
                                     {
@@ -609,7 +609,7 @@ namespace gameEngine
                         {
                             if (Relic.id == card.id)
                             {
-                                foreach (var cards in mainMenu.Inventary.CardsInventary)
+                                foreach (var cards in mainMenu.Inventory.CardsInventory)
                                 {
                                     if (cards.id == card.id)
                                     {
@@ -631,8 +631,8 @@ namespace gameEngine
                         for (int i = 0; i < cards; i++)
                         {
                             Random rnd = new Random();
-                            int random = rnd.Next(1, mainMenu.Inventary.CardsInventary.Count() + 1);
-                            foreach (var card in mainMenu.Inventary.CardsInventary)
+                            int random = rnd.Next(1, mainMenu.Inventory.CardsInventory.Count() + 1);
+                            foreach (var card in mainMenu.Inventory.CardsInventory)
                             {
                                 if (card.id == random)
                                 {
@@ -649,12 +649,12 @@ namespace gameEngine
                         
                         foreach (var card in affectedCards)
                         {
-                            foreach (var cardInventary in mainMenu.Inventary.CardsInventary)
+                            foreach (var cardInventory in mainMenu.Inventory.CardsInventory)
                             {
-                                if (card.id == cardInventary.id)
+                                if (card.id == cardInventory.id)
                                 {
-                                    Affected.hand.Add(new Relics(Affected, this.Relic.Enemy, cardInventary.id, cardInventary.name, cardInventary.passiveDuration, cardInventary.activeDuration,
-                                            cardInventary.imgAddress, cardInventary.isTrap, cardInventary.type, cardInventary.effect, card.description));
+                                    Affected.hand.Add(new Relics(Affected, this.Relic.Enemy, cardInventory.id, cardInventory.name, cardInventory.passiveDuration, cardInventory.activeDuration,
+                                            cardInventory.imgAddress, cardInventory.isTrap, cardInventory.type, cardInventory.effect, card.description));
                                     break;
                                 }
                             }
