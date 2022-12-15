@@ -7,18 +7,18 @@ namespace gameEngine
 {
     public class Relics
     {
-        public int id {get;}
-        public string name{get;}
+        public int id {get; set;}
+        public string name{get; set;}
         public int activeDuration{get;set;}
         public int passiveDuration{get;set;}
-        public string imgAddress{get;}
-        public Player Owner{get;}
-        public Player Enemy{get;}
-        public string type{get;} 
-        public bool isTrap{get;}
+        public string imgAddress{get; set;}
+        public Player Owner{get; set;}
+        public Player Enemy{get; set;}
+        public string type{get; set;} 
+        public bool isTrap{get; set;}
         public CardState cardState = CardState.OnDeck;
-        public string effect{get;}
-        public string description{get;}
+        public string effect{get; set;}
+        public string description{get; set;}
         public List<InterpretAction> Actions;
 
         public Relics(Player Owner, Player Enemy, int id, string name, int passiveDuration, int activeDuration, string imgAddress, bool isTrap, string type, string effect, string description)

@@ -1,21 +1,39 @@
-using Godot;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Godot;
+using System.IO;
 
 namespace gameEngine
 {
+    
     public class Inventary
     {
+        public static string JSONpath = "./Sprites/cards-inventary.json";
+
         public List<CharacterProperties> CharactersInventary;
         public List<Relics> CardsInventary;
         public Inventary()
         {
             Player defaultPlayer = new Player("default");
+
             CardsInventary = new List<Relics>()
             {
                 //Espada del Destino
                 //Te suma 15 de ataque
-                new Relics(defaultPlayer, defaultPlayer, 1, "Espada del destino", 0, 3, "res://Sprites/Cards-images/DALL·E 2022-10-10 13.46.09 - Sword of destiny.png", false, "damage", "(Owner.Attack.15)", "Te suma 15 de ataque"),
-
+                new Relics(defaultPlayer, defaultPlayer, 1, "Espada del destino", 0, 3, "res://Sprites/Cards-images/DALL·E 2022-10-10 13.46.09 - Sword of destiny.png", false, "damage", "(Owner.Attack.15)", "Te suma 15 de ataque")
+                {
+                    Owner = defaultPlayer,
+                    Enemy = defaultPlayer,
+                    id = 0,
+                    name = "Espada del destino",
+                    passiveDuration = 0,
+                    activeDuration = 3,
+                    imgAddress = "res://Sprites/Cards-images/DALL·E 2022-10-10 13.46.09 - Sword of destiny.png",
+                    isTrap = false,
+                    type = "damage",
+                    effect = "(Owner.Attack.15)",
+                    description = "Te suma 15 de ataque"
+                },
                 //Capsula del Tiempo
                 //Roba una carta del cementerio
                 new Relics(defaultPlayer, defaultPlayer, 2, "Capsula del Tiempo", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-10 14.53.40 - antique time capsule in center of galaxy digital art.png", false, "draw", "(Owner.Draw.EnemyHand.1)", "Roba una carta del cementerio"),
@@ -68,6 +86,10 @@ namespace gameEngine
                 // Devuelve el ataque del enemigo
                 new Relics(defaultPlayer, defaultPlayer, 14, "El arco del último momento", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-23 16.55.31 - revenge crossbow with a lake behind digital art.png", true, "defense", "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)", "Devuelve el ataque del enemigo"),
             };
+
+            addToJson(new Relics(defaultPlayer, defaultPlayer, 14, "El arco del último momento", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-23 16.55.31 - revenge crossbow with a lake behind digital art.png", true, "defense", "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)", "Devuelve el ataque del enemigo"));
+            // LoadJson(); // Loading cards Inventary
+
             
             CharactersInventary = new List<CharacterProperties>()
             {
@@ -78,6 +100,29 @@ namespace gameEngine
                 new CharacterProperties(1005, "El leon amistoso", 2, 0, "imgpath", "", "Tiene el don de rejuvenecer que le permite recuperar 10 de vida en cada turno", 0, 1)
             };
 
+        }
+        public static void addToJson(Relics card)
+        {
+            gameVisual.mainMenu.Inventary.CardsInventary.Add(card);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string jsonContent = JsonSerializer.Serialize(gameVisual.mainMenu.Inventary.CardsInventary, options);
+            System.IO.File.WriteAllText(JSONpath, jsonContent);
+        }
+        public static void LoadJson()
+        {
+            if (System.IO.File.Exists(JSONpath))
+            {
+                string jsonContent = System.IO.File.ReadAllText(JSONpath);
+                if (jsonContent != "")
+                {
+                    gameVisual.mainMenu.Inventary.CardsInventary = JsonSerializer.Deserialize<List<Relics>>(jsonContent);
+                }
+
+            }
+            else
+            {
+                GD.Print("No .JSON FOUNDED");
+            }
         }
     }
 }

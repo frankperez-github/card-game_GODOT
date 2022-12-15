@@ -158,6 +158,7 @@ namespace gameVisual
         bool player1Attack = false;
         bool player2Attack = false;
         public static Label Turnlabel;
+        public static Button Attack;
 
         public override void _Process(float delta)
         {
@@ -198,15 +199,17 @@ namespace gameVisual
             {
                 // Next Player takes a card
                 ((RandomVirtPlayer)(Game.player1)).Play();
+                // PAUSAR EL JUEGO AQUI PARA QUE SE VEAN LOS EFECTOS DEL VIRTUAL PLAYER/***************************************************************///
+                AttackButtonFunction();
                 EndButtonFunction();
             }
 
-            Button Attack = GetNode<Button>("Attack");
+            Attack = GetNode<Button>("Attack");
             Button endButton = GetNode<Button>("endButton");
 
             // ATTACK BUTTON
             Attack.Disabled = false;
-            AttackButtonFunction(Attack);
+            AttackButtonFunction();
 
             //Change Turn (END BUTTON)
             if (endButton.Pressed)
@@ -215,6 +218,14 @@ namespace gameVisual
                 endButton.Disabled = true; // Disabling button, increment turn just one time
             }
             endButton.Disabled = false;
+
+            Attack.Disabled = false;
+            if (Attack.Pressed)
+            {
+                AttackButtonFunction();
+                Attack.Disabled = true;
+            }
+
             
             // SHOW SELECT CARDS SCENE
             if (Game.GraveYard.Count != 0)
@@ -258,24 +269,19 @@ namespace gameVisual
             Game.turn++;
             Turnlabel.Text = "Turno: " + Game.turn;
         }
-        public void AttackButtonFunction(Button Attack)
+        public void AttackButtonFunction()
         {
-            if (Attack.Pressed)
+            if (Game.turn % 2 == 0 && !player1Attack) // Player1's Turn
             {
-                if (Game.turn % 2 == 0 && !player1Attack) // Player1's Turn
-                {
-                    Game.player2.life -= Game.player1.character.attack;
-                    player1Attack = true;
-                    player2Attack = false; // Enabling attack button to next turn 
-                    Attack.Disabled = true;
-                }
-                if (Game.turn % 2 != 0 && !player2Attack)// Player2's Turn
-                {
-                    Game.player1.life -= Game.player2.character.attack;
-                    player2Attack = true;
-                    player1Attack = false; // Enabling attack button to next turn 
-                    Attack.Disabled = true;
-                }
+                Game.player2.life -= Game.player1.character.attack;
+                player1Attack = true;
+                player2Attack = false; // Enabling attack button to next turn 
+            }
+            if (Game.turn % 2 != 0 && !player2Attack)// Player2's Turn
+            {
+                Game.player1.life -= Game.player2.character.attack;
+                player2Attack = true;
+                player1Attack = false; // Enabling attack button to next turn 
             }
         }
         public void RefreshVisualHands()
@@ -500,7 +506,6 @@ namespace gameVisual
                 Player2emptySlots = PlayerEmptySlots;
             }
         }
-
         public void selectVisually(List<Relics> Source, int quant)
         {
             SelectedCards = new List<Relics>();
@@ -542,7 +547,6 @@ namespace gameVisual
                 SelectMenu.QueueFree();
             }
         }
-
         public void PreviewPropierties(Relics relic)
         {
             if (((Label)Preview.GetChild(0)).Text != relic.name)

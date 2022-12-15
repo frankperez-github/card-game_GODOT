@@ -43,9 +43,13 @@
               "target": "Package",
               "version": "[1.0.2, )",
               "autoReferenced": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.2, )"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.403/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/frankperez/.dotnet-6.0/sdk/6.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }
