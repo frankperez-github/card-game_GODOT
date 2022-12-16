@@ -73,7 +73,7 @@ namespace gameEngine
             {
                 if (field[slot] != null)
                 {
-                    board.hijo.AddChild(field[slot]);
+                    board.child.AddChild(field[slot]);
                     field[slot].Position = position[slot];
                 }
             }

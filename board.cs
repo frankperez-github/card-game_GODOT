@@ -6,26 +6,21 @@ namespace gameVisual
     public class board : Godot.Node2D
     {   
 
-        public static Node hijo = new Node();
+        public static Node child = new Node();
+
         #region Visual Objects
         const int maxinHand = 6;
-
 
         static List<Sprite> Player2VisualHand = new List<Sprite>();
         static List<Sprite> Player1VisualHand = new List<Sprite>();
 
         public static Vector2[] Player1FieldPositions;
-        static bool[] boolPlayer1Field = new bool[4];
-        
         public static Vector2[] Player2FieldPositions;
-        static bool[] boolPlayer2Field = new bool[4];
-
-
-        static Sprite Relic = new Sprite();
-
 
         public static int Player1emptySlots = 4;
-        static int Player2emptySlots = 4;
+        public static int Player2emptySlots = 4;
+
+        static Sprite Relic = new Sprite();
 
 
         public static bool selecting = false;
@@ -37,7 +32,7 @@ namespace gameVisual
         public static Vector2 Player2VisualHandPosition;
         public static Vector2 Player1VisualHandPosition;
 
-        public static Node PauseMenu;
+        public static Node PauseMenu = new Node();
 
         static Sprite GraveYardCard = new Sprite();
         Sprite Preview = new Sprite();
@@ -48,8 +43,60 @@ namespace gameVisual
         public static List<Relics> SourceToSelect;
 
         Button AcceptButton = InstanciateButton();
+
+        bool player1Attack = false;
+        bool player2Attack = false;
+        public static Label Turnlabel;
+        public static Button Attack;
+
+        public static Game Game;
+        public static Board VisualBoard;
+
         #endregion
 
+        public void resetVisualGame()
+        {
+            child = new Node();
+            Player2VisualHand = new List<Sprite>();
+            Player1VisualHand = new List<Sprite>();
+
+            Player1FieldPositions = new Vector2[4];
+            Player2FieldPositions = new Vector2[4];
+
+            selecting = false;
+            discardPlayer = new Player("default");
+            discardButtons = new List<Button>();
+
+            Player2VisualHandPosition = new Vector2();
+            Player1VisualHandPosition = new Vector2();
+
+            Player1emptySlots = 4;
+            Player2emptySlots = 4;
+
+            GraveYardCard = new Sprite();
+            Preview = new Sprite();
+
+            selectCards = null;
+            selectQuant = 1;
+            SelectedCards = null;
+            SourceToSelect = null;
+
+            player1Attack = false;
+            player2Attack = false;
+            Turnlabel = new Label();
+            Attack = new Button();
+            Game = null;
+            VisualBoard = null;
+
+            foreach (Node node in GetTree().GetNodesInGroup("RelicsNodes1"))
+            {
+                node.QueueFree();
+            }
+            foreach (Node node in GetTree().GetNodesInGroup("RelicsNodes2"))
+            {
+                node.QueueFree();
+            }
+        }
 
         public class Board : Godot.Node2D
         {
@@ -123,11 +170,9 @@ namespace gameVisual
 
         }
        
-        public static Game Game;
-        public static Board VisualBoard;
         public override void _Ready()
         {
-            AddChild(hijo);
+            AddChild(child);
             Game = new Game(SelectPlayer.player1, SelectPlayer.player2);
             VisualBoard = new Board(Game);
 
@@ -155,10 +200,6 @@ namespace gameVisual
             RefreshVisualHands();
         }
 
-        bool player1Attack = false;
-        bool player2Attack = false;
-        public static Label Turnlabel;
-        public static Button Attack;
 
         public override void _Process(float delta)
         {
@@ -198,7 +239,7 @@ namespace gameVisual
             if (Game.turn % 2 == 0) // Player1's turn
             {
                 // Next Player takes a card
-                ((RandomVirtPlayer)(Game.player1)).Play();
+                ((VirtualPlayer)(Game.player1)).Play();
                 // PAUSAR EL JUEGO AQUI PARA QUE SE VEAN LOS EFECTOS DEL VIRTUAL PLAYER/***************************************************************///
                 AttackButtonFunction();
                 EndButtonFunction();
@@ -308,15 +349,24 @@ namespace gameVisual
             List<Sprite> PlayerVisualHand = new List<Sprite>();
             Vector2 PlayerVisualHandPosition;
             string group = "";
+            bool VirtualPlayer = false;
 
             if (board.Game.player1.hand == playerHand)
             {
+                if (Game.player1 is VirtualPlayer)
+                {
+                    VirtualPlayer = true;
+                }
                 group = "RelicsNodes1";
                 PlayerVisualHand = Player1VisualHand;
                 PlayerVisualHandPosition = Player1VisualHandPosition;
             }
             else
             {
+                if (Game.player2 is VirtualPlayer)
+                {
+                    VirtualPlayer = true;
+                }
                 group = "RelicsNodes2";
                 PlayerVisualHand = Player2VisualHand;
                 PlayerVisualHandPosition = Player2VisualHandPosition;
@@ -356,9 +406,13 @@ namespace gameVisual
                 //Create new relics in hand
                 for(int i = PlayerVisualHand.Count; i < playerHand.Count; i++)
                 {
-                    Sprite relic = InstanciateVisualCard(playerHand[i]);
+                    Sprite relic;
+
+                    if (VirtualPlayer) relic = InstanciateVisualBackCard(playerHand[i]);
+                    else relic = InstanciateVisualCard(playerHand[i]);
+
                     PlayerVisualHand.Add(Relic);
-                    hijo.AddChild(relic);
+                    child.AddChild(relic);
                     relic.AddToGroup(group);
                     if (i >= maxinHand)
                     {
@@ -372,7 +426,7 @@ namespace gameVisual
                 {
                     PlayerVisualHand[i].Position = new Vector2(PlayerVisualHandPosition.x + 200*i, PlayerVisualHandPosition.y);
                 }
-            }            
+            }        
         }
         public static Button InstanciateButton()
         {
@@ -447,19 +501,16 @@ namespace gameVisual
         }
         public static void UpdateBattleField(gameEngine.Player player)
         {
-            bool[] boolPlayerField;
             int PlayerEmptySlots;
             Sprite[] field;
 
             if (player == Game.player1)
             {
-                boolPlayerField = boolPlayer1Field;
                 PlayerEmptySlots = Player1emptySlots;
                 field = VisualBoard.visualBattleField1.visualBattleField;
             }
             else
             {
-                boolPlayerField = boolPlayer2Field;
                 PlayerEmptySlots = Player2emptySlots;
                 field = VisualBoard.visualBattleField2.visualBattleField;
             }
@@ -473,7 +524,6 @@ namespace gameVisual
                     {
                         // Removing card from battelfield
                         PlayerEmptySlots++;
-                        boolPlayerField[index] = false;
                         field[index].QueueFree();
                         field[index] = null;
                         Game.GraveYard.Add(player.BattleField[index]);
@@ -553,13 +603,13 @@ namespace gameVisual
             {
                 Sprite Relic = board.InstanciateVisualCard(relic);
                 Preview.Visible = true;
-                ((Label)Preview.GetChild(0)).Text = ((Label)Relic.GetChild(0)).Text;
-                ((Sprite)Preview.GetChild(1)).Texture = ((Sprite)Relic.GetChild(1)).Texture;
-                ((Label)Preview.GetChild(2)).Text = ((Label)Relic.GetChild(2)).Text;
-                ((Sprite)Preview.GetChild(3)).Texture = ((Sprite)Relic.GetChild(3)).Texture;
-                ((Label)Preview.GetChild(4)).Text = ((Label)Relic.GetChild(4)).Text;
+                ((Label)Preview.GetChild(0)).Text = ((Label)Relic.GetChild(0)).Text; //Name
+                ((Sprite)Preview.GetChild(1)).Texture = ((Sprite)Relic.GetChild(1)).Texture; //Image
+                ((Label)Preview.GetChild(2)).Text = ((Label)Relic.GetChild(2)).Text; //Duration
+                ((Sprite)Preview.GetChild(3)).Texture = ((Sprite)Relic.GetChild(3)).Texture; //Type
+                ((Label)Preview.GetChild(4)).Text = ((Label)Relic.GetChild(4)).Text; //Description
 
-
+                // Scale of Image and Type sprites
                 ((Sprite)Preview.GetChild(1)).Scale = new Vector2((float)0.60, (float)0.50);
                 ((Sprite)Preview.GetChild(3)).Scale = new Vector2((float)0.15, (float)0.15);
             }
@@ -653,11 +703,14 @@ namespace gameVisual
             if (@event is InputEventMouse mouseMove)
             {
                 // Preview player1 hand
-                for (int i = 0; i < Player1VisualHand.Count; i++)
+                if (!(Game.player1 is VirtualPlayer))
                 {
-                    if(Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseMove.Position)))
+                    for (int i = 0; i < Player1VisualHand.Count; i++)
                     {
-                        PreviewPropierties(Game.player1.hand[i]);
+                        if(Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseMove.Position)))
+                        {
+                            PreviewPropierties(Game.player1.hand[i]);
+                        }
                     }
                 }
 
@@ -673,16 +726,20 @@ namespace gameVisual
                     }
                 }
                 
-                // for (int i = 0; i < Player2VisualHand.Count; i++)
-                // {
-                //     if(Player2VisualHand[i].GetRect().HasPoint(Player2VisualHand[i].ToLocal(mouseMove.Position)))
-                //     {
-                //         Sprite Relic = board.InstanciateVisualCard(Game.player2.hand[i]);
-                //         AddChild(Relic);
-                //         Relic.Scale = new Vector2((float)0.44, (float)0.45);
-                //         Relic.Position = new Vector2(170, 500);
-                //     }
-                // }
+                //Preview Player2 hand
+                if (!(Game.player2 is VirtualPlayer))
+                {
+                    for (int i = 0; i < Player2VisualHand.Count; i++)
+                    {
+                        if(Player2VisualHand[i].GetRect().HasPoint(Player2VisualHand[i].ToLocal(mouseMove.Position)))
+                        {
+                            Sprite Relic = board.InstanciateVisualCard(Game.player2.hand[i]);
+                            AddChild(Relic);
+                            Relic.Scale = new Vector2((float)0.44, (float)0.45);
+                            Relic.Position = new Vector2(170, 500);
+                        }
+                    }
+                }
 
                 // Preview player2 Field
                 for (int i = 0; i < VisualBoard.visualBattleField2.visualBattleField.Length; i++)
