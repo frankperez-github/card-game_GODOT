@@ -54,49 +54,7 @@ namespace gameVisual
 
         #endregion
 
-        public void resetVisualGame()
-        {
-            child = new Node();
-            Player2VisualHand = new List<Sprite>();
-            Player1VisualHand = new List<Sprite>();
-
-            Player1FieldPositions = new Vector2[4];
-            Player2FieldPositions = new Vector2[4];
-
-            selecting = false;
-            discardPlayer = new Player("default");
-            discardButtons = new List<Button>();
-
-            Player2VisualHandPosition = new Vector2();
-            Player1VisualHandPosition = new Vector2();
-
-            Player1emptySlots = 4;
-            Player2emptySlots = 4;
-
-            GraveYardCard = new Sprite();
-            Preview = new Sprite();
-
-            selectCards = null;
-            selectQuant = 1;
-            SelectedCards = null;
-            SourceToSelect = null;
-
-            player1Attack = false;
-            player2Attack = false;
-            Turnlabel = new Label();
-            Attack = new Button();
-            Game = null;
-            VisualBoard = null;
-
-            foreach (Node node in GetTree().GetNodesInGroup("RelicsNodes1"))
-            {
-                node.QueueFree();
-            }
-            foreach (Node node in GetTree().GetNodesInGroup("RelicsNodes2"))
-            {
-                node.QueueFree();
-            }
-        }
+        
 
         public class Board : Godot.Node2D
         {
@@ -168,6 +126,42 @@ namespace gameVisual
                 }
             }
 
+            public void resetVisualGame()
+            {
+                child = new Node();
+                Player2VisualHand = new List<Sprite>();
+                Player1VisualHand = new List<Sprite>();
+
+                selecting = false;
+
+                Player1emptySlots = 4;
+                Player2emptySlots = 4;
+
+                selectCards = null;
+                selectQuant = 1;
+                SelectedCards = null;
+                SourceToSelect = null;
+                Game = null;
+                VisualBoard = null;
+
+                try
+                {
+                    foreach (Node node in GetTree().GetNodesInGroup("RelicsNodes1"))
+                    {
+                        node.QueueFree();
+                    }
+                }
+                catch (System.Exception){}
+                
+                try
+                {
+                    foreach (Node node in GetTree().GetNodesInGroup("RelicsNodes2"))
+                    {
+                        node.QueueFree();
+                    }
+                }
+                catch (System.Exception){}
+            }
         }
        
         public override void _Ready()
