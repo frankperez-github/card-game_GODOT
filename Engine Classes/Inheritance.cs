@@ -7,18 +7,18 @@ namespace gameEngine
 {
     public class Relics
     {
-        public int id {get;}
-        public string name{get;}
+        public int id {get; set;}
+        public string name{get; set;}
         public int activeDuration{get;set;}
         public int passiveDuration{get;set;}
-        public string imgAddress{get;}
-        public Player Owner{get;}
-        public Player Enemy{get;}
-        public string type{get;} 
-        public bool isTrap{get;}
+        public string imgAddress{get; set;}
+        public Player Owner{get; set;}
+        public Player Enemy{get; set;}
+        public string type{get; set;} 
+        public bool isTrap{get; set;}
         public CardState cardState = CardState.OnDeck;
-        public string effect{get;}
-        public string description{get;}
+        public string effect{get; set;}
+        public string description{get; set;}
         public List<InterpretAction> Actions;
 
         public Relics(Player Owner, Player Enemy, int id, string name, int passiveDuration, int activeDuration, string imgAddress, bool isTrap, string type, string effect, string description)
@@ -67,12 +67,13 @@ namespace gameEngine
                     break;
                 }
             }
+            
             // Fulling (visually) battlefield
             for (int slot = 0; slot < field.Length; slot++)
             {
                 if (field[slot] != null)
                 {
-                    board.hijo.AddChild(field[slot]);
+                    board.child.AddChild(field[slot]);
                     field[slot].Position = position[slot];
                 }
             }
@@ -258,8 +259,8 @@ namespace gameEngine
             for (int i = 0; i < cards; i++)
             {
                 Random rnd = new Random();
-                int random = rnd.Next(1, mainMenu.Inventary.CardsInventary.Count());
-                Relics card = mainMenu.Inventary.CardsInventary[random];
+                int random = rnd.Next(1, mainMenu.Inventory.CardsInventory.Count());
+                Relics card = mainMenu.Inventory.CardsInventory[random];
                 this.hand.Add( new Relics(this, this.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration, 
                             card.imgAddress,card.isTrap, card.type, card.effect, card.description));
             }

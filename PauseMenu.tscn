@@ -33,10 +33,10 @@ __meta__ = {
 }
 
 [node name="Capitulation" type="Button" parent="Tree/Continue"]
-anchor_left = 0.00543915
-anchor_top = 5.65322
-anchor_right = 0.00543915
-anchor_bottom = 5.65322
+anchor_left = 0.00543969
+anchor_top = 5.51528
+anchor_right = 0.00543969
+anchor_bottom = 5.51528
 margin_left = -1.84387
 margin_top = -301.829
 margin_right = 337.156
@@ -48,10 +48,10 @@ __meta__ = {
 }
 
 [node name="Quit" type="Button" parent="Tree/Continue"]
-anchor_left = 0.00543915
-anchor_top = 3.83712
-anchor_right = 0.00543915
-anchor_bottom = 3.83712
+anchor_left = 0.00543969
+anchor_top = 3.73367
+anchor_right = 0.00543969
+anchor_bottom = 3.73367
 margin_left = -1.84387
 margin_top = 45.1711
 margin_right = 337.156

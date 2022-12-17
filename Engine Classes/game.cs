@@ -1,7 +1,6 @@
 using Godot;
 using System.Collections.Generic;
 
-
 namespace gameEngine
 {
     public class Game
@@ -21,6 +20,13 @@ namespace gameEngine
             GraveYard = new List<Relics>();
             player1.TakeFromDeck(5);
             player2.TakeFromDeck(5);
+        }
+        public void resetGame()
+        {
+            player1 = null;
+            player2 = null;
+            turn = 1;
+            GraveYard = null;
         }
     }
 }

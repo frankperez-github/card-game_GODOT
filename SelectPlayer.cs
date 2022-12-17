@@ -27,9 +27,9 @@ namespace gameVisual
             };
             characters = new List<Sprite>();
 
-            for (var i = 0; i < mainMenu.Inventary.CharactersInventary.Count; i++)
+            for (var i = 0; i < mainMenu.Inventory.CharactersInventory.Count; i++)
             {
-                Sprite Character = gameVisual.board.InstanciateVisualCharact(mainMenu.Inventary.CharactersInventary[i]);
+                Sprite Character = gameVisual.board.InstanciateVisualCharact(mainMenu.Inventory.CharactersInventory[i]);
                 AddChild(Character);
                 characters.Add(Character);
                 Character.Position = charactPositions[i];
@@ -98,7 +98,7 @@ namespace gameVisual
                                 }
                                 
                                 characters[i].Scale = new Vector2((float)0.40,(float)0.41);
-                                character1 = mainMenu.Inventary.CharactersInventary[i];
+                                character1 = mainMenu.Inventory.CharactersInventory[i];
                             }
                         }
                         break;

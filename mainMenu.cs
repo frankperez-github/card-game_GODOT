@@ -8,12 +8,12 @@ namespace gameVisual
     public class mainMenu : Node2D
     {
         public static string gameType;
-        public static Inventary Inventary;
+        public static Inventory Inventory;
 
         public override void _Ready()
         {
             gameType = "virtual";
-            Inventary = new Inventary();
+            Inventory = new Inventory();
             GetTree().SetScreenStretch(SceneTree.StretchMode.Mode2d, SceneTree.StretchAspect.Keep, new Vector2(1920, 1080), 1);
         }
 
@@ -23,6 +23,7 @@ namespace gameVisual
             if (Start.Pressed)
             {
                 GetTree().ChangeScene("res://SelectPlayer.tscn");
+                Inventory.ImportJsonContent();
             }
 
             Button HumanPlayer = GetNode<Button>("Start/Human");

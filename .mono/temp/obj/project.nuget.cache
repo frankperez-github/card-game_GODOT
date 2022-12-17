@@ -1,6 +1,7 @@
 {
   "version": 2,
 <<<<<<< HEAD
+<<<<<<< HEAD
   "dgSpecHash": "e+7/oqM7P7mSwoGexewncYYIKtwEhbr110ApBEepqWeBcDHLttiXkCZWwaEsxjzmBIuL1o6wIeP5xNLkF2wGqw==",
 =======
   "dgSpecHash": "7lVrp5xDubMID9MBqlfT22hFCmRWjhH177IMqOfv9YdrniMZgiIUfw+6QN/1JVG/NvJa9J/nu/ALNznXv6zaBg==",
@@ -8,5 +9,15 @@
   "success": true,
   "projectFilePath": "C:\\Users\\bathr\\OneDrive\\Desktop\\Juego de Cartas GitHub\\card-game_GODOT\\card-game.csproj",
   "expectedPackageFiles": [],
+=======
+  "dgSpecHash": "1BSCe1feXDI+psMl4oWOlFs/iKs/BrlGJCyhcUsrrLXGHKunoyAxxHHmJHrNRSA6IIVziC1QFSYvvDFx5e8dLA==",
+  "success": true,
+  "projectFilePath": "/home/frankperez/Documents/card-game/card-game.csproj",
+  "expectedPackageFiles": [
+    "/home/frankperez/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.2/microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "/home/frankperez/.nuget/packages/microsoft.netframework.referenceassemblies.net472/1.0.2/microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512",
+    "/home/frankperez/.nuget/packages/newtonsoft.json/13.0.2/newtonsoft.json.13.0.2.nupkg.sha512"
+  ],
+>>>>>>> 6fab453ff405f93eea11a73319629a07b2f961c0
   "logs": []
 }
