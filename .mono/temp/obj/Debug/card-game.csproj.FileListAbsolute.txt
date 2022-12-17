@@ -16,14 +16,19 @@
 /home/frankperez/Documents/New Game Project/.mono/temp/obj/Debug/card-game.csproj.CoreCompileInputs.cache
 /home/frankperez/Documents/New Game Project/.mono/temp/obj/Debug/card-game.dll
 /home/frankperez/Documents/New Game Project/.mono/temp/obj/Debug/card-game.pdb
-C:/Users/bathr/OneDrive/Desktop/Juego de Cartas GitHub/card-game_GODOT/.mono/temp/bin/Debug/card-game.dll
-C:/Users/bathr/OneDrive/Desktop/Juego de Cartas GitHub/card-game_GODOT/.mono/temp/bin/Debug/card-game.pdb
-C:/Users/bathr/OneDrive/Desktop/Juego de Cartas GitHub/card-game_GODOT/.mono/temp/obj/Debug/card-game.csproj.AssemblyReference.cache
-C:/Users/bathr/OneDrive/Desktop/Juego de Cartas GitHub/card-game_GODOT/.mono/temp/obj/Debug/card-game.GeneratedMSBuildEditorConfig.editorconfig
-C:/Users/bathr/OneDrive/Desktop/Juego de Cartas GitHub/card-game_GODOT/.mono/temp/obj/Debug/card-game.AssemblyInfoInputs.cache
-C:/Users/bathr/OneDrive/Desktop/Juego de Cartas GitHub/card-game_GODOT/.mono/temp/obj/Debug/card-game.AssemblyInfo.cs
-C:/Users/bathr/OneDrive/Desktop/Juego de Cartas GitHub/card-game_GODOT/.mono/temp/obj/Debug/card-game.csproj.CoreCompileInputs.cache
-C:/Users/bathr/OneDrive/Desktop/Juego de Cartas GitHub/card-game_GODOT/.mono/temp/obj/Debug/card-game.dll
-C:/Users/bathr/OneDrive/Desktop/Juego de Cartas GitHub/card-game_GODOT/.mono/temp/obj/Debug/card-game.pdb
+<<<<<<< HEAD
+C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\.mono\temp\bin\Debug\card-game.dll
+C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\.mono\temp\bin\Debug\card-game.pdb
+C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\.mono\temp\obj\Debug\card-game.csproj.AssemblyReference.cache
+C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\.mono\temp\obj\Debug\card-game.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\.mono\temp\obj\Debug\card-game.AssemblyInfoInputs.cache
+C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\.mono\temp\obj\Debug\card-game.AssemblyInfo.cs
+C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\.mono\temp\obj\Debug\card-game.csproj.CoreCompileInputs.cache
+C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\.mono\temp\obj\Debug\card-game.dll
+C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\.mono\temp\obj\Debug\card-game.pdb
+=======
 /home/frankperez/Documents/card-game/.mono/temp/bin/Debug/Newtonsoft.Json.dll
 /home/frankperez/Documents/card-game/.mono/temp/obj/Debug/card-game.csproj.CopyComplete
+>>>>>>> 6fab453ff405f93eea11a73319629a07b2f961c0
+C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\.mono\temp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\bathr\OneDrive\Desktop\Juego de Cartas GitHub\card-game_GODOT\.mono\temp\obj\Debug\card-game.csproj.CopyComplete
