@@ -51,12 +51,12 @@ namespace gameEngine
             if (Owner == board.Game.player1)
             {
                 field = board.VisualBoard.visualBattleField1.visualBattleField;
-                position = board.Player1FieldPositions;
+                position = board.Board.VisualBattleField.Player1FieldPositions;
             }
             else
             {
                 field = board.VisualBoard.visualBattleField2.visualBattleField;
-                position = board.Player2FieldPositions;
+                position = board.Board.VisualBattleField.Player2FieldPositions;
             }
 
             for (int i = 0; i < field.Length; i++)
