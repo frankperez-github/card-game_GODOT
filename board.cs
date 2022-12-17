@@ -177,18 +177,18 @@ namespace gameVisual
             
             Player2FieldPositions = new Vector2[4]
             {
-                new Vector2(570, 760),
-                new Vector2(860, 760),
-                new Vector2(1145, 760),
-                new Vector2(1430, 760)
+                new Vector2(570, 720),
+                new Vector2(860, 720),
+                new Vector2(1145, 720),
+                new Vector2(1430, 720)
             };
              
             Player1FieldPositions = new Vector2[4]
             {
-                new Vector2(570, 350),
-                new Vector2(860, 350),
-                new Vector2(1145, 350),
-                new Vector2(1430, 350)
+                new Vector2(570, 320),
+                new Vector2(860, 320),
+                new Vector2(1145, 320),
+                new Vector2(1430, 320)
             };
 
             RefreshVisualHands();
@@ -208,43 +208,41 @@ namespace gameVisual
             
             #region Updating visually playerInfo
             Label PlayerNick = GetNode<Label>("PlayerInfo/Player's Nick");
-            PlayerNick.Text = Game.player1.nick;
+            PlayerNick.Text = Game.player2.nick;
             Label PlayerLife = GetNode<Label>("PlayerInfo/Player's Life");
-            PlayerLife.Text = "Life : "+ Game.player1.life.ToString();
+            PlayerLife.Text = "Life : "+ Game.player2.life.ToString();
             Label PlayerShield = GetNode<Label>("PlayerInfo/Player's Shield");
-            PlayerShield.Text = "Shield : "+ Game.player1.character.defense.ToString();
+            PlayerShield.Text = "Shield : "+ Game.player2.character.defense.ToString();
             Label PlayerAttack = GetNode<Label>("PlayerInfo/Player's Attack");
-            PlayerAttack.Text = "Attack : "+ Game.player1.character.attack.ToString();
+            PlayerAttack.Text = "Attack : "+ Game.player2.character.attack.ToString();
             Label Player1State = GetNode<Label>("PlayerInfo/Player's State");
-            Player1State.Text = "State : "+ Game.player1.state.ToString();
+            Player1State.Text = "State : "+ Game.player2.state.ToString();
 
             Label Player2Nick = GetNode<Label>("Player2Info/Player2's Nick");
-            Player2Nick.Text = Game.player2.nick;
+            Player2Nick.Text = Game.player1.nick;
             Label Player2Life = GetNode<Label>("Player2Info/Player2's Life");
-            Player2Life.Text = "Life : "+ Game.player2.life.ToString();
+            Player2Life.Text = "Life : "+ Game.player1.life.ToString();
             Label Player2Shield = GetNode<Label>("Player2Info/Player2's Shield");
-            Player2Shield.Text = "Shield : "+ Game.player2.character.defense.ToString();
+            Player2Shield.Text = "Shield : "+ Game.player1.character.defense.ToString();
             Label Player2Attack = GetNode<Label>("Player2Info/Player2's Attack");
-            Player2Attack.Text = "Attack : "+ Game.player2.character.attack.ToString();
+            Player2Attack.Text = "Attack : "+ Game.player1.character.attack.ToString();
             Label Player2State = GetNode<Label>("Player2Info/Player2's State");
-            Player2State.Text = "State : "+ Game.player2.state.ToString();
+            Player2State.Text = "State : "+ Game.player1.state.ToString();
             #endregion
 
             if (Game.turn % 2 == 0) // Player1's turn
             {
                 // Next Player takes a card
-                ((VirtualPlayer)(Game.player1)).Play();
-                // PAUSAR EL JUEGO AQUI PARA QUE SE VEAN LOS EFECTOS DEL VIRTUAL PLAYER/***************************************************************///
+                ((VirtualPlayer)(Game.player1)).Play();                
                 AttackButtonFunction();
+                WaitForSeconds(5);
+                // PAUSAR EL JUEGO AQUI PARA QUE SE VEAN LOS EFECTOS DEL VIRTUAL PLAYER/***************************************************************///
                 EndButtonFunction();
             }
 
             Attack = GetNode<Button>("Attack");
             Button endButton = GetNode<Button>("endButton");
 
-            // ATTACK BUTTON
-            Attack.Disabled = false;
-            AttackButtonFunction();
 
             //Change Turn (END BUTTON)
             if (endButton.Pressed)
@@ -608,16 +606,10 @@ namespace gameVisual
                 ((Sprite)Preview.GetChild(3)).Scale = new Vector2((float)0.15, (float)0.15);
             }
         }
-        public void PauseGame(int time)
+        public IEnumerator<(Godot.SceneTreeTimer, string)> WaitForSeconds(float seconds)
         {
-            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-            watch.Start();
-            while (watch.ElapsedMilliseconds < time*1000)
-            {
-                GetTree().Paused = true;
-            }
-            GetTree().Paused = false;
-            watch.Stop();
+            GD.Print("time");
+                yield return (GetTree().CreateTimer(seconds), "timeout");
         }
         public override void _Input(InputEvent @event)  
         {

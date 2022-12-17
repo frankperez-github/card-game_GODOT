@@ -191,13 +191,21 @@ namespace gameVisual
             Button Save = GetNode<Button>("Code/Compile/Save");
             if (Save.Pressed)
             {
-                GetTree().ChangeScene("res://mainMenu.tscn");
+                try
+                {
+                    GetTree().ChangeScene("res://mainMenu.tscn");
 
-                //Creating card in game's logic
-                gameEngine.Player defaultplayer = new gameEngine.Player(default);
-                gameEngine.Relics Relic = new gameEngine.Relics(defaultplayer, defaultplayer, gameVisual.mainMenu.Inventory.CardsInventory.Count, 
-                                                                Name.Text, 0, 0, imgPath, IsTrap.Pressed, Type, Effect.Text, Description.Text);
-                gameVisual.mainMenu.Inventory.addToJson(Relic);
+                    //Creating card in game's logic
+                    gameEngine.Player defaultplayer = new gameEngine.Player(default);
+                    gameEngine.Relics Relic = new gameEngine.Relics(defaultplayer, defaultplayer, gameVisual.mainMenu.Inventory.CardsInventory.Count, 
+                                                                    Name.Text, 0, 0, imgPath, IsTrap.Pressed, Type, Effect.Text, Description.Text);
+                    gameVisual.mainMenu.Inventory.addToJson(Relic);
+                }
+                catch(NullReferenceException)
+                {
+                    GD.Print("Must Complete all field to create new relic");
+                }
+                
             }
         }
     }
