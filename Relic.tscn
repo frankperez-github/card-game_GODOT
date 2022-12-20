@@ -19,7 +19,7 @@ normal_map = SubResource( 1 )
 [node name="Name" type="Label" parent="."]
 margin_left = -183.503
 margin_top = -518.353
-margin_right = 217.497
+margin_right = 216.497
 margin_bottom = -452.353
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )

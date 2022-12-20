@@ -12,9 +12,9 @@ namespace gameVisual
 
         public override void _Ready()
         {
-            Quit = GetNode<Button>("Tree/Continue/Quit");
-            Continue = GetNode<Button>("Tree/Continue");
-            Capitulation = GetNode<Button>("Tree/Continue/Capitulation");
+            Quit = GetNode<Button>("PauseMenu/Continue/Quit");
+            Continue = GetNode<Button>("PauseMenu/Continue");
+            Capitulation = GetNode<Button>("PauseMenu/Continue/Capitulation");
         }
 
         public override void _Process(float delta)
@@ -25,16 +25,11 @@ namespace gameVisual
             }
             if (Continue.Pressed)
             {
-                board.PauseMenu.QueueFree();
+                this.QueueFree();
             }
             if (Capitulation.Pressed)
             {
-<<<<<<< HEAD
-                board.Game.resetGame();
-                board.VisualBoard.resetVisualGame();
-=======
                 // board.VisualBoard.resetVisualGame();
->>>>>>> 205f9adab204bc7f1080a35202acfc56f73cd68f
                 GetTree().ChangeScene("res://mainMenu.tscn");
             }
         }

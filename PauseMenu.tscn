@@ -10,14 +10,14 @@ font_data = ExtResource( 1 )
 [node name="PauseMenu" type="Node"]
 script = ExtResource( 2 )
 
-[node name="Tree" type="Tree" parent="."]
+[node name="PauseMenu" type="Tree" parent="."]
 margin_left = 393.0
 margin_top = 181.0
 margin_right = 1497.0
 margin_bottom = 853.0
 rect_pivot_offset = Vector2( 627, 284 )
 
-[node name="Continue" type="Button" parent="Tree"]
+[node name="Continue" type="Button" parent="PauseMenu"]
 anchor_left = 0.00543915
 anchor_top = 1.57275
 anchor_right = 0.00543915
@@ -32,7 +32,7 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Capitulation" type="Button" parent="Tree/Continue"]
+[node name="Capitulation" type="Button" parent="PauseMenu/Continue"]
 anchor_left = 0.00543969
 anchor_top = 5.51528
 anchor_right = 0.00543969
@@ -47,7 +47,7 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Quit" type="Button" parent="Tree/Continue"]
+[node name="Quit" type="Button" parent="PauseMenu/Continue"]
 anchor_left = 0.00543969
 anchor_top = 3.73367
 anchor_right = 0.00543969

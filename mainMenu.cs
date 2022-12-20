@@ -8,12 +8,12 @@ namespace gameVisual
     public class mainMenu : Node2D
     {
         public static string gameType;
-        public static Inventory Inventory;
+        public static inventory Inventory;
 
         public override void _Ready()
         {
             gameType = "virtual";
-            Inventory = new Inventory();
+            Inventory = new inventory();
             GetTree().SetScreenStretch(SceneTree.StretchMode.Mode2d, SceneTree.StretchAspect.Keep, new Vector2(1920, 1080), 1);
         }
 

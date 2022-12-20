@@ -152,12 +152,12 @@ text = "State: Safe"
 
 [node name="battleField" type="Tree" parent="."]
 margin_left = 341.0
-margin_top = -74.0
+margin_top = -89.0
 margin_right = 1657.0
-margin_bottom = 1046.0
+margin_bottom = 1097.0
 
 [node name="Card-placeholder(2)" type="Sprite" parent="battleField"]
-position = Vector2( 229, 350 )
+position = Vector2( 234.5, 380.25 )
 scale = Vector2( 0.543796, 0.549676 )
 texture = ExtResource( 3 )
 
@@ -175,7 +175,7 @@ scale = Vector2( 1, 1.00208 )
 texture = ExtResource( 3 )
 
 [node name="Card-placeholder(2)3" type="Sprite" parent="battleField"]
-position = Vector2( 229, 758 )
+position = Vector2( 235, 775 )
 scale = Vector2( 0.543796, 0.549676 )
 texture = ExtResource( 3 )
 
@@ -193,10 +193,10 @@ scale = Vector2( 1, 1.01386 )
 texture = ExtResource( 3 )
 
 [node name="endButton" type="Button" parent="."]
-margin_left = 1046.0
-margin_top = 448.0
-margin_right = 1215.0
-margin_bottom = 508.0
+margin_left = 1049.0
+margin_top = 454.0
+margin_right = 1218.0
+margin_bottom = 514.0
 
 [node name="Label" type="Label" parent="endButton"]
 margin_left = 46.0
@@ -207,10 +207,10 @@ custom_fonts/font = SubResource( 4 )
 text = "End Turn"
 
 [node name="Attack" type="Button" parent="."]
-margin_left = 768.0
-margin_top = 448.0
-margin_right = 938.0
-margin_bottom = 508.0
+margin_left = 771.0
+margin_top = 454.0
+margin_right = 941.0
+margin_bottom = 514.0
 
 [node name="Label" type="Label" parent="Attack"]
 margin_left = 56.0
