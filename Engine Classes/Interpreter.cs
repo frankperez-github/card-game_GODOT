@@ -837,12 +837,10 @@ namespace gameEngine
             }
             else if(count == "all")
             {
-                Console.Clear();
                 cards = Affected.hand.Count();
                 foreach (var card in Affected.hand)
                 {
                     show.Add(card);
-                    Console.WriteLine(card.name);
                 }
             }
             //Metodo que debe hacer Frank para visualizar las cartas
@@ -850,7 +848,7 @@ namespace gameEngine
         }
         public void ShowCards(List<Relics> show)
         {
-
+            
         }
     }
 }
