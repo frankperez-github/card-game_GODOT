@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using System;
+using gameEngine;
 
 namespace gameVisual
 {
@@ -9,12 +10,19 @@ namespace gameVisual
         public static Button AcceptButton;
         public static int selectQuant = 1;
         public static List<Sprite> selectCards;
-
+        public static Action<List<Relics>> SelectDelegate;
+        public static List<Relics> target;
+        public static Label SelectLabel;
+        static PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
+        public static Node SelectCardInstance = SelectCardsScene.Instance(); 
 
         public override void _Ready()
         {
             PauseMode = PauseModeEnum.Process;
             AcceptButton = GetNode<Button>("Button");
+            SelectLabel = GetNode<Label>("DiscardLabel");
+            SelectLabel.Text = "Select: " + selectQuant;
+            SelectLabel.Visible = true;
             VisualMethods.selecting = true;
         }
 
@@ -36,6 +44,7 @@ namespace gameVisual
             {
                 board.child.GetTree().Paused = false;
                 this.QueueFree();
+                SelectDelegate(target);
             }
 
         }

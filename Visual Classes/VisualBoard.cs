@@ -39,9 +39,9 @@ namespace gameVisual
 
             public class VisualGraveYard 
             {
-                List<Relics> graveYard;
-                List<Sprite> visualGraveYard;
-                Sprite GraveYardCard;
+                public List<Relics> graveYard;
+                // List<Sprite> visualGraveYard;
+                public Sprite GraveYardCard;
 
                 public VisualGraveYard(List<Relics> graveYard, Sprite GraveYard)
                 {
@@ -146,13 +146,15 @@ namespace gameVisual
 
                 if (board.Game.player1.hand.Count > Game.MaxInHand)
                 {
-                    Discard(board.Game.player1);
-                    UpdateVisualHand(visualHand1);
+                    if(board.Game.player1 is VirtualPlayer)
+                        VisualMethods.DiscardVirtualPlayer(board.Game.player1.hand, board.Game.player1.hand.Count-Game.MaxInHand);
+                    else Discard(board.Game.player1.hand);
                 }
                 if (board.Game.player2.hand.Count > Game.MaxInHand)
                 {
-                    Discard(board.Game.player2);
-                    UpdateVisualHand(visualHand2);
+                    if(board.Game.player2 is VirtualPlayer)
+                        VisualMethods.DiscardVirtualPlayer(board.Game.player2.hand, board.Game.player2.hand.Count-Game.MaxInHand);
+                    else Discard(board.Game.player2.hand);
                 }    
             }
             public void UpdateBattleFields(Player player)
@@ -179,40 +181,27 @@ namespace gameVisual
                 VisualMethods.RefreshPositionCards(VisualHand);
   
             }
-            public void Discard(Player player)
+            public void Discard(List<Relics> playerHand)
             {
-                if(player is VirtualPlayer)
-                    VisualMethods.DiscardVirtualPlayer(player.hand, player.hand.Count-Game.MaxInHand);
-                else
-                    selectVisually(player.hand, player.hand.Count-Game.MaxInHand);
-            }
-            
-            public void selectVisually(List<Relics> Source, int quant)
-            {
-                VisualMethods.selecting = true;
-                VisualMethods.SelectedCards = new List<Relics>();
-                SelectCards.selectCards = new List<Sprite>();
-                VisualMethods.SourceToSelect = Source;
-                SelectCards.selectQuant = quant;
-                PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
-                Tree SelectMenu = (Tree)SelectCardsScene.Instance();
-                board.child.AddChild(SelectMenu);
-                board.child.GetTree().Paused = true;
-                
-                Vector2 FirstPosition = new Vector2(180, 275);
-
-                // Showing cards to select
-                int index = 1;
-                foreach (var card in Source)
+                if (VisualMethods.SelectedCards == null)
                 {
-                    Sprite Card = VisualMethods.InstanciateVisualCard(card);
-                    SelectCards.selectCards.Add(Card);
-                    SelectMenu.AddChild(Card);
-                    Card.Position = new Vector2(210 * index + FirstPosition.x, FirstPosition.y); 
-                    index++;
-                    GD.Print("ene");
+                    VisualMethods.selectVisually(playerHand, playerHand.Count-Game.MaxInHand, Discard, playerHand);
                 }
+                else
+                {
+                    foreach (var item in VisualMethods.SelectedCards)
+                    {
+                        board.Game.GraveYard.Add(item);
+                        playerHand.Remove(item);
+                    }
+                    VisualMethods.SelectedCards = null;
+                }
+                UpdateVisualHand(visualHand1);
+                UpdateVisualHand(visualHand2);
+                VisualMethods.UpdatePlayersVisualProperties();
+                visualGraveYard.Show();
             }
+
         }
        
 }

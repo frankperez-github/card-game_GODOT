@@ -19,7 +19,33 @@ namespace gameVisual
         #endregion
 
         public static Node boardNode;
+        public static void selectVisually(List<Relics> Source, int quant, System.Action<List<Relics>> Delegate, List<Relics> target)
+        {
+            SelectCards.target = target;
+            VisualMethods.selecting = true;
+            VisualMethods.SelectedCards = new List<Relics>();
+            SelectCards.selectCards = new List<Sprite>();
+            SelectCards.SelectDelegate = Delegate;
+            VisualMethods.SourceToSelect = Source;
+            SelectCards.selectQuant = quant;
 
+            Node SelectMenu = SelectCards.SelectCardInstance;
+            board.child.AddChild(SelectMenu);
+            board.child.GetTree().Paused = true;
+            
+            Vector2 FirstPosition = new Vector2(180, 275);
+
+            // Showing cards to select
+            int index = 1;
+            foreach (var card in Source)
+            {
+                Sprite Card = VisualMethods.InstanciateVisualCard(card);
+                SelectCards.selectCards.Add(Card);
+                SelectMenu.AddChild(Card);
+                Card.Position = new Vector2(210 * index + FirstPosition.x, FirstPosition.y); 
+                index++;
+            }
+        }
         public static void ListenToVisualButtons()
         {
             if (board.endButton.Pressed)
@@ -220,8 +246,13 @@ namespace gameVisual
             {
                 Random rnd = new Random();
                 int card = rnd.Next(0, hand.Count-1);
+                board.Game.GraveYard.Add(hand[card]);
                 hand.RemoveAt(card);
             }
+            board.VisualBoard.UpdateVisualHand(board.VisualBoard.visualHand2);
+            board.VisualBoard.UpdateVisualHand(board.VisualBoard.visualHand1);
+            VisualMethods.UpdatePlayersVisualProperties();
+            board.VisualBoard.visualGraveYard.Show();
         }
         public static void resetVisualGame()
         {
@@ -292,7 +323,6 @@ namespace gameVisual
             }
         }
         
-        
         #region Input Methods
         public static void PreviewHandCards(Board.VisualHand Hand, InputEventMouse mouseMove)
         {
@@ -322,7 +352,6 @@ namespace gameVisual
             switch ((ButtonList)mouseEvent.ButtonIndex)
             {
                 case ButtonList.Left:
-
                     if(board.Game.turn % 2 == 0)
                     {
                         // // Player 1 is clicking
@@ -350,6 +379,16 @@ namespace gameVisual
                             }
                         }
                     }
+                if(board.VisualBoard.visualGraveYard.GraveYardCard.GetRect().HasPoint(board.VisualBoard.visualGraveYard.GraveYardCard.ToLocal(mouseEvent.Position)))
+                {
+                    if(board.VisualBoard.visualGraveYard.graveYard.Count>0)
+                    {
+                        selectVisually(board.VisualBoard.visualGraveYard.graveYard, 0, (x)=>{}, new List<Relics>());
+                        SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("DiscardLabel");
+                        SelectCards.SelectLabel.Text = "Graveyard: " ;
+                        SelectCards.SelectLabel.Visible = true;
+                    }
+                }
                     break;
             }
         }     
