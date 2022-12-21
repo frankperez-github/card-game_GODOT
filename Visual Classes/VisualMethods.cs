@@ -358,30 +358,29 @@ namespace gameVisual
             switch ((ButtonList)mouseEvent.ButtonIndex)
             {
                 case ButtonList.Left:
-                    if(board.Game.turn % 2 == 0)
+                    if(board.Game.turn % 2 == 0) // Player 1 is clicking
                     {
-                        // // Player 1 is clicking
-                        // for(int i = 0; i < Player1VisualHand.Count; i++)
-                        // {
-                        //     if (Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseEvent.Position)) && Player1emptySlots > 0)
-                        //     {
-                        //         // Add to player's battlefield logically and visually
-                        //         Game.player1.hand[i].Effect(); // Activating effect of card
-                        //         Player1emptySlots--;
-                        //         GetTree().Paused = true;
-                        //         RefreshBoard();
-                        //         GetTree().Paused = false;
-                        //     }
-                            
-                        // }
+                        if (!(board.Game.player1 is VirtualPlayer))
+                        {
+                            for(int i = 0; i < board.VisualBoard.visualHand1.visualHand.Count; i++)
+                            {
+                                if  (board.VisualBoard.visualHand1.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand1.visualHand[i].ToLocal(mouseEvent.Position)))
+                                {
+                                    Effect(board.Game.player1.hand[i]);
+                                }
+                            }
+                        }
                     }
                     else // Player 2 is clicking
                     {
-                        for(int i = 0; i < board.VisualBoard.visualHand2.visualHand.Count; i++)
+                        if (!(board.Game.player2 is VirtualPlayer))
                         {
-                            if  (board.VisualBoard.visualHand2.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand2.visualHand[i].ToLocal(mouseEvent.Position)))
+                            for(int i = 0; i < board.VisualBoard.visualHand2.visualHand.Count; i++)
                             {
-                                Effect(board.Game.player2.hand[i]);
+                                if  (board.VisualBoard.visualHand2.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand2.visualHand[i].ToLocal(mouseEvent.Position)))
+                                {
+                                    Effect(board.Game.player2.hand[i]);
+                                }
                             }
                         }
                     }
@@ -414,11 +413,12 @@ namespace gameVisual
         }
         public static void ActiveEscapeMenu()
         {
-            PackedScene EscMenu = (PackedScene)GD.Load("res://PauseMenu.tscn");
-            Node PauseMenu = (Node)EscMenu.Instance();
-            boardNode.AddChild(PauseMenu);
+                PackedScene EscMenu = (PackedScene)GD.Load("res://PauseMenu.tscn");
+                Node PauseMenu = (Node)EscMenu.Instance();
+                boardNode.AddChild(PauseMenu);
+                boardNode.GetTree().Paused = true;            
         }
-        
+
         #endregion
     }
 }
