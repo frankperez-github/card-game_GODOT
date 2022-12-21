@@ -15,9 +15,6 @@ namespace gameVisual
         public Stopwatch watch;
         public bool VirtualPlay = true;
 
-<<<<<<< HEAD
-        #endregion
-
         
 
         public class Board : Godot.Node2D
@@ -329,8 +326,6 @@ namespace gameVisual
             //     catch (System.Exception){}
             // }
         }
-=======
->>>>>>> 960bc1ed04ba42c5901c5265d255d30e5f7f1e91
        
         public override void _Ready()
         {

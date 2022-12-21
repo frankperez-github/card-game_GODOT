@@ -7,23 +7,12 @@ namespace gameVisual
     public class VisualMethods
     {
         #region Visual Objects
+
         public static Sprite Relic = new Sprite();
-
-        public static bool selecting = false;
-        // public static Player discardPlayer = new Player("default");
-        // public static List<Button> discardButtons = new List<Button>();
-
-        public static List<Sprite> selectCards;
-        public static int selectQuant = 1;
-        public static List<Relics> SelectedCards;
-        public static List<Relics> SourceToSelect;
-
-        
-
+        public static Node boardNode = board.child;
 
         #endregion
 
-        public static Node boardNode = board.child;
 
         public static void ListenToVisualButtons()
         {
@@ -224,6 +213,7 @@ namespace gameVisual
                 }
             }
         }
+       
         #region Input Methods
         public static void PreviewHandCards(Board.VisualHand Hand, InputEventMouse mouseMove)
         {
@@ -326,7 +316,7 @@ namespace gameVisual
             Node PauseMenu = (Node)EscMenu.Instance();
             boardNode.AddChild(PauseMenu);
         }
-        
+
         #endregion
     }
 }
