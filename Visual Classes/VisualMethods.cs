@@ -2,6 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using gameEngine;
 using System.Diagnostics;
+using gameVisual;
 namespace gameVisual
 {
     public class VisualMethods
@@ -9,10 +10,25 @@ namespace gameVisual
         #region Visual Objects
 
         public static Sprite Relic = new Sprite();
+<<<<<<< HEAD
         public static Node boardNode = board.child;
 
         #endregion
 
+=======
+
+        public static bool selecting = false;
+        // public static Player discardPlayer = new Player("default");
+        // public static List<Button> discardButtons = new List<Button>();
+        public static List<Sprite> selectCards;
+        public static int selectQuant = 1;
+        public static List<Relics> SelectedCards;
+        public static List<Relics> SourceToSelect;
+
+        #endregion
+
+        public static Node boardNode;
+>>>>>>> f1610c5e98bfb29019461e649bc64ededd148943
 
         public static void ListenToVisualButtons()
         {
@@ -30,6 +46,7 @@ namespace gameVisual
         }
         public static void UpdatePlayersVisualProperties()
         {
+            boardNode = board.child;
             Label PlayerNick = boardNode.GetParent().GetNode<Label>("PlayerInfo/Player's Nick");
             PlayerNick.Text = board.Game.player2.nick;
             Label PlayerLife = boardNode.GetParent().GetNode<Label>("PlayerInfo/Player's Life");
@@ -213,7 +230,81 @@ namespace gameVisual
                 }
             }
         }
+<<<<<<< HEAD
        
+=======
+        public static void resetVisualGame()
+        {
+            VisualMethods.selecting = false;
+            VisualMethods.selectCards = null;
+            VisualMethods.selectQuant = 1;
+            VisualMethods.SelectedCards = null;
+            VisualMethods.SourceToSelect = null;
+
+            board.child.GetParent().QueueFree();
+            board.child.QueueFree();
+        }
+        public static void RemoveVisualCards(Board.VisualHand VisualHand)
+        {
+            int HandCount = 0;
+            for(int i = 0; i < VisualHand.visualHand.Count; i++)
+            {
+                try
+                {
+                    if (((Label)VisualHand.visualHand[i].GetChild(0)).Text != VisualHand.Hand[HandCount].name)
+                    {
+                        VisualHand.visualHand[i].QueueFree();
+                        VisualHand.visualHand.RemoveAt(i);
+                        i--;
+                    }
+                    else
+                    {
+                        HandCount++;
+                    }
+                }
+                catch (System.Exception)
+                {
+                    if (VisualHand.visualHand.Count != 0)
+                    {
+                        VisualHand.visualHand[i].QueueFree();
+                        VisualHand.visualHand.RemoveAt(i);
+                        i--;
+                    }
+                }                        
+            }
+        }
+        public static void CreateNewCards(Board.VisualHand VisualHand)
+        {
+            for(int i = VisualHand.visualHand.Count; i < VisualHand.Hand.Count; i++)
+            {
+                Sprite relic;
+                if (VisualHand.Hand[i].Owner is VirtualPlayer) relic = VisualMethods.InstanciateVisualBackCard(VisualHand.Hand[i]);
+                else relic = VisualMethods.InstanciateVisualCard(VisualHand.Hand[i]);
+
+                VisualHand.visualHand.Add(VisualMethods.Relic);
+                board.child.AddChild(relic);
+                relic.AddToGroup(VisualHand.group);
+            }   
+        }
+        public static void RefreshPositionCards(Board.VisualHand VisualHand)
+        {
+            float InitialPosition = (1920/2) - (((VisualHand.visualHand.Count*104) + (50 * (VisualHand.visualHand.Count-1)))/2);
+            for(int i = 0; i < VisualHand.visualHand.Count; i++)
+            {
+                if(i==0)
+                {
+                    VisualHand.visualHand[0].Position = new Vector2(InitialPosition, VisualHand.VisualHandPosition.y);
+                }
+                else
+                {
+                    VisualHand.visualHand[i].Position = new Vector2(VisualHand.visualHand[i-1].Position.x + 200, VisualHand.VisualHandPosition.y);
+                }
+                VisualHand.visualHand[i].ZIndex = 1;
+            }
+        }
+        
+        
+>>>>>>> f1610c5e98bfb29019461e649bc64ededd148943
         #region Input Methods
         public static void PreviewHandCards(Board.VisualHand Hand, InputEventMouse mouseMove)
         {
@@ -303,6 +394,7 @@ namespace gameVisual
             effect.Scan(relic);
             if(effect.Active)
             {
+
                 board.Game.player2.AddtoBattleField(relic);
                 AddtoVisualBattleField(relic.Owner, relic);
                 board.VisualBoard.Update();

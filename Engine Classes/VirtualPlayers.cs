@@ -19,8 +19,15 @@ namespace gameEngine
         public override void Play()
         {
             System.Random rnd = new System.Random();
-            int random = rnd.Next(1, hand.Count-1);
-            VisualMethods.Effect(this.hand[random]);
+            if(this.hand.Count > 1)
+            {
+                int random = rnd.Next(1, hand.Count-1);
+                VisualMethods.Effect(this.hand[random]);
+            }
+            else if(this.hand.Count == 1)
+            {
+                VisualMethods.Effect(this.hand[0]);
+            }
         }
     }
 }

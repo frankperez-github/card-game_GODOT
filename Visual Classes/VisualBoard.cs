@@ -39,8 +39,8 @@ namespace gameVisual
                 this.visualGraveYard = new VisualGraveYard(game.GraveYard, GraveYard);
                 this.visualBattleField1 = new VisualBattleField(game.player1.BattleField, Player1FieldPositions);
                 this.visualBattleField2 = new VisualBattleField(game.player2.BattleField, Player2FieldPositions);
-                this.visualHand1 = new VisualHand(game.player1.hand, Tree, 50, "RelicsNode1");
-                this.visualHand2 = new VisualHand(game.player2.hand, Tree, 1000, "RelicsNode2");
+                this.visualHand1 = new VisualHand(game.player1.hand, Tree, 50, "RelicsNodes1");
+                this.visualHand2 = new VisualHand(game.player2.hand, Tree, 1000, "RelicsNodes2");
                 this.Tree = Tree;
             }
 
@@ -166,22 +166,22 @@ namespace gameVisual
             {
                 if (VisualHand.visualHand.Count - VisualHand.Hand.Count >= 0)
                 {
-                    RemoveVisualCards(VisualHand);
+                    VisualMethods.RemoveVisualCards(VisualHand);
                 }
                 else if (VisualHand.visualHand.Count - VisualHand.Hand.Count < 0)
                 {
-                    CreateNewCards(VisualHand);
+                    VisualMethods.CreateNewCards(VisualHand);
                 }
-                RefreshPositionCards(VisualHand);
+                VisualMethods.RefreshPositionCards(VisualHand);
 
-                // if (board.Game.player1.hand.Count > Game.MaxInHand)
-                // {
-                //     Discard(board.Game.player1);
-                // }
-                // if (board.Game.player2.hand.Count > Game.MaxInHand)
-                // {
-                //     Discard(board.Game.player2);
-                // }        
+                if (board.Game.player1.hand.Count > Game.MaxInHand)
+                {
+                    Discard(board.Game.player1);
+                }
+                if (board.Game.player2.hand.Count > Game.MaxInHand)
+                {
+                    Discard(board.Game.player2);
+                }        
             }
             public void Discard(Player player)
             {
@@ -192,73 +192,22 @@ namespace gameVisual
                     //Discard de toa la life
                 }
             }
-            public void CreateNewCards(VisualHand VisualHand)
-            {
-                for(int i = VisualHand.visualHand.Count; i < VisualHand.Hand.Count; i++)
-                {
-                    Sprite relic;
-                    if (VisualHand.Hand[i].Owner is VirtualPlayer) relic = VisualMethods.InstanciateVisualBackCard(VisualHand.Hand[i]);
-                    else relic = VisualMethods.InstanciateVisualCard(VisualHand.Hand[i]);
-
-                    VisualHand.visualHand.Add(VisualMethods.Relic);
-                    board.child.AddChild(relic);
-                    relic.AddToGroup(VisualHand.group);
-                }   
-            }
-            public void RefreshPositionCards(VisualHand VisualHand)
-            {
-                float InitialPosition = (1920/2) - (((VisualHand.visualHand.Count*104) + (50 * (VisualHand.visualHand.Count-1)))/2);
-                for(int i = 0; i < VisualHand.visualHand.Count; i++)
-                {
-                    if(i==0)
-                    {
-                        VisualHand.visualHand[0].Position = new Vector2(InitialPosition, VisualHand.VisualHandPosition.y);
-                    }
-                    else
-                    {
-                        VisualHand.visualHand[i].Position = new Vector2(VisualHand.visualHand[i-1].Position.x + 200, VisualHand.VisualHandPosition.y);
-                    }
-                    VisualHand.visualHand[i].ZIndex = 1;
-                }
-            }
-            public void RemoveVisualCards(VisualHand VisualHand)
-            {
-                int HandCount = 0;
-                for(int i = 0; i < VisualHand.visualHand.Count; i++)
-                {
-                    try
-                    {
-                        if (((Label)VisualHand.visualHand[i].GetChild(0)).Text != VisualHand.Hand[HandCount].name)
-                        {
-                            ((Node)Tree.GetNodesInGroup(VisualHand.group)[i]).QueueFree();
-                            VisualHand.visualHand.RemoveAt(i);
-                            i--;
-                        }
-                        else
-                        {
-                            HandCount++;
-                        }
-                    }
-                    catch (System.Exception)
-                    {
-                        if (VisualHand.visualHand.Count != 0)
-                        {
-                            ((Node)Tree.GetNodesInGroup(VisualHand.group)[i]).QueueFree();
-                            VisualHand.visualHand.RemoveAt(i);
-                            i--;
-                        }
-                    }                        
-                }
-            }
+            
             public void selectVisually(List<Relics> Source, int quant)
             {
+                VisualMethods.selecting = true;
                 VisualMethods.SelectedCards = new List<Relics>();
                 VisualMethods.selectCards = new List<Sprite>();
                 VisualMethods.SourceToSelect = Source;
                 VisualMethods.selectQuant = quant;
                 PackedScene SelectCards = (PackedScene)GD.Load("res://SelectCards.tscn");
                 Tree SelectMenu = (Tree)SelectCards.Instance();
+<<<<<<< HEAD
                 AddChild(SelectMenu);
+=======
+                board.child.AddChild(SelectMenu);
+                
+>>>>>>> f1610c5e98bfb29019461e649bc64ededd148943
                 board.AcceptButton.SetPosition(new Vector2(875, 720));
                 
                 Vector2 FirstPosition = new Vector2(180, 450);
@@ -269,7 +218,7 @@ namespace gameVisual
                 {
                     Sprite Card = VisualMethods.InstanciateVisualCard(card);
                     VisualMethods.selectCards.Add(Card);
-                    AddChild(Card);
+                    board.child.AddChild(Card);
                     Card.Position = new Vector2(210 * index, FirstPosition.y); 
                     index++;
                 }
@@ -289,42 +238,6 @@ namespace gameVisual
                     SelectMenu.QueueFree();
                 }
             }
-            // public void resetVisualGame()
-            // {
-            //     child = new Node();
-            //     Player2VisualHand = new List<Sprite>();
-            //     Player1VisualHand = new List<Sprite>();
-
-            //     VisualMethods.selecting = false;
-
-            //     Player1emptySlots = 4;
-            //     Player2emptySlots = 4;
-
-            //     VisualMethods.selectCards = null;
-            //     VisualMethods.selectQuant = 1;
-            //     VisualMethods.SelectedCards = null;
-            //     VisualMethods.SourceToSelect = null;
-            //     Game = null;
-            //     VisualBoard = null;
-
-            //     try
-            //     {
-            //         foreach (Node node in GetTree().GetNodesInGroup("RelicsNodes1"))
-            //         {
-            //             node.QueueFree();
-            //         }
-            //     }
-            //     catch (System.Exception){}
-                
-            //     try
-            //     {
-            //         foreach (Node node in GetTree().GetNodesInGroup("RelicsNodes2"))
-            //         {
-            //             node.QueueFree();
-            //         }
-            //     }
-            //     catch (System.Exception){}
-            // }
         }
        
 }

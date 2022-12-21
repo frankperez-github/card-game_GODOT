@@ -7,7 +7,7 @@ namespace gameVisual
     public class board : Godot.Node2D
     {   
         public static Game Game;
-        public static Node child = new Node();
+        public static Node child;
         public static Board VisualBoard;
         public static Button AcceptButton;
         public static Button Attack;
@@ -329,6 +329,7 @@ namespace gameVisual
        
         public override void _Ready()
         {
+            child = new Node();
             AddChild(child);
             Game = new Game(SelectPlayer.player1, SelectPlayer.player2);
             VisualBoard = new Board(Game, GetNode<Sprite>("GraveYard/Relic"), GetTree());
@@ -373,6 +374,7 @@ namespace gameVisual
             // SHOW SELECT CARDS SCENE
             if(VisualMethods.selectQuant == 0)
             {
+                GD.Print(VisualMethods.selectQuant);
                 if (AcceptButton.GetParent() == null)
                 {
                     AddChild(AcceptButton);

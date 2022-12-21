@@ -75,7 +75,10 @@ namespace gameVisual
                     }
                     else
                     {
-                        GetTree().ChangeScene("res://board.tscn");
+                        this.QueueFree();
+                        PackedScene board = (PackedScene)ResourceLoader.Load("res://board.tscn");
+                        Node2D boardInstance = (Node2D)board.Instance();
+                        this.GetParent().AddChild(boardInstance);
                     }
                 }
             }
