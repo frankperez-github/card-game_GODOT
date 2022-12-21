@@ -4,13 +4,6 @@ using gameEngine;
 using System.Diagnostics;
 namespace gameVisual
 {
-    
-        public static bool selecting = false;
-        public static List<Sprite> selectCards;
-        public static int selectQuant = 1;
-        public static List<Relics> SelectedCards;
-        public static List<Relics> SourceToSelect;
-
         public class Board : Godot.Node2D
         {
             public VisualGraveYard visualGraveYard;
@@ -191,32 +184,6 @@ namespace gameVisual
             public void Discard(List<Relics> playerHand)
             {
                 if (VisualMethods.SelectedCards == null)
-                selectVisually(player.hand, player.hand.Count-Game.MaxInHand);
-
-                if (SelectedCards.Count != 0)
-                {
-                    //Discard de toa la life
-                }
-            }
-            
-            public void selectVisually(List<Relics> Source, int quant)
-            {
-                VisualMethods.selecting = true;
-                VisualMethods.SelectedCards = new List<Relics>();
-                VisualMethods.selectCards = new List<Sprite>();
-                VisualMethods.SourceToSelect = Source;
-                VisualMethods.selectQuant = quant;
-                PackedScene SelectCards = (PackedScene)GD.Load("res://SelectCards.tscn");
-                Tree SelectMenu = (Tree)SelectCards.Instance();
-                board.child.AddChild(SelectMenu);
-                
-                board.AcceptButton.SetPosition(new Vector2(875, 720));
-                
-                Vector2 FirstPosition = new Vector2(180, 450);
-
-                // Showing cards to select
-                int index = 1;
-                foreach (var card in Source)
                 {
                     VisualMethods.selectVisually(playerHand, playerHand.Count-Game.MaxInHand, Discard, playerHand);
                 }

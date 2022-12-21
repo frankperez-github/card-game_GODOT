@@ -1,7 +1,3 @@
 is_global = true
 build_property.RootNamespace = cardgame
-<<<<<<< HEAD
-build_property.ProjectDir = c:\Users\bathr\OneDrive\Desktop\Clone\card-game_GODOT\
-=======
-build_property.ProjectDir = /home/frankperez/Documents/card-game/
->>>>>>> 960bc1ed04ba42c5901c5265d255d30e5f7f1e91
+build_property.ProjectDir = C:\Users\bathr\OneDrive\Desktop\Clone\card-game_GODOT\

@@ -418,6 +418,7 @@ namespace gameVisual
             PackedScene EscMenu = (PackedScene)GD.Load("res://PauseMenu.tscn");
             Node PauseMenu = (Node)EscMenu.Instance();
             boardNode.AddChild(PauseMenu);
+            boardNode.GetParent().GetTree().Paused = true;
         }
 
         #endregion
