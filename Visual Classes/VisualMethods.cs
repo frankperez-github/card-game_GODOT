@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using gameEngine;
 using System.Diagnostics;
-using gameVisual;
+using System;
 namespace gameVisual
 {
     public class VisualMethods
@@ -13,8 +13,6 @@ namespace gameVisual
         public static bool selecting = false;
         // public static Player discardPlayer = new Player("default");
         // public static List<Button> discardButtons = new List<Button>();
-        public static List<Sprite> selectCards;
-        public static int selectQuant = 1;
         public static List<Relics> SelectedCards;
         public static List<Relics> SourceToSelect;
 
@@ -95,12 +93,6 @@ namespace gameVisual
             board.Attack.Disabled = true;
             board.VisualBoard.Update();
 
-        }
-        public static Button InstanciateButton()
-        {
-            PackedScene relic = (PackedScene)GD.Load("res://DiscardButton.tscn");
-            Button button = (Button)relic.Instance();
-            return button;
         }
         public static Sprite InstanciateVisualCard(Relics card)
         {
@@ -222,11 +214,19 @@ namespace gameVisual
                 }
             }
         }
+        public static void DiscardVirtualPlayer(List<Relics> hand, int count)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                Random rnd = new Random();
+                int card = rnd.Next(0, hand.Count-1);
+                hand.RemoveAt(card);
+            }
+        }
         public static void resetVisualGame()
         {
             VisualMethods.selecting = false;
-            VisualMethods.selectCards = null;
-            VisualMethods.selectQuant = 1;
+            SelectCards.selectCards = null;
             VisualMethods.SelectedCards = null;
             VisualMethods.SourceToSelect = null;
 
@@ -320,61 +320,38 @@ namespace gameVisual
         public static void ActiveClickAction(InputEventMouseButton mouseEvent)
         {
             switch ((ButtonList)mouseEvent.ButtonIndex)
-                {
-                    case ButtonList.Left:
+            {
+                case ButtonList.Left:
 
-                        if (VisualMethods.selecting)
+                    if(board.Game.turn % 2 == 0)
+                    {
+                        // // Player 1 is clicking
+                        // for(int i = 0; i < Player1VisualHand.Count; i++)
+                        // {
+                        //     if (Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseEvent.Position)) && Player1emptySlots > 0)
+                        //     {
+                        //         // Add to player's battlefield logically and visually
+                        //         Game.player1.hand[i].Effect(); // Activating effect of card
+                        //         Player1emptySlots--;
+                        //         GetTree().Paused = true;
+                        //         RefreshBoard();
+                        //         GetTree().Paused = false;
+                        //     }
+                            
+                        // }
+                    }
+                    else // Player 2 is clicking
+                    {
+                        for(int i = 0; i < board.VisualBoard.visualHand2.visualHand.Count; i++)
                         {
-                            for(int i = 0; i < VisualMethods.selectCards.Count; i++)
+                            if  (board.VisualBoard.visualHand2.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand2.visualHand[i].ToLocal(mouseEvent.Position)))
                             {
-                                if (VisualMethods.selectCards[i].GetRect().HasPoint(VisualMethods.selectCards[i].ToLocal(mouseEvent.Position)))
-                                {
-                                    if (VisualMethods.selectCards[i].Scale == new Vector2((float)0.30,(float)0.30))
-                                    {
-                                        VisualMethods.selectQuant++;
-                                        VisualMethods.SelectedCards.Remove(VisualMethods.SourceToSelect[i]);
-                                        VisualMethods.selectCards[i].Scale = new Vector2((float)0.25,(float)0.25);
-                                    }
-                                    else if (VisualMethods.selectQuant != 0)
-                                    {
-                                        VisualMethods.selectQuant--;
-                                        VisualMethods.SelectedCards.Add(VisualMethods.SourceToSelect[i]);
-                                        VisualMethods.selectCards[i].Scale = new Vector2((float)0.30,(float)0.30);
-                                    }
-                                    board.VisualBoard.Update();
-                                }
+                                Effect(board.Game.player2.hand[i]);
                             }
                         }
-
-                        if(board.Game.turn % 2 == 0)
-                        {
-                            // // Player 1 is clicking
-                            // for(int i = 0; i < Player1VisualHand.Count; i++)
-                            // {
-                            //     if (Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseEvent.Position)) && Player1emptySlots > 0)
-                            //     {
-                            //         // Add to player's battlefield logically and visually
-                            //         Game.player1.hand[i].Effect(); // Activating effect of card
-                            //         Player1emptySlots--;
-                            //         GetTree().Paused = true;
-                            //         RefreshBoard();
-                            //         GetTree().Paused = false;
-                            //     }
-                                
-                            // }
-                        }
-                        else // Player 2 is clicking
-                        {
-                            for(int i = 0; i < board.VisualBoard.visualHand2.visualHand.Count; i++)
-                            {
-                                if  (board.VisualBoard.visualHand2.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand2.visualHand[i].ToLocal(mouseEvent.Position)))
-                                {
-                                    Effect(board.Game.player2.hand[i]);
-                                }
-                            }
-                        }
-                        break;
-                }
+                    }
+                    break;
+            }
         }     
         public static void Effect(Relics relic)
         {

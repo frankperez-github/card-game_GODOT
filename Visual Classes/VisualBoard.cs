@@ -143,6 +143,17 @@ namespace gameVisual
                 UpdateVisualHand(visualHand2);
                 VisualMethods.UpdatePlayersVisualProperties();
                 visualGraveYard.Show();
+
+                if (board.Game.player1.hand.Count > Game.MaxInHand)
+                {
+                    Discard(board.Game.player1);
+                    UpdateVisualHand(visualHand1);
+                }
+                if (board.Game.player2.hand.Count > Game.MaxInHand)
+                {
+                    Discard(board.Game.player2);
+                    UpdateVisualHand(visualHand2);
+                }    
             }
             public void UpdateBattleFields(Player player)
             {
@@ -166,60 +177,40 @@ namespace gameVisual
                     VisualMethods.CreateNewCards(VisualHand);
                 }
                 VisualMethods.RefreshPositionCards(VisualHand);
-
-                if (board.Game.player1.hand.Count > Game.MaxInHand)
-                {
-                    Discard(board.Game.player1);
-                }
-                if (board.Game.player2.hand.Count > Game.MaxInHand)
-                {
-                    Discard(board.Game.player2);
-                }        
+  
             }
             public void Discard(Player player)
             {
-                selectVisually(player.hand, player.hand.Count-Game.MaxInHand);
+                if(player is VirtualPlayer)
+                    VisualMethods.DiscardVirtualPlayer(player.hand, player.hand.Count-Game.MaxInHand);
+                else
+                    selectVisually(player.hand, player.hand.Count-Game.MaxInHand);
             }
             
             public void selectVisually(List<Relics> Source, int quant)
             {
                 VisualMethods.selecting = true;
                 VisualMethods.SelectedCards = new List<Relics>();
-                VisualMethods.selectCards = new List<Sprite>();
+                SelectCards.selectCards = new List<Sprite>();
                 VisualMethods.SourceToSelect = Source;
-                VisualMethods.selectQuant = quant;
-                PackedScene SelectCards = (PackedScene)GD.Load("res://SelectCards.tscn");
-                Tree SelectMenu = (Tree)SelectCards.Instance();
+                SelectCards.selectQuant = quant;
+                PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
+                Tree SelectMenu = (Tree)SelectCardsScene.Instance();
                 board.child.AddChild(SelectMenu);
+                board.child.GetTree().Paused = true;
                 
-                board.AcceptButton.SetPosition(new Vector2(875, 720));
-                
-                Vector2 FirstPosition = new Vector2(180, 450);
+                Vector2 FirstPosition = new Vector2(180, 275);
 
                 // Showing cards to select
                 int index = 1;
                 foreach (var card in Source)
                 {
                     Sprite Card = VisualMethods.InstanciateVisualCard(card);
-                    VisualMethods.selectCards.Add(Card);
-                    board.child.AddChild(Card);
-                    Card.Position = new Vector2(210 * index, FirstPosition.y); 
+                    SelectCards.selectCards.Add(Card);
+                    SelectMenu.AddChild(Card);
+                    Card.Position = new Vector2(210 * index + FirstPosition.x, FirstPosition.y); 
                     index++;
-                }
-
-                VisualMethods.selecting = true;
-                if (VisualMethods.selectQuant == 0)
-                {
-                    VisualMethods.selecting = false;
-                }
-
-                if(board.AcceptButton.Pressed)
-                {
-                    foreach (Node node in VisualMethods.selectCards)
-                    {
-                        node.QueueFree();
-                    }
-                    SelectMenu.QueueFree();
+                    GD.Print("ene");
                 }
             }
         }

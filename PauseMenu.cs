@@ -11,6 +11,7 @@ namespace gameVisual
 
         public override void _Ready()
         {
+            PauseMode = PauseModeEnum.Process;
             Quit = GetNode<Button>("PauseMenu/Continue/Quit");
             Continue = GetNode<Button>("PauseMenu/Continue");
             Capitulation = GetNode<Button>("PauseMenu/Continue/Capitulation");
