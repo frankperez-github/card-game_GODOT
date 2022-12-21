@@ -411,7 +411,7 @@ namespace gameEngine
                     for (int i = 0; i < int.Parse(condition); i++)
                     {
                         Random rnd = new Random();
-                        result.Add(list.ElementAt(rnd.Next(1, list.Count)));
+                        result.Add(list.ElementAt(rnd.Next(0, list.Count-1)));
                     }
                     return result;
                 }
@@ -445,6 +445,144 @@ namespace gameEngine
     }
 
 
+    public class InterpretEffect
+    {
+        public bool Active = false; 
+        public void Scan(Relics Relic)
+        {
+            string[] expression = Relic.effect.Split('\n');
+            Scan(expression, 0, Relic.Owner, Relic.Enemy, Relic);
+        }
+        //Metodo Recursivo
+        public void Scan(string[] expression, int index, Player Owner, Player Enemy, Relics Relic)
+        {
+            if(index==expression.Length)
+            {
+                return;
+            }
+            if (expression[index].Contains("if ("))
+            {
+                string condition = expression[index].Substring(expression[index].IndexOf("("), expression[index].Length -2 - expression[index].IndexOf("("));
+                if (new BoolEx(condition, Owner, Enemy, Relic).Evaluate())
+                {
+                    if (!Active)
+                    {
+                        Active = true;
+                        return;
+                    }
+                    Scan(expression, index+1, Owner, Enemy, Relic);
+                }
+                else
+                {
+                    //Si la condicion es falsa revisará hasta encontrar la llave de cierre correspondiente al if
+                    for (int i = index+1; i < expression.Length; i++)
+                    {
+                        int key = 0;
+                        if(expression[i].Contains("{"))
+                        {
+                            key++;
+                        }
+                        else if(expression[i].Contains("}"))
+                        {
+                            key--;
+                        }
+                        if(key == 0)
+                        {
+                            if(expression[i].Contains("else"))
+                            {
+                                Scan(expression, i+1, Owner, Enemy, Relic);
+                                break;
+                            }
+                            if(expression[i].Contains("else if ("))
+                            {
+                                expression[i] = expression[i].Replace("else ", "");
+                                Scan(expression, i, Owner, Enemy, Relic);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            else if (!expression[index].Contains("{") && !expression[index].Contains("}"))
+            {
+                InterpretActionExpression(expression[index], Relic);
+                Scan(expression, index+1, Owner, Enemy, Relic);
+            }    
+            //Si no es un if ni una accion es una llave y nos la saltamos
+            else Scan(expression, index+1, Owner, Enemy, Relic);
+        }
+            public static Player SetAffected(string player, Relics relics)
+        {
+            if (player == "Owner")
+            {
+                return relics.Owner;
+            }
+            else
+            {
+                return relics.Enemy;
+            }
+        }
+        public Player SetNotAffected(Player Affected)
+        {
+            return Affected.Enemy;
+        }
+        public void Action(string expression, Player Affected, Player NotAffected, Relics relics)
+        {
+            EditExpression Edit = new EditExpression();
+            expression = Edit.CutExpression(expression);
+            switch (Edit.NextWord(expression))
+            {
+                case "Attack":
+                    Attack Attack = new Attack(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
+                    Attack Negate = new Attack("-" + Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
+                    relics.Actions.Add(Negate);
+                    Attack.Effect();
+                    break;
+                case "Cure":
+                    Cure Cure = new Cure(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
+                    relics.Actions.Add(Cure);
+                    Cure.Effect();
+                    break;
+                case "Draw":
+                    Draw Draw = new Draw(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
+                    relics.Actions.Add(Draw);
+                    Draw.Effect();
+                    break;
+                case "Remove":
+                    Remove Remove = new Remove(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
+                    relics.Actions.Add(Remove);
+                    Remove.Effect();
+                    break;
+                case "Defense":
+                    Defense Defense = new Defense(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
+                    relics.Actions.Add(Defense);
+                    Defense.Effect();
+                    break;
+                case "ChangeState":
+                    ChangeState ChangeState = new ChangeState(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
+                    relics.Actions.Add(ChangeState);
+                    break;
+                case "Show":
+                    Show Show = new Show(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
+                    relics.Actions.Add(Show);
+                    Show.Effect();
+                    break;
+        }
+    
+        }
+        public void InterpretActionExpression(string action, Relics relics)
+        {
+            EditExpression Edit = new EditExpression();
+            int start = action.IndexOf("(");
+            int end = action.IndexOf(")");
+            string actualAction = action.Substring(start, end - start);
+            
+            Player Affected = SetAffected(Edit.NextWord(actualAction), relics);
+            Player NotAffected = SetNotAffected(Affected);
+            Action(actualAction, Affected, NotAffected, relics);
+        
+        }
+    }
     public class InterpretAction : Expression
     {
         public Player Affected;
@@ -638,6 +776,7 @@ namespace gameEngine
                                 {
                                     this.Relic.Owner.hand.Add(new Relics(Affected, this.Relic.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration,
                                                     card.imgAddress, card.isTrap, card.type, card.effect, card.description));
+                                    GD.Print("Add");
                                     break;
                                 }
                             }
@@ -645,6 +784,7 @@ namespace gameEngine
                     }
                     else
                     {
+                        GD.Print(this.expressionA);
                         affectedCards = FullList.FullList(this.expressionA, this.Relic.Enemy);
                         
                         foreach (var card in affectedCards)
@@ -769,10 +909,14 @@ namespace gameEngine
             cards = cards * factor;
             for (int i = 0; i < cards; i++)
             {
-                Random rnd = new Random();
-                int random = rnd.Next(1, Place.Count());
-                gameVisual.board.Game.GraveYard.Add(Place[random]);
-                Place.RemoveAt(random);
+                try
+                {
+                    Random rnd = new Random();
+                    int random = rnd.Next(0, Place.Count()-1);
+                    gameVisual.board.Game.GraveYard.Add(Place[random]);
+                    Place.RemoveAt(random);
+                }
+                catch{}
             }
         }
         void RemoveForList(List<Relics> Place)

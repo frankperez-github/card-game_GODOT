@@ -29,7 +29,7 @@ namespace gameVisual
 
             for (var i = 0; i < mainMenu.Inventory.CharactersInventory.Count; i++)
             {
-                Sprite Character = gameVisual.board.InstanciateVisualCharact(mainMenu.Inventory.CharactersInventory[i]);
+                Sprite Character = VisualMethods.InstanciateVisualCharact(mainMenu.Inventory.CharactersInventory[i]);
                 AddChild(Character);
                 characters.Add(Character);
                 Character.Position = charactPositions[i];
