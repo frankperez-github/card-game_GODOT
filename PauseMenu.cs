@@ -28,7 +28,7 @@ namespace gameVisual
             }
             if (Capitulation.Pressed)
             {
-                // board.VisualBoard.resetVisualGame();
+                VisualMethods.resetVisualGame();
                 GetTree().ChangeScene("res://mainMenu.tscn");
             }
         }

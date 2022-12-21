@@ -460,8 +460,10 @@ namespace gameEngine
             {
                 return;
             }
+
             if (expression[index].Contains("if ("))
             {
+
                 string condition = expression[index].Substring(expression[index].IndexOf("("), expression[index].Length -2 - expression[index].IndexOf("("));
                 if (new BoolEx(condition, Owner, Enemy, Relic).Evaluate())
                 {
@@ -490,6 +492,11 @@ namespace gameEngine
                         {
                             if(expression[i].Contains("else"))
                             {
+                                if (!Active)
+                                {
+                                    Active = true;
+                                    return;
+                                }
                                 Scan(expression, i+1, Owner, Enemy, Relic);
                                 break;
                             }
@@ -505,6 +512,11 @@ namespace gameEngine
             }
             else if (!expression[index].Contains("{") && !expression[index].Contains("}"))
             {
+                if (!Active)
+                {
+                    Active = true;
+                    return;
+                }
                 InterpretActionExpression(expression[index], Relic);
                 Scan(expression, index+1, Owner, Enemy, Relic);
             }    
@@ -776,7 +788,6 @@ namespace gameEngine
                                 {
                                     this.Relic.Owner.hand.Add(new Relics(Affected, this.Relic.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration,
                                                     card.imgAddress, card.isTrap, card.type, card.effect, card.description));
-                                    GD.Print("Add");
                                     break;
                                 }
                             }
@@ -784,7 +795,6 @@ namespace gameEngine
                     }
                     else
                     {
-                        GD.Print(this.expressionA);
                         affectedCards = FullList.FullList(this.expressionA, this.Relic.Enemy);
                         
                         foreach (var card in affectedCards)
