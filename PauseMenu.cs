@@ -25,11 +25,13 @@ namespace gameVisual
             }
             if (Continue.Pressed)
             {
+                GetTree().Paused = false;
                 this.QueueFree();
             }
             if (Capitulation.Pressed)
             {
                 VisualMethods.resetVisualGame();
+                GetTree().Paused = false;
                 GetTree().ChangeScene("res://mainMenu.tscn");
             }
             
