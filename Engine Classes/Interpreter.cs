@@ -970,8 +970,6 @@ namespace gameEngine
             if(IsDigit(count))
             {
                 cards = int.Parse(count);
-                Console.Clear();
-                Console.WriteLine("El enemygo cuenta con " + Affected.hand.Count() + " cartas en su mano, cuales desea ver?");
                 for (int i = 0; i < cards; i++)
                 {
                     try
@@ -983,10 +981,6 @@ namespace gameEngine
                         break;
                     }
                     
-                }
-                foreach (var card in show)
-                {
-                    Console.WriteLine(card.name);
                 }
             }
             else if(count == "all")
@@ -1002,7 +996,10 @@ namespace gameEngine
         }
         public void ShowCards(List<Relics> show)
         {
-            
+            VisualMethods.selectVisually(show, 0, (x)=>{}, new List<Relics>());
+            SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("Tree/DiscardLabel");
+            SelectCards.SelectLabel.Text = "EnemyHand: " ;
+            SelectCards.SelectLabel.Visible = true;
         }
     }
 }

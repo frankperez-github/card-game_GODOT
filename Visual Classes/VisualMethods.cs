@@ -10,13 +10,9 @@ namespace gameVisual
         #region Visual Objects
 
         public static Sprite Relic = new Sprite();
-
         public static bool selecting = false;
-        // public static Player discardPlayer = new Player("default");
-        // public static List<Button> discardButtons = new List<Button>();
         public static List<Relics> SelectedCards;
         public static List<Relics> SourceToSelect;
-
         #endregion
 
         public static Node boardNode;
@@ -30,20 +26,30 @@ namespace gameVisual
             VisualMethods.SourceToSelect = Source;
             SelectCards.selectQuant = quant;
 
-            Node SelectMenu = SelectCards.SelectCardInstance;
+            Node SelectMenu = SelectCards.SelectCardsScene.Instance();
+            SelectCards.SelectCardInstance = SelectMenu;
             board.child.AddChild(SelectMenu);
             board.child.GetTree().Paused = true;
             
-            Vector2 FirstPosition = new Vector2(180, 275);
+            float InitialPosition = (1010) - ((200 * (Source.Count-1))/2);
+            Vector2 FirstPosition = new Vector2(InitialPosition, 470);
 
             // Showing cards to select
-            int index = 1;
+            int index = 0;
             foreach (var card in Source)
             {
                 Sprite Card = VisualMethods.InstanciateVisualCard(card);
+                Card.ZIndex = 7;
                 SelectCards.selectCards.Add(Card);
                 SelectMenu.AddChild(Card);
-                Card.Position = new Vector2(210 * index + FirstPosition.x, FirstPosition.y); 
+                if(index==0)
+                {
+                    SelectCards.selectCards[index].Position = new Vector2(FirstPosition.x, FirstPosition.y);
+                }
+                else
+                {
+                    SelectCards.selectCards[index].Position = new Vector2(SelectCards.selectCards[index-1].Position.x + 200, FirstPosition.y);
+                }
                 index++;
             }
         }
@@ -151,7 +157,7 @@ namespace gameVisual
             name.Text = card.name;
 
             img.Texture = image;
-            img.Scale = new Vector2((float)0.60, (float)0.50);
+            img.Scale = new Vector2((float)0.96, (float)0.74);
 
 
             description.Text = card.description;
@@ -159,7 +165,7 @@ namespace gameVisual
             duration.Text = card.activeDuration.ToString();
 
             type.Texture = Type;
-            type.Scale = new Vector2((float)0.15, (float)0.15);
+            type.Scale = new Vector2((float)0.25, (float)0.25);
             return Relic;
         }
         public static Sprite InstanciateVisualCharact(gameEngine.CharacterProperties character)
@@ -175,7 +181,7 @@ namespace gameVisual
 
             name.Text = character.name;
             img.Texture = image;
-            img.Scale = new Vector2((float)0.64, (float)0.52);
+            img.Scale = new Vector2((float)0.96, (float)0.77);
             description.Text = character.description;
             return Relic;
         }
@@ -202,8 +208,8 @@ namespace gameVisual
                 ((Label)Preview.GetChild(4)).Text = ((Label)Relic.GetChild(4)).Text; //Description
 
                 // Scale of Image and Type sprites
-                ((Sprite)Preview.GetChild(1)).Scale = new Vector2((float)0.60, (float)0.50);
-                ((Sprite)Preview.GetChild(3)).Scale = new Vector2((float)0.15, (float)0.15);
+                ((Sprite)Preview.GetChild(1)).Scale = new Vector2((float)0.96, (float)0.74);
+                ((Sprite)Preview.GetChild(3)).Scale = new Vector2((float)0.25, (float)0.25);
             }
         }
         public static void AddtoVisualBattleField(Player Owner, Relics relic)
@@ -385,7 +391,7 @@ namespace gameVisual
                     if(board.VisualBoard.visualGraveYard.graveYard.Count>0)
                     {
                         selectVisually(board.VisualBoard.visualGraveYard.graveYard, 0, (x)=>{}, new List<Relics>());
-                        SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("DiscardLabel");
+                        SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("Tree/DiscardLabel");
                         SelectCards.SelectLabel.Text = "Graveyard: " ;
                         SelectCards.SelectLabel.Visible = true;
                     }

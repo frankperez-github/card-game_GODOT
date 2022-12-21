@@ -2,7 +2,7 @@
 
 [ext_resource path="res://mainMenu.cs" type="Script" id=1]
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Sprites/board-texture.jpeg" type="Texture" id=3]
+[ext_resource path="res://Sprites/WhatsApp Image 2022-12-07 at 11.20.16 PM.jpeg" type="Texture" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 57
@@ -25,16 +25,17 @@ rotation = -0.000353929
 script = ExtResource( 1 )
 
 [node name="Board-texturejpeg" type="Sprite" parent="."]
-position = Vector2( -13.0145, -21.0509 )
-scale = Vector2( 6.97495, 6.01587 )
+position = Vector2( 2054.05, -135.273 )
+rotation = 1.56762
+scale = Vector2( 2.08166, 2.25526 )
 texture = ExtResource( 3 )
 centered = false
 
 [node name="Start" type="Button" parent="."]
-margin_left = 768.919
-margin_top = 229.272
-margin_right = 1107.92
-margin_bottom = 320.272
+margin_left = 772.872
+margin_top = 361.274
+margin_right = 1111.87
+margin_bottom = 452.274
 custom_fonts/font = SubResource( 1 )
 text = "vs virtual player"
 __meta__ = {

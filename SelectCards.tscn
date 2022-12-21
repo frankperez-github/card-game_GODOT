@@ -1,34 +1,52 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Sprites/Tipografia/MarkaziText-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://SelectCards.cs" type="Script" id=2]
+[ext_resource path="res://Sprites/prueba transparencia_Mesa de trabajo 1.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/1671655080359 (1).png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Tipografia/BlackOpsOne-Regular.ttf" type="DynamicFontData" id=5]
+
+[sub_resource type="Theme" id=3]
 
 [sub_resource type="DynamicFont" id=1]
-size = 50
+size = 19
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 52
-font_data = ExtResource( 1 )
+size = 15
+font_data = ExtResource( 5 )
 
-[node name="Tree" type="Tree"]
-margin_top = 217.0
-margin_right = 1929.0
-margin_bottom = 821.0
+[node name="Tree" type="Sprite"]
+z_index = 6
 script = ExtResource( 2 )
 
-[node name="DiscardLabel" type="Label" parent="."]
-margin_left = 16.0
-margin_top = 21.0
-margin_right = 475.0
-margin_bottom = 87.0
+[node name="PruebaTransparenciaMesaDeTrabajo1" type="Sprite" parent="."]
+position = Vector2( 978, 552 )
+rotation = 1.57326
+scale = Vector2( 0.658258, 0.705069 )
+z_index = -1
+texture = ExtResource( 3 )
+
+[node name="Tree" type="Sprite" parent="."]
+position = Vector2( 978, 506 )
+scale = Vector2( 2.5019, 1.93612 )
+texture = ExtResource( 4 )
+
+[node name="DiscardLabel" type="Label" parent="Tree"]
+margin_left = -83.9363
+margin_top = -186.971
+margin_right = 97.0637
+margin_bottom = -161.971
+theme = SubResource( 3 )
 custom_fonts/font = SubResource( 1 )
 text = "You must discard"
+align = 1
 
-[node name="Button" type="Button" parent="."]
-margin_left = 827.0
-margin_top = 494.0
-margin_right = 1094.0
-margin_bottom = 572.0
+[node name="Button" type="Button" parent="Tree"]
+margin_left = -35.573
+margin_top = 102.266
+margin_right = 62.427
+margin_bottom = 135.266
+theme = SubResource( 3 )
 custom_fonts/font = SubResource( 2 )
 text = "Aceptar"
