@@ -5,7 +5,7 @@ using gameEngine;
 
 namespace gameVisual
 {
-    public class SelectCards : Tree
+    public class SelectCards : Sprite
     {
         public static Button AcceptButton;
         public static int selectQuant = 1;
@@ -13,14 +13,14 @@ namespace gameVisual
         public static Action<List<Relics>> SelectDelegate;
         public static List<Relics> target;
         public static Label SelectLabel;
-        static PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
+        public static PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
         public static Node SelectCardInstance = SelectCardsScene.Instance(); 
 
         public override void _Ready()
         {
             PauseMode = PauseModeEnum.Process;
-            AcceptButton = GetNode<Button>("Button");
-            SelectLabel = GetNode<Label>("DiscardLabel");
+            AcceptButton = GetNode<Button>("Tree/Button");
+            SelectLabel = GetNode<Label>("Tree/DiscardLabel");
             SelectLabel.Text = "Select: " + selectQuant;
             SelectLabel.Visible = true;
             VisualMethods.selecting = true;
@@ -63,11 +63,11 @@ namespace gameVisual
                                 if (selectCards[i].GetRect().HasPoint(selectCards[i].ToLocal(mouseEvent.Position)))
                                 {
                                     // Deselecting
-                                    if (selectCards[i].Scale == new Vector2((float)0.30,(float)0.30))
+                                    if (selectCards[i].Scale == new Vector2((float)0.20,(float)0.20))
                                     {
                                         selectQuant++;
                                         VisualMethods.SelectedCards.Remove(VisualMethods.SourceToSelect[i]);
-                                        selectCards[i].Scale = new Vector2((float)0.25,(float)0.25);
+                                        selectCards[i].Scale = new Vector2((float)0.170,(float)0.170);
                                     }
                                     // Selecting
                                     else if (selectQuant != 0)
@@ -75,7 +75,7 @@ namespace gameVisual
                                         // GD.Print(selectCards[i].Scale);
                                         selectQuant--;
                                         VisualMethods.SelectedCards.Add(VisualMethods.SourceToSelect[i]);
-                                        selectCards[i].Scale = new Vector2((float)0.30,(float)0.30);
+                                        selectCards[i].Scale = new Vector2((float)0.20,(float)0.20);
                                     }
                                     break;
                                 }

@@ -97,10 +97,10 @@ namespace gameVisual
                             {
                                 foreach (var charact in characters)
                                 {
-                                    charact.Scale = new Vector2((float)0.24,(float)0.25);
+                                    charact.Scale = new Vector2((float)0.17,(float)0.18);
                                 }
                                 
-                                characters[i].Scale = new Vector2((float)0.40,(float)0.41);
+                                characters[i].Scale = new Vector2((float)0.27,(float)0.28);
                                 character1 = mainMenu.Inventory.CharactersInventory[i];
                             }
                         }

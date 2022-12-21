@@ -17,14 +17,14 @@ namespace gameVisual
             {
                 Vector2[] Player2FieldPositions = new Vector2[4]
                 {
-                    new Vector2(570, 725),
+                    new Vector2(575, 725),
                     new Vector2(860, 725),
                     new Vector2(1145, 725),
                     new Vector2(1430, 725)
                 };
                 Vector2[] Player1FieldPositions = new Vector2[4]
                 {
-                    new Vector2(570, 330),
+                    new Vector2(575, 330),
                     new Vector2(860, 330),
                     new Vector2(1145, 330),
                     new Vector2(1430, 330)
@@ -64,8 +64,8 @@ namespace gameVisual
                             ((Label)GraveYardCard.GetChild(2)).Text = ((Label)Relic.GetChild(2)).Text;
                             ((Sprite)GraveYardCard.GetChild(3)).Texture = ((Sprite)Relic.GetChild(3)).Texture;
                             ((Label)GraveYardCard.GetChild(4)).Text = ((Label)Relic.GetChild(4)).Text;
-                            ((Sprite)GraveYardCard.GetChild(1)).Scale = new Vector2((float)0.60, (float)0.50);
-                            ((Sprite)GraveYardCard.GetChild(3)).Scale = new Vector2((float)0.15, (float)0.15);
+                            ((Sprite)GraveYardCard.GetChild(1)).Scale = new Vector2((float)0.96, (float)0.72);
+                            ((Sprite)GraveYardCard.GetChild(3)).Scale = new Vector2((float)0.25, (float)0.25);
                         }
                     }
                 }
