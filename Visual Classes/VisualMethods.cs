@@ -10,12 +10,6 @@ namespace gameVisual
         #region Visual Objects
 
         public static Sprite Relic = new Sprite();
-<<<<<<< HEAD
-        public static Node boardNode = board.child;
-
-        #endregion
-
-=======
 
         public static bool selecting = false;
         // public static Player discardPlayer = new Player("default");
@@ -28,7 +22,6 @@ namespace gameVisual
         #endregion
 
         public static Node boardNode;
->>>>>>> f1610c5e98bfb29019461e649bc64ededd148943
 
         public static void ListenToVisualButtons()
         {
@@ -230,9 +223,6 @@ namespace gameVisual
                 }
             }
         }
-<<<<<<< HEAD
-       
-=======
         public static void resetVisualGame()
         {
             VisualMethods.selecting = false;
@@ -304,7 +294,6 @@ namespace gameVisual
         }
         
         
->>>>>>> f1610c5e98bfb29019461e649bc64ededd148943
         #region Input Methods
         public static void PreviewHandCards(Board.VisualHand Hand, InputEventMouse mouseMove)
         {

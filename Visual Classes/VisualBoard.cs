@@ -202,12 +202,8 @@ namespace gameVisual
                 VisualMethods.selectQuant = quant;
                 PackedScene SelectCards = (PackedScene)GD.Load("res://SelectCards.tscn");
                 Tree SelectMenu = (Tree)SelectCards.Instance();
-<<<<<<< HEAD
-                AddChild(SelectMenu);
-=======
                 board.child.AddChild(SelectMenu);
                 
->>>>>>> f1610c5e98bfb29019461e649bc64ededd148943
                 board.AcceptButton.SetPosition(new Vector2(875, 720));
                 
                 Vector2 FirstPosition = new Vector2(180, 450);
