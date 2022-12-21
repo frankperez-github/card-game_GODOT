@@ -5,7 +5,6 @@ namespace gameVisual
 {
     public class PauseMenu : Node
     {
-
         public Button Quit;
         public Button Continue;
         public Button Capitulation;

@@ -9,6 +9,7 @@ namespace gameEngine
         public Player player2{get; set;}
         public int turn{get; set;}
         public List<Relics> GraveYard{get; set;}
+        public const int MaxInHand = 6;
 
         public Game(Player player1, Player player2)
         {
