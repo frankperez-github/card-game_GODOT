@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using gameEngine;
 using System.Diagnostics;
-using gameVisual;
+using System;
 namespace gameVisual
 {
     public class VisualMethods
@@ -14,15 +14,39 @@ namespace gameVisual
         public static bool selecting = false;
         // public static Player discardPlayer = new Player("default");
         // public static List<Button> discardButtons = new List<Button>();
-        public static List<Sprite> selectCards;
-        public static int selectQuant = 1;
         public static List<Relics> SelectedCards;
         public static List<Relics> SourceToSelect;
 
         #endregion
 
         public static Node boardNode;
+        public static void selectVisually(List<Relics> Source, int quant, System.Action<List<Relics>> Delegate, List<Relics> target)
+        {
+            SelectCards.target = target;
+            VisualMethods.selecting = true;
+            VisualMethods.SelectedCards = new List<Relics>();
+            SelectCards.selectCards = new List<Sprite>();
+            SelectCards.SelectDelegate = Delegate;
+            VisualMethods.SourceToSelect = Source;
+            SelectCards.selectQuant = quant;
 
+            Node SelectMenu = SelectCards.SelectCardInstance;
+            board.child.AddChild(SelectMenu);
+            board.child.GetTree().Paused = true;
+            
+            Vector2 FirstPosition = new Vector2(180, 275);
+
+            // Showing cards to select
+            int index = 1;
+            foreach (var card in Source)
+            {
+                Sprite Card = VisualMethods.InstanciateVisualCard(card);
+                SelectCards.selectCards.Add(Card);
+                SelectMenu.AddChild(Card);
+                Card.Position = new Vector2(210 * index + FirstPosition.x, FirstPosition.y); 
+                index++;
+            }
+        }
         public static void ListenToVisualButtons()
         {
             if (board.endButton.Pressed)
@@ -96,12 +120,6 @@ namespace gameVisual
             board.Attack.Disabled = true;
             board.VisualBoard.Update();
 
-        }
-        public static Button InstanciateButton()
-        {
-            PackedScene relic = (PackedScene)GD.Load("res://DiscardButton.tscn");
-            Button button = (Button)relic.Instance();
-            return button;
         }
         public static Sprite InstanciateVisualCard(Relics card)
         {
@@ -223,11 +241,24 @@ namespace gameVisual
                 }
             }
         }
+        public static void DiscardVirtualPlayer(List<Relics> hand, int count)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                Random rnd = new Random();
+                int card = rnd.Next(0, hand.Count-1);
+                board.Game.GraveYard.Add(hand[card]);
+                hand.RemoveAt(card);
+            }
+            board.VisualBoard.UpdateVisualHand(board.VisualBoard.visualHand2);
+            board.VisualBoard.UpdateVisualHand(board.VisualBoard.visualHand1);
+            VisualMethods.UpdatePlayersVisualProperties();
+            board.VisualBoard.visualGraveYard.Show();
+        }
         public static void resetVisualGame()
         {
             VisualMethods.selecting = false;
-            VisualMethods.selectCards = null;
-            VisualMethods.selectQuant = 1;
+            SelectCards.selectCards = null;
             VisualMethods.SelectedCards = null;
             VisualMethods.SourceToSelect = null;
 
@@ -293,7 +324,6 @@ namespace gameVisual
             }
         }
         
-        
         #region Input Methods
         public static void PreviewHandCards(Board.VisualHand Hand, InputEventMouse mouseMove)
         {
@@ -321,61 +351,47 @@ namespace gameVisual
         public static void ActiveClickAction(InputEventMouseButton mouseEvent)
         {
             switch ((ButtonList)mouseEvent.ButtonIndex)
+            {
+                case ButtonList.Left:
+                    if(board.Game.turn % 2 == 0)
+                    {
+                        // // Player 1 is clicking
+                        // for(int i = 0; i < Player1VisualHand.Count; i++)
+                        // {
+                        //     if (Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseEvent.Position)) && Player1emptySlots > 0)
+                        //     {
+                        //         // Add to player's battlefield logically and visually
+                        //         Game.player1.hand[i].Effect(); // Activating effect of card
+                        //         Player1emptySlots--;
+                        //         GetTree().Paused = true;
+                        //         RefreshBoard();
+                        //         GetTree().Paused = false;
+                        //     }
+                            
+                        // }
+                    }
+                    else // Player 2 is clicking
+                    {
+                        for(int i = 0; i < board.VisualBoard.visualHand2.visualHand.Count; i++)
+                        {
+                            if  (board.VisualBoard.visualHand2.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand2.visualHand[i].ToLocal(mouseEvent.Position)))
+                            {
+                                Effect(board.Game.player2.hand[i]);
+                            }
+                        }
+                    }
+                if(board.VisualBoard.visualGraveYard.GraveYardCard.GetRect().HasPoint(board.VisualBoard.visualGraveYard.GraveYardCard.ToLocal(mouseEvent.Position)))
                 {
-                    case ButtonList.Left:
-
-                        if (VisualMethods.selecting)
-                        {
-                            for(int i = 0; i < VisualMethods.selectCards.Count; i++)
-                            {
-                                if (VisualMethods.selectCards[i].GetRect().HasPoint(VisualMethods.selectCards[i].ToLocal(mouseEvent.Position)))
-                                {
-                                    if (VisualMethods.selectCards[i].Scale == new Vector2((float)0.30,(float)0.30))
-                                    {
-                                        VisualMethods.selectQuant++;
-                                        VisualMethods.SelectedCards.Remove(VisualMethods.SourceToSelect[i]);
-                                        VisualMethods.selectCards[i].Scale = new Vector2((float)0.25,(float)0.25);
-                                    }
-                                    else if (VisualMethods.selectQuant != 0)
-                                    {
-                                        VisualMethods.selectQuant--;
-                                        VisualMethods.SelectedCards.Add(VisualMethods.SourceToSelect[i]);
-                                        VisualMethods.selectCards[i].Scale = new Vector2((float)0.30,(float)0.30);
-                                    }
-                                    board.VisualBoard.Update();
-                                }
-                            }
-                        }
-
-                        if(board.Game.turn % 2 == 0)
-                        {
-                            // // Player 1 is clicking
-                            // for(int i = 0; i < Player1VisualHand.Count; i++)
-                            // {
-                            //     if (Player1VisualHand[i].GetRect().HasPoint(Player1VisualHand[i].ToLocal(mouseEvent.Position)) && Player1emptySlots > 0)
-                            //     {
-                            //         // Add to player's battlefield logically and visually
-                            //         Game.player1.hand[i].Effect(); // Activating effect of card
-                            //         Player1emptySlots--;
-                            //         GetTree().Paused = true;
-                            //         RefreshBoard();
-                            //         GetTree().Paused = false;
-                            //     }
-                                
-                            // }
-                        }
-                        else // Player 2 is clicking
-                        {
-                            for(int i = 0; i < board.VisualBoard.visualHand2.visualHand.Count; i++)
-                            {
-                                if  (board.VisualBoard.visualHand2.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand2.visualHand[i].ToLocal(mouseEvent.Position)))
-                                {
-                                    Effect(board.Game.player2.hand[i]);
-                                }
-                            }
-                        }
-                        break;
+                    if(board.VisualBoard.visualGraveYard.graveYard.Count>0)
+                    {
+                        selectVisually(board.VisualBoard.visualGraveYard.graveYard, 0, (x)=>{}, new List<Relics>());
+                        SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("DiscardLabel");
+                        SelectCards.SelectLabel.Text = "Graveyard: " ;
+                        SelectCards.SelectLabel.Visible = true;
+                    }
                 }
+                    break;
+            }
         }     
         public static void Effect(Relics relic)
         {

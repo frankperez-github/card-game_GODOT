@@ -9,7 +9,6 @@ namespace gameVisual
         public static Game Game;
         public static Node child;
         public static Board VisualBoard;
-        public static Button AcceptButton;
         public static Button Attack;
         public static Button endButton;
         public Stopwatch watch;
@@ -337,7 +336,6 @@ namespace gameVisual
             GetNode<Sprite>("Preview/Relic").Visible = false;
             Attack = GetNode<Button>("Attack");
             endButton = GetNode<Button>("endButton");
-            AcceptButton = VisualMethods.InstanciateButton();
             VisualBoard.Update();
             watch = new System.Diagnostics.Stopwatch();
         }
@@ -370,25 +368,6 @@ namespace gameVisual
 
             //Wait for change Turn or Attack
             VisualMethods.ListenToVisualButtons();
-            
-            // SHOW SELECT CARDS SCENE
-            if(VisualMethods.selectQuant == 0)
-            {
-                GD.Print(VisualMethods.selectQuant);
-                if (AcceptButton.GetParent() == null)
-                {
-                    AddChild(AcceptButton);
-                }
-                AcceptButton.Visible = true;
-            }
-            else
-            {
-                if (AcceptButton.GetParent() != null)
-                {
-                    RemoveChild(AcceptButton);
-                }
-                AcceptButton.Visible = false;
-            }
         }
         public override void _Input(InputEvent @event)  
         {
