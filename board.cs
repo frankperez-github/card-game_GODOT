@@ -30,7 +30,6 @@ namespace gameVisual
         public Stopwatch watch;
         public bool VirtualPlay = true;
 
-
         #endregion
 
         
