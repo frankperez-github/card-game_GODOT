@@ -12,6 +12,8 @@ namespace gameVisual
         public static bool selecting = false;
         public static List<Relics> SelectedCards;
         public static List<Relics> SourceToSelect;
+        public static Node PauseMenu;
+
         #endregion
 
         public static Node boardNode;
@@ -414,9 +416,9 @@ namespace gameVisual
         public static void ActiveEscapeMenu()
         {
                 PackedScene EscMenu = (PackedScene)GD.Load("res://PauseMenu.tscn");
-                Node PauseMenu = (Node)EscMenu.Instance();
+                PauseMenu = (Node)(EscMenu.Instance());
                 boardNode.AddChild(PauseMenu);
-                boardNode.GetTree().Paused = true;            
+                boardNode.GetTree().Paused = true; 
         }
 
         #endregion
