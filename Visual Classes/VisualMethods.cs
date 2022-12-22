@@ -13,6 +13,8 @@ namespace gameVisual
         public static bool selecting = false;
         public static List<Relics> SelectedCards;
         public static List<Relics> SourceToSelect;
+        public static Node PauseMenu;
+
         #endregion
 
         public static Node boardNode;
@@ -247,20 +249,6 @@ namespace gameVisual
                 }
             }
         }
-        public static void DiscardVirtualPlayer(List<Relics> hand, int count)
-        {
-            for (var i = 0; i < count; i++)
-            {
-                Random rnd = new Random();
-                int card = rnd.Next(0, hand.Count-1);
-                board.Game.GraveYard.Add(hand[card]);
-                hand.RemoveAt(card);
-            }
-            board.VisualBoard.UpdateVisualHand(board.VisualBoard.visualHand2);
-            board.VisualBoard.UpdateVisualHand(board.VisualBoard.visualHand1);
-            VisualMethods.UpdatePlayersVisualProperties();
-            board.VisualBoard.visualGraveYard.Show();
-        }
         public static void resetVisualGame()
         {
             VisualMethods.selecting = false;
@@ -404,7 +392,6 @@ namespace gameVisual
             effect.Scan(relic);
             if(effect.Active)
             {
-
                 board.Game.player2.AddtoBattleField(relic);
                 AddtoVisualBattleField(relic.Owner, relic);
                 board.VisualBoard.Update();
@@ -415,9 +402,9 @@ namespace gameVisual
         public static void ActiveEscapeMenu()
         {
                 PackedScene EscMenu = (PackedScene)GD.Load("res://PauseMenu.tscn");
-                Node PauseMenu = (Node)EscMenu.Instance();
+                PauseMenu = (Node)(EscMenu.Instance());
                 boardNode.AddChild(PauseMenu);
-                boardNode.GetTree().Paused = true;            
+                boardNode.GetTree().Paused = true; 
         }
 
         #endregion
