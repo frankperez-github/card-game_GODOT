@@ -147,13 +147,13 @@ namespace gameVisual
                 if (board.Game.player1.hand.Count > Game.MaxInHand)
                 {
                     if(board.Game.player1 is VirtualPlayer)
-                        VisualMethods.DiscardVirtualPlayer(board.Game.player1.hand, board.Game.player1.hand.Count-Game.MaxInHand);
+                        ((VirtualPlayer)(board.Game.player1)).Discard(board.Game.player1.hand.Count-Game.MaxInHand);
                     else Discard(board.Game.player1.hand);
                 }
                 if (board.Game.player2.hand.Count > Game.MaxInHand)
                 {
                     if(board.Game.player2 is VirtualPlayer)
-                        VisualMethods.DiscardVirtualPlayer(board.Game.player2.hand, board.Game.player2.hand.Count-Game.MaxInHand);
+                        ((VirtualPlayer)(board.Game.player2)).Discard(board.Game.player2.hand.Count-Game.MaxInHand);
                     else Discard(board.Game.player2.hand);
                 }    
             }

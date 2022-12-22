@@ -248,20 +248,6 @@ namespace gameVisual
                 }
             }
         }
-        public static void DiscardVirtualPlayer(List<Relics> hand, int count)
-        {
-            for (var i = 0; i < count; i++)
-            {
-                Random rnd = new Random();
-                int card = rnd.Next(0, hand.Count-1);
-                board.Game.GraveYard.Add(hand[card]);
-                hand.RemoveAt(card);
-            }
-            board.VisualBoard.UpdateVisualHand(board.VisualBoard.visualHand2);
-            board.VisualBoard.UpdateVisualHand(board.VisualBoard.visualHand1);
-            VisualMethods.UpdatePlayersVisualProperties();
-            board.VisualBoard.visualGraveYard.Show();
-        }
         public static void resetVisualGame()
         {
             VisualMethods.selecting = false;
@@ -405,7 +391,6 @@ namespace gameVisual
             effect.Scan(relic);
             if(effect.Active)
             {
-
                 board.Game.player2.AddtoBattleField(relic);
                 AddtoVisualBattleField(relic.Owner, relic);
                 board.VisualBoard.Update();

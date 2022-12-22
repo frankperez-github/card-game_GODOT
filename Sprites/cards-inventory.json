@@ -2,7 +2,7 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 1,
+    "id": 0,
     "name": "Espada del destino",
     "activeDuration": 3,
     "passiveDuration": 0,
@@ -201,7 +201,7 @@
     },
     "type": "draw",
     "isTrap": false,
-    "effect": "(Owner.Draw.Deck.random.5)",
+    "effect": "(Owner.Draw.Deck.random.2)",
     "description": "Robas 2 cartas del deck"
   },
   {
@@ -334,7 +334,7 @@
     "name": "La lanza de la muerte",
     "activeDuration": 1,
     "passiveDuration": 0,
-    "imgAddress": "",
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.50.46 - mystic dagger of revenge in a magic envoirment digital art.png",
     "Owner": {
       "character": null,
       "Enemy": null,
@@ -371,52 +371,11 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 12,
-    "name": "Token",
-    "activeDuration": 1,
-    "passiveDuration": 0,
-    "imgAddress": "",
-    "Owner": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "Enemy": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "type": "random",
-    "isTrap": false,
-    "effect": "",
-    "description": "Reunir 3 tokens activa el efecto especial de tu personaje"
-  },
-  {
-    "cardState": 2,
-    "Actions": [],
     "id": 13,
     "name": "Espejo de impaciencia",
     "activeDuration": 1,
     "passiveDuration": 0,
-    "imgAddress": "",
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.47.44 - magic mirror reflecting powerfull attack of sauron.png",
     "Owner": {
       "character": null,
       "Enemy": null,
@@ -457,7 +416,7 @@
     "name": "El arco del último momento",
     "activeDuration": 1,
     "passiveDuration": 0,
-    "imgAddress": "",
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.55.31 - revenge crossbow with a lake behind digital art.png",
     "Owner": {
       "character": null,
       "Enemy": null,
@@ -488,48 +447,7 @@
     },
     "type": "defense",
     "isTrap": true,
-    "effect": "(Owner.Defense.1.1)\n(Enemy.Cure.5)",
+    "effect": "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)",
     "description": "Devuelve el ataque del enemigo"
-  },
-  {
-    "cardState": 2,
-    "Actions": [],
-    "id": 12,
-    "name": "",
-    "activeDuration": 0,
-    "passiveDuration": 0,
-    "imgAddress": "",
-    "Owner": {
-      "character": null,
-      "Enemy": null,
-      "nick": null,
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "Enemy": {
-      "character": null,
-      "Enemy": null,
-      "nick": null,
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "type": "",
-    "isTrap": false,
-    "effect": "if ( Enemy )\n{\n   Life\n}\n",
-    "description": ""
   }
 ]

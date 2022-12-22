@@ -61,7 +61,7 @@ namespace gameVisual
                 {
                     if (mainMenu.gameType.ToLower() == "virtual")
                     {
-                        player1 = new RandomVirtPlayer("virtualPl");
+                        player1 = new OffensiveVirtPlayer("virtualPl");
                         player1.SetCharacter(character1);
 
                         player2.SetCharacter(character1);
