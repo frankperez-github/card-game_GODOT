@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Sprites/Tipografia/BlackOpsOne-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://GameOver.cs" type="Script" id=2]
 [ext_resource path="res://Sprites/1671655712654.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Yo won.mp3" type="AudioStream" id=4]
 
 [sub_resource type="DynamicFontData" id=3]
 font_path = "res://Sprites/Tipografia/BlackOpsOne-Regular.ttf"
@@ -77,3 +78,7 @@ custom_styles/focus = SubResource( 7 )
 custom_styles/disabled = SubResource( 8 )
 custom_styles/normal = SubResource( 9 )
 text = "Go to main menu"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+volume_db = 0.234

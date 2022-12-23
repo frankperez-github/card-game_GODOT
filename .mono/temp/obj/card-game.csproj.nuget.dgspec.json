@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone\\card-game_GODOT\\card-game.csproj": {}
+    "/home/frankperez/Documents/card-game/card-game.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone\\card-game_GODOT\\card-game.csproj": {
+    "/home/frankperez/Documents/card-game/card-game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone\\card-game_GODOT\\card-game.csproj",
+        "projectUniqueName": "/home/frankperez/Documents/card-game/card-game.csproj",
         "projectName": "card-game",
-        "projectPath": "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone\\card-game_GODOT\\card-game.csproj",
-        "packagesPath": "C:\\Users\\bathr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone\\card-game_GODOT\\.mono\\temp\\obj\\",
+        "projectPath": "/home/frankperez/Documents/card-game/card-game.csproj",
+        "packagesPath": "/home/frankperez/.nuget/packages/",
+        "outputPath": "/home/frankperez/Documents/card-game/.mono/temp/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\bathr\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/frankperez/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net472"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,12 +38,18 @@
         "net472": {
           "targetAlias": "net472",
           "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.2, )",
+              "autoReferenced": true
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.2, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.403/RuntimeIdentifierGraph.json"
         }
       }
     }

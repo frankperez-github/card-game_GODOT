@@ -12,7 +12,7 @@ namespace gameVisual
         public override void _Ready()
         {
             string winner;
-            if (board.Game.player1.life == 0 && board.Game.player1.life == 0)
+            if (board.Game.player1.life == 0 && board.Game.player2.life == 0)
             {
                 winner = "Empate";
             }
@@ -26,6 +26,9 @@ namespace gameVisual
             }
             Label winnerLabel = GetNode<Label>("Tree/wins");
             winnerLabel.Text = winner;
+
+            GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D").Play();
+
         }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.

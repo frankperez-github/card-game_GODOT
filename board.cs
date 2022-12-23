@@ -34,7 +34,6 @@ namespace gameVisual
             if (!(Game.player1.life > 0 && Game.player2.life > 0))
             {
                 GetTree().ChangeScene("res://GameOver.tscn");
-                GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D").Play();
             }
             
             if (Game.turn % 2 == 0 && Game.player1 is VirtualPlayer) // Player's 1 trun (IA)

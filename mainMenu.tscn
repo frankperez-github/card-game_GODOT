@@ -4,7 +4,7 @@
 [ext_resource path="res://Sprites/WhatsApp Image 2022-12-07 at 11.20.16 PM.jpeg" type="Texture" id=3]
 
 [sub_resource type="DynamicFontData" id=3]
-font_path = "res://Sprites/Tipografia/BlackOpsOne-Regular.ttf"
+font_path = "res://Sprites/Tipografia/excelsiorcomics.ttf"
 
 [sub_resource type="DynamicFont" id=1]
 size = 57
