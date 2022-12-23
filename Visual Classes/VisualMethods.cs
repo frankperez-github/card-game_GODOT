@@ -268,7 +268,7 @@ namespace gameVisual
         {
             VisualMethods.selecting = false;
             SelectCards.selectCards = null;
-            VisualMethods.SelectedCards = null;
+            VisualMethods.SelectedCards = new List<Relics>();
             VisualMethods.SourceToSelect = null;
 
             board.child.GetParent().QueueFree();

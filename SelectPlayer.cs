@@ -11,9 +11,10 @@ namespace gameVisual
         List<Sprite> characters; 
         Label choose;
         public static Player player1;
-        public static RandomVirtPlayer virtualPlayer1;
+        public static RandomVirtPlayer virtualplayer1;
         public static Player player2;
-        
+        public Player player1initial;
+        public Player player2initial;
 
         public override void _Ready()
         {
@@ -39,8 +40,12 @@ namespace gameVisual
                 charact.Scale = new Vector2((float)0.25,(float)0.26);
             }
 
-            player1 = new Player("Player1");
-            player2 = new Player("Player2");
+            player1initial = new Player("player1");
+            player2initial = new Player("Player2");
+            
+            player2initial.Enemy = player1initial;
+            player1initial.Enemy = player2initial;
+
         }
        
         public override void _Process(float delta)
@@ -59,13 +64,19 @@ namespace gameVisual
             {
                 if (Nick.Text != "")
                 {
+
                     if (mainMenu.gameType.ToLower() == "virtual")
                     {
-                        player1 = new OffensiveVirtPlayer("virtualPl");
-                        player1.SetCharacter(character1);
+                        player1initial = new OffensiveVirtPlayer("virtualPl");
+                        player1initial.Enemy = player2initial;
+                        player2initial.Enemy = player1initial;
 
-                        player2.SetCharacter(character1);
-                        player2.nick = Nick.Text;
+                        player1initial.SetCharacter(character1);
+
+                        player2initial.nick = Nick.Text;
+                        player2initial.SetCharacter(character1);
+                        player1 = player1initial;
+                        player2 = player2initial;
                     }
 
                     if (mainMenu.gameType.ToLower() == "human")

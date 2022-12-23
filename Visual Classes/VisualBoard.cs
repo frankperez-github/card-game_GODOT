@@ -12,6 +12,8 @@ namespace gameVisual
             public VisualHand visualHand1;
             public VisualHand visualHand2;
             public SceneTree Tree;
+            public bool[] SpecialAttack1 = new bool[]{false};
+            public bool[] SpecialAttack2 = new bool[]{false};
 
             public Board(Game game, Sprite GraveYard, SceneTree Tree)
             {
@@ -166,7 +168,31 @@ namespace gameVisual
                     if(board.Game.player2 is VirtualPlayer)
                         ((VirtualPlayer)(board.Game.player2)).Discard(board.Game.player2.hand.Count-Game.MaxInHand);
                     else Discard(board.Game.player2.hand, board.Game.player2.hand.Count-Game.MaxInHand);
-                }    
+                }
+                if(!SpecialAttack1[0])
+                {
+                    CheckSpecialAttack(visualHand1, SpecialAttack1);
+                }
+                if(!SpecialAttack2[0])
+                {
+                    CheckSpecialAttack(visualHand2, SpecialAttack2);
+                }
+            }
+            public void CheckSpecialAttack(VisualHand player, bool[] SpecialAttack)
+            {
+                int count = 0;
+                foreach (var card in player.Hand)
+                {
+                    if(card.name == "Token")
+                    {
+                        count++;
+                    }
+                }
+                if(count == 3)
+                {
+                    SpecialAttack[0] = true;
+                    VisualMethods.Effect(player.Hand[0].Owner.character);
+                }
             }
             public void UpdateBattleField(VisualBattleField battleField)
             {
@@ -208,7 +234,7 @@ namespace gameVisual
             }
             public void Discard(List<Relics> playerHand, int count)
             {
-                if (VisualMethods.SelectedCards == null)
+                if (VisualMethods.SelectedCards.Count == 0)
                 {
                     VisualMethods.selectVisually(playerHand, count, Discard, playerHand, new bool[]{false});
                 }
@@ -219,7 +245,7 @@ namespace gameVisual
                         board.Game.GraveYard.Add(item);
                         playerHand.Remove(item);
                     }
-                    VisualMethods.SelectedCards = null;
+                    VisualMethods.SelectedCards = new List<Relics>();
                 }
                 UpdateVisualHand(visualHand1);
                 UpdateVisualHand(visualHand2);

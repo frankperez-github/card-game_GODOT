@@ -333,11 +333,15 @@ namespace gameEngine
         //Metodo Recursivo
         public void Scan(string[] expression, int index, Player Owner, Player Enemy, Relics Relic)
         {
+            if(string.Join(" ", expression) == "")
+            {
+                Active = true;
+                return;
+            }
             if(index==expression.Length)
             {
                 return;
             }
-
             if (expression[index].Contains("if ("))
             {
 
@@ -740,6 +744,7 @@ namespace gameEngine
             {
                 expression = CutExpression(expression);
                 NextDraw();
+                GD.Print(cards);
                 for (int i = 0; i < cards; i++)
                 {
                     Random rnd = new Random();
@@ -959,6 +964,7 @@ namespace gameEngine
         {
             int cards = int.Parse(NextWord(this.expressionA));
             int factor = 1;
+            expressionA = CutExpression(expressionA);
             if (NextWord(this.expressionA) != "")
             {
                 factor = setFactor();
