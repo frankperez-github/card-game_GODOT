@@ -32,7 +32,7 @@ namespace gameVisual
         {
             VisualMethods.selecting = true;
             VisualMethods.SelectedCards = new List<Relics>();
-            target = VisualMethods.SelectedCards;
+            // target = VisualMethods.SelectedCards;
             SelectCards.selectCards = new List<Sprite>();
             VisualMethods.SourceToSelect = Source;
             SelectCards.selectQuant = quant;
@@ -50,10 +50,8 @@ namespace gameVisual
             int index = 0;
             foreach (var card in Source)
             {
-                GD.Print("instanciate");
                 if(card != null)
                 {
-                    GD.Print("instanciate");
                     Sprite Card = VisualMethods.InstanciateVisualCard(card);
                     Card.ZIndex = 7;
                     SelectCards.selectCards.Add(Card);

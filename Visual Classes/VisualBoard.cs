@@ -157,17 +157,19 @@ namespace gameVisual
                 VisualMethods.UpdatePlayersVisualProperties();
                 visualGraveYard.Show();
 
-                if (board.Game.player1.hand.Count > Game.MaxInHand)
+                if (visualHand1.Hand.Count > Game.MaxInHand)
                 {
                     if(board.Game.player1 is VirtualPlayer)
-                        ((VirtualPlayer)(board.Game.player1)).Discard(board.Game.player1.hand.Count-Game.MaxInHand);
-                    else Discard(board.Game.player1.hand, board.Game.player1.hand.Count-Game.MaxInHand);
+                        ((VirtualPlayer)(board.Game.player1)).Discard(visualHand1.Hand.Count-Game.MaxInHand);
+                    else
+                    Discard(visualHand1.Hand, visualHand1.Hand.Count-Game.MaxInHand);
                 }
-                if (board.Game.player2.hand.Count > Game.MaxInHand)
+                if (visualHand2.Hand.Count > Game.MaxInHand)
                 {
                     if(board.Game.player2 is VirtualPlayer)
-                        ((VirtualPlayer)(board.Game.player2)).Discard(board.Game.player2.hand.Count-Game.MaxInHand);
-                    else Discard(board.Game.player2.hand, board.Game.player2.hand.Count-Game.MaxInHand);
+                        ((VirtualPlayer)(board.Game.player2)).Discard(visualHand2.Hand.Count-Game.MaxInHand);
+                    else 
+                    Discard(visualHand2.Hand, visualHand2.Hand.Count-Game.MaxInHand);
                 }
                 if(!SpecialAttack1[0])
                 {
@@ -240,12 +242,13 @@ namespace gameVisual
                 }
                 else
                 {
-                    foreach (var item in VisualMethods.SelectedCards)
+                    for (int i = 0; i < VisualMethods.SelectedCards.Count; i++)
                     {
-                        board.Game.GraveYard.Add(item);
-                        playerHand.Remove(item);
+                        board.Game.GraveYard.Add(VisualMethods.SelectedCards[i]);
+                        playerHand[0].Owner.hand.Remove(VisualMethods.SelectedCards[i]);
                     }
                     VisualMethods.SelectedCards = new List<Relics>();
+                    GD.Print(playerHand.Count);
                 }
                 UpdateVisualHand(visualHand1);
                 UpdateVisualHand(visualHand2);

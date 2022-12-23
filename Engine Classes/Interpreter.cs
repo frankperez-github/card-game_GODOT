@@ -427,7 +427,6 @@ namespace gameEngine
             {
                 case "Attack":
                     Attack Attack = new Attack(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
-                    GD.Print("hay que hacer la negacion del ataque dentro de UpdateBattlefield");                    
                     relics.Actions.Add(Attack);
                     break;
                 case "Cure":
