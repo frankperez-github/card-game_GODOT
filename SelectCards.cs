@@ -7,6 +7,8 @@ namespace gameVisual
     public class SelectCards : Sprite
     {
         public static Button AcceptButton;
+        Button Left;
+        Button Right;
         public static int selectQuant = 1;
         public static List<Sprite> selectCards;
         public static Action<List<Relics>, int> SelectDelegate;
@@ -15,6 +17,12 @@ namespace gameVisual
         public static Label SelectLabel;
         public static PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
         public static Node SelectCardInstance = SelectCardsScene.Instance(); 
+        public static List<int> SelectedIndexes = new List<int>();
+
+        public static List<Relics> Source;
+        public static List<Relics> target;
+        public static int actualSwipe = 0;
+        public static int partitions = 0;
 
         public override void _Ready()
         {
@@ -22,9 +30,11 @@ namespace gameVisual
             PauseMode = PauseModeEnum.Process;
             AcceptButton = GetNode<Button>("Tree/Button");
             SelectLabel = GetNode<Label>("Tree/DiscardLabel");
-            SelectLabel.Text = "Select: " + selectQuant;
             SelectLabel.Visible = true;
             VisualMethods.selecting = true;
+
+            Left = GetNode<Button>("Left");
+            Right = GetNode<Button>("Left/Right");
         }
 
         public override void _Process(float delta)
@@ -58,6 +68,22 @@ namespace gameVisual
                 }
             }
 
+            Left.Disabled = false;
+            if (actualSwipe == 0) Left.Disabled = true;
+            Right.Disabled = false;
+            if (actualSwipe == partitions) Right.Disabled = true;
+
+            if(Left.Pressed)
+            {
+                VisualMethods.SetSelectCardsProperties("GraveYard: ",partitions, actualSwipe-1, Source, selectQuant, target, Ready);
+                this.QueueFree();
+            }
+            if(Right.Pressed)
+            {
+                VisualMethods.SetSelectCardsProperties("GraveYard: ",partitions, actualSwipe+1, Source, selectQuant, target, Ready);
+                this.QueueFree();
+            }
+
         }
         public override void _Input(InputEvent @event)
         {
@@ -76,6 +102,7 @@ namespace gameVisual
                                     // Deselecting
                                     if (selectCards[i].Scale == new Vector2((float)0.20,(float)0.20))
                                     {
+                                        SelectedIndexes.Remove(i);
                                         selectQuant++;
                                         VisualMethods.SelectedCards.Remove(VisualMethods.SourceToSelect[i]);
                                         selectCards[i].Scale = new Vector2((float)0.170,(float)0.170);
@@ -84,6 +111,7 @@ namespace gameVisual
                                     else if (selectQuant != 0)
                                     {
                                         // GD.Print(selectCards[i].Scale);
+                                        SelectedIndexes.Add(i);
                                         selectQuant--;
                                         VisualMethods.SelectedCards.Add(VisualMethods.SourceToSelect[i]);
                                         selectCards[i].Scale = new Vector2((float)0.20,(float)0.20);
