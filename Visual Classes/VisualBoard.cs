@@ -124,6 +124,10 @@ namespace gameVisual
                                         Attack Negate = new Attack("-" + effect.expressionA, effect.Relic, effect.Affected, effect.NotAffected, effect.Relic.Owner, effect.Relic.Enemy);
                                         Negate.Effect();
                                     }
+                                    else if(effect is ChangeState)
+                                    {
+                                        ChangeState Negate = new ChangeState("Safe", effect.Relic, effect.Affected, effect.NotAffected, effect.Relic.Owner, effect.Relic.Enemy);
+                                    }
                                 }
                                 field[index].QueueFree();
                                 field[index] = null;
@@ -138,7 +142,15 @@ namespace gameVisual
                                 }
                                 else
                                 {
-                                    int Defaultpassive = mainMenu.Inventory.CardsInventory[BattleField[index].id].passiveDuration;
+                                    int Defaultpassive;
+                                    if(BattleField[index] is Character)
+                                    {
+                                        Defaultpassive = mainMenu.Inventory.CharactersInventory[BattleField[index].id-1000].passiveDuration;
+                                    }
+                                    else
+                                    {
+                                        Defaultpassive = mainMenu.Inventory.CardsInventory[BattleField[index].id].passiveDuration;
+                                    }
                                     BattleField[index].passiveDuration = Defaultpassive;
                                     BattleField[index].activeDuration--;
                                 }
@@ -190,13 +202,15 @@ namespace gameVisual
                         count++;
                     }
                 }
-                if(count == 2)
+                if(count >= 2)
                 {
+                    count = 0;
                     for (int i = 0; i < player.Hand.Count; i++)
                     {
-                        if(player.Hand[i].name == "Token")
+                        if(count < 2 || player.Hand[i].name == "Token")
                         {
                             player.Hand.Remove(player.Hand[i]);
+                            count++;
                         }
                     }
                     SpecialAttack[0] = true;

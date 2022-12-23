@@ -44,19 +44,27 @@ namespace gameVisual
                     ((VirtualPlayer)(Game.player1)).Play();
                     VisualBoard.Update();
 
-                    VisualMethods.AttackButtonFunction();
+                    if(Game.player1.state != State.Freezed)
+                    {
+                        VisualMethods.AttackButtonFunction();
+                    }
                     VirtualPlay = false;
                 }
                 if(watch.ElapsedMilliseconds > 2000)
                 {
                     VirtualPlay = true;
-                    VisualMethods.EndButtonFunction();
+                    VisualMethods.EndButtonFunction(Game.player1);
                     watch.Reset();
                 }
             }
 
             //Wait for change Turn or Attack
-            VisualMethods.ListenToVisualButtons();
+            if(Game.turn % 2 == 0)
+            {
+                VisualMethods.ListenToVisualButtons(Game.player1);
+            }
+            else
+                VisualMethods.ListenToVisualButtons(Game.player2);
         }
         public override void _Input(InputEvent @event)  
         {

@@ -283,7 +283,7 @@
     },
     "type": "trap",
     "isTrap": false,
-    "effect": "(Enemy.Remove.EnemyBattlefield.Battlefield.random.1)",
+    "effect": "(Owner.Remove.EnemyBattlefield.Battlefield.1)",
     "description": "Destruye 1 reliquia que tenga activa enemigo"
   },
   {
@@ -489,6 +489,47 @@
     "type": "random",
     "isTrap": false,
     "effect": "",
-    "description": "Si tienes 3 de esta carta en la mano puedes activar tu ataque especial"
+    "description": "Si tienes 3 de esta carta en la mano puedes activar tu ataque especial, si el efecto de esta carta es activado, esta carta es removida del juego"
+  },
+  {
+    "cardState": 2,
+    "Actions": [],
+    "id": 11,
+    "name": "Resfriado",
+    "activeDuration": 4,
+    "passiveDuration": 0,
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.30.45 - the cursed shield digital art.png",
+    "Owner": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "Enemy": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "type": "trap",
+    "isTrap": false,
+    "effect": "(Enemy.ChangeState.Freezed)",
+    "description": "Congela al rival impidiendole atacar durante 2 turnos"
   }
 ]

@@ -88,15 +88,18 @@ namespace gameVisual
                 }
             }
         }
-        public static void ListenToVisualButtons()
+        public static void ListenToVisualButtons(Player player)
         {
             if (board.endButton.Pressed)
             {
-                EndButtonFunction();
+                EndButtonFunction(player);
                 board.endButton.Disabled = true; // Disabling button, increment turn just one time
             }
             board.endButton.Disabled = false;
-
+            if(player.state == State.Freezed)
+            {
+                board.Attack.Disabled = true;
+            }
             if (board.Attack.Pressed)
             {
                 AttackButtonFunction();
@@ -127,11 +130,15 @@ namespace gameVisual
             Label Player2State = boardNode.GetParent().GetNode<Label>("Player2Info/Player2's State");
             Player2State.Text = "State : "+ board.Game.player1.state.ToString();
         }
-        public static void EndButtonFunction()
+        public static void EndButtonFunction(Player player)
         {
             board.Game.turn++;
             boardNode.GetParent().GetNode<Label>("TurnLabel").Text = "Turno: " + board.Game.turn;
             board.Attack.Disabled = false;
+            if(player.Enemy.state == State.Poisoned)
+            {
+                player.Enemy.life -= 10;
+            }
             if (board.Game.turn % 2 != 0) // Player2's turn
             {
                 // Next Player takes a card
