@@ -80,7 +80,7 @@ namespace gameEngine
             for (int i = 0; i < cards; i++)
             {
                 Random rnd = new Random();
-                int random = rnd.Next(1, mainMenu.Inventory.CardsInventory.Count());
+                int random = rnd.Next(0, mainMenu.Inventory.CardsInventory.Count());
                 Relics card = mainMenu.Inventory.CardsInventory[random];
                 this.hand.Add( new Relics(this, this.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration, 
                             card.imgAddress,card.isTrap, card.type, card.effect, card.description));

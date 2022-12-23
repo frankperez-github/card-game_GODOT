@@ -449,5 +449,46 @@
     "isTrap": true,
     "effect": "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)",
     "description": "Devuelve el ataque del enemigo"
+  },
+  {
+    "cardState": 2,
+    "Actions": [],
+    "id": 0,
+    "name": "Magaly",
+    "activeDuration": 0,
+    "passiveDuration": 0,
+    "imgAddress": "",
+    "Owner": {
+      "character": null,
+      "Enemy": null,
+      "nick": null,
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "Enemy": {
+      "character": null,
+      "Enemy": null,
+      "nick": null,
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "type": "",
+    "isTrap": false,
+    "effect": " Owner.Life + = 150",
+    "description": "Durisima"
   }
 ]

@@ -36,7 +36,7 @@ namespace gameVisual
             Button Edit = GetNode<Button>("Start/Edit");
             if (Edit.Pressed)
             {
-                GetTree().ChangeScene("res://Editor.tscn");
+                GetTree().ChangeScene("res://EditDeck.tscn");
             }
 
             Button Quit = GetNode<Button>("Start/Quit");
