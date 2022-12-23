@@ -113,7 +113,7 @@ namespace gameVisual
                     {
                         if (BattleField[index] != null)
                         {
-                            
+                            GD.Print(BattleField[index].name + " pasiveDuration: " + BattleField[index].passiveDuration + " activeDuration: " + BattleField[index].activeDuration);
                             if (BattleField[index].activeDuration == 1)
                             {
                                 // Removing card from battelfield
@@ -152,6 +152,8 @@ namespace gameVisual
                                         Defaultpassive = mainMenu.Inventory.CardsInventory[BattleField[index].id].passiveDuration;
                                     }
                                     BattleField[index].passiveDuration = Defaultpassive;
+                                    InterpretEffect effect = new InterpretEffect();
+                                    BattleField[index].Effect(effect);
                                     BattleField[index].activeDuration--;
                                 }
                             }
