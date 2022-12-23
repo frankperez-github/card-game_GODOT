@@ -371,7 +371,7 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 13,
+    "id": 10,
     "name": "Espejo de impaciencia",
     "activeDuration": 1,
     "passiveDuration": 0,
@@ -412,7 +412,7 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 14,
+    "id": 7,
     "name": "El arco del último momento",
     "activeDuration": 1,
     "passiveDuration": 0,
@@ -453,7 +453,7 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 15,
+    "id": 1,
     "name": "Token",
     "activeDuration": 1,
     "passiveDuration": 0,
