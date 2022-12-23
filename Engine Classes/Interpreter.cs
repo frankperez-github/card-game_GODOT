@@ -963,7 +963,6 @@ namespace gameEngine
         }
         void RemoveForint(List<Relics> Place)
         {
-            GD.Print(expression);
             int cards = int.Parse(NextWord(expression));
             int factor = 1;
             expression = CutExpression(expression);

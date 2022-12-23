@@ -119,6 +119,13 @@ namespace gameVisual
             {
                 player.Enemy.life -= 10;
             }
+            if(player.Enemy.state == State.Asleep)
+            {
+                board.VisualBoard.UpdateBattleFields(board.Game.player2);
+                board.VisualBoard.UpdateBattleFields(board.Game.player1);
+                board.VisualBoard.Update();
+                EndButtonFunction(player.Enemy);
+            }
             if (board.Game.turn % 2 != 0) // Player2's turn
             {
                 // Next Player takes a card

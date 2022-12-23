@@ -19,11 +19,11 @@ namespace gameEngine
            
             CharactersInventory = new List<CharacterProperties>()
             {
-                new CharacterProperties(1001, "El dragón indiferente", 1, 0, "res://Sprites/Cards-images/DALL·E 2022-10-10 15.21.44 - The lost dragon of Argea sleeping over a city digital art.png", "", "Intimida al oponente dando golpes en el pecho y lo hace perder 2 turnos", 10, 3),
-                new CharacterProperties(1002, "El toro alado", 3, 0, "res://Sprites/Cards-images/DALL·E 2022-10-10 15.16.38 - The winged bull of Zeus digital art.png", "(Enemy.Remove.EnemyHand.1.EnemyHand)", "Crea un tornado con sus alas que arrasa con el oponente y lo deja sin cartas en la mano", 0, 5),
-                new CharacterProperties(1003, "La serpiente truhana", 1, 0, "res://Sprites/Cards-images/DALL·E 2022-10-23 15.35.44 - medieval style snake in a nuclear war digital art.png", "(Enemy.ChangeState.Poisoned)", "No hay nada mas tóxico que ella (ni siquiera tu ex) Empieza un envenenamiento que le quita 10 de vida al enemigo en cada turno", 5, 0),
-                new CharacterProperties(1004, "El tigre recursivo", 1, 0, "res://Sprites/Cards-images/DALL·E 2022-10-23 15.49.37 - Hercules' tiger in a nuclear war digital art.png", "", "Cada 3 turnos puedes robar una carta extra del deck", 8, 0),
-                new CharacterProperties(1005, "El leon amistoso", 2, 0, "imgpath", "", "Tiene el don de rejuvenecer que le permite recuperar 10 de vida en cada turno", 0, 1)
+                new CharacterProperties(1001, "El dragón indiferente", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-10 15.21.44 - The lost dragon of Argea sleeping over a city digital art.png", "(Enemy.ChangeState.Asleep)", "Intimida al oponente dando golpes en el pecho y lo hace perder 2 turnos", 10, 3),
+                new CharacterProperties(1002, "El toro alado", 0, 1, "res://Sprites/Cards-images/DALL·E 2022-10-10 15.16.38 - The winged bull of Zeus digital art.png", "(Enemy.Remove.EnemyHand.1.EnemyHand)", "Crea un tornado con sus alas que arrasa con el oponente y lo deja sin cartas en la mano", 0, 5),
+                new CharacterProperties(1003, "La serpiente truhana", 2, 1, "res://Sprites/Cards-images/DALL·E 2022-10-23 15.35.44 - medieval style snake in a nuclear war digital art.png", "(Enemy.ChangeState.Poisoned)", "No hay nada mas tóxico que ella (ni siquiera tu ex) Empieza un envenenamiento que le quita 10 de vida al enemigo en cada turno", 5, 0),
+                new CharacterProperties(1004, "El tigre recursivo", 1, 1, "res://Sprites/Cards-images/DALL·E 2022-10-23 15.49.37 - Hercules' tiger in a nuclear war digital art.png", "", "Cada 3 turnos puedes robar una carta extra del deck", 8, 0),
+                new CharacterProperties(1005, "El leon amistoso", 2, 1, "imgpath", "", "Tiene el don de rejuvenecer que le permite recuperar 10 de vida en cada turno", 0, 1)
             };
 
         }
