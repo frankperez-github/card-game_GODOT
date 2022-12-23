@@ -743,11 +743,10 @@ namespace gameEngine
             {
                 expression = CutExpression(expression);
                 NextDraw();
-                GD.Print(cards);
                 for (int i = 0; i < cards; i++)
                 {
                     Random rnd = new Random();
-                    int random = rnd.Next(1, mainMenu.Inventory.CardsInventory.Count() + 1);
+                    int random = rnd.Next(0, mainMenu.Inventory.CardsInventory.Count() - 1);
                     foreach (var card in mainMenu.Inventory.CardsInventory)
                     {
                         if (card.id == random)
