@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://board.cs" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Sprites/Tipografia/BlackOpsOne-Regular.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://Sprites/1671655712654.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/1671659940098 (1).png" type="Texture" id=10]
+[ext_resource path="res://Sprites/Yo won.mp3" type="AudioStream" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 77
@@ -305,3 +306,7 @@ region_rect = Rect2( 87.206, 232, 23, 0 )
 [node name="Relic" parent="Preview" instance=ExtResource( 7 )]
 position = Vector2( -1.97992, -11.5589 )
 scale = Vector2( 0.257311, 0.301877 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 11 )
+volume_db = 0.234
