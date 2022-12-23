@@ -201,7 +201,7 @@
     },
     "type": "draw",
     "isTrap": false,
-    "effect": "(Owner.Draw.Deck.random.2)",
+    "effect": "(Owner.Draw.Deck.Random.2)",
     "description": "Robas 2 cartas del deck"
   },
   {

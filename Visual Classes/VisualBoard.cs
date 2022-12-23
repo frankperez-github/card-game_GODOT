@@ -48,7 +48,6 @@ namespace gameVisual
                     this.graveYard = graveYard;
                     GraveYardCard = GraveYard;
                     GraveYardCard.Visible = false;
-
                 }
                 public void Show()
                 {
@@ -116,6 +115,14 @@ namespace gameVisual
                             if (BattleField[index].activeDuration == 1)
                             {
                                 // Removing card from battelfield
+                                foreach (var effect in BattleField[index].Actions)
+                                {
+                                    if(effect is Attack)
+                                    {
+                                        Attack Negate = new Attack("-" + effect.expressionA, effect.Relic, effect.Affected, effect.NotAffected, effect.Relic.Owner, effect.Relic.Enemy);
+                                        Negate.Effect();
+                                    }
+                                }
                                 field[index].QueueFree();
                                 field[index] = null;
                                 board.Game.GraveYard.Add(BattleField[index]);

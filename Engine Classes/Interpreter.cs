@@ -582,9 +582,12 @@ namespace gameEngine
             {
                 if(edit.IsDigit(condition))
                 {
-                    selectCards(list, int.Parse(condition));
-                    // VisualMethods.selectVisually(list, int.Parse(condition), (x,y)=>{}, new List<Relics>(), )
-                    // return result;
+                    if(Affected is VirtualPlayer)
+                    {
+                        affectCards = ((VirtualPlayer)Affected).FullList(list, int.Parse(condition));
+                    }
+                    else
+                        selectCards(list, int.Parse(condition));
                 }
             }
             foreach (var Relic in list)
@@ -731,9 +734,11 @@ namespace gameEngine
                         }
                     }
                 }
+                VisualMethods.SelectedCards = new List<Relics>();
             }
             else
             {
+                expression = CutExpression(expression);
                 NextDraw();
                 for (int i = 0; i < cards; i++)
                 {
@@ -778,6 +783,7 @@ namespace gameEngine
                             }
                         }
                     }
+                    VisualMethods.SelectedCards = new List<Relics>();
                 }
             }
             else
