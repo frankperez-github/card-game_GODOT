@@ -8,11 +8,15 @@ public class EditDeck : Node2D
     Button CreateCard;
     public override void _Ready()
     {
+        CreateCard = GetNode<Button>("Button/Create");
         
     }
 
     public override void _Process(float delta)
     {
-        
+        if(CreateCard.Pressed)
+        {
+            GetTree().ChangeScene("res://Editor.tscn");
+        }
     }
 }

@@ -1000,21 +1000,26 @@ namespace gameEngine
         void RemoveForBattlefiel(Relics[] Battlefield, Player Affected)
         {
             affectCards = VisualMethods.SelectedCards;
-            if(affectCards.Count == 0)
+            foreach (var item in Battlefield)
             {
-                AddForType(CutExpression(expression), Affected.BattleField.ToList());
-            }
-
-            foreach (var listCard in affectCards)
-            {
-                for (int i = 0; i < Battlefield.Length; i++)
+                if (item != null)
                 {
-                    GD.Print(listCard.name + " && " + Battlefield[i].name);
-                    if (listCard == Battlefield[i])
+                    if(affectCards.Count == 0)
                     {
-                        Battlefield[i] = null;
-                        break;
+                        AddForType(CutExpression(expression), Affected.BattleField.ToList());
                     }
+                    foreach (var listCard in affectCards)
+                    {
+                        for (int i = 0; i < Battlefield.Length; i++)
+                        {
+                            if (listCard == Battlefield[i])
+                            {
+                                Battlefield[i] = null;
+                                break;
+                            }
+                        }
+                    }
+                    break;
                 }
             }
         }
