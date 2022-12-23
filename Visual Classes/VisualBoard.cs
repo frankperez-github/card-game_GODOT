@@ -190,8 +190,15 @@ namespace gameVisual
                         count++;
                     }
                 }
-                if(count == 3)
+                if(count == 2)
                 {
+                    for (int i = 0; i < player.Hand.Count; i++)
+                    {
+                        if(player.Hand[i].name == "Token")
+                        {
+                            player.Hand.Remove(player.Hand[i]);
+                        }
+                    }
                     SpecialAttack[0] = true;
                     VisualMethods.Effect(player.Hand[0].Owner.character);
                 }
