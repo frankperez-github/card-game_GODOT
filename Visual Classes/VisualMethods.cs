@@ -21,24 +21,31 @@ namespace gameVisual
         public static void selectVisually(List<Relics> Source, int quant, System.Action<List<Relics>, int> Delegate, List<Relics> target, bool[] Ready)
         {
             SelectCards.SelectDelegate = Delegate;
-            int repetitions = 0;
-            if (Source.Count > 5)
-            {
-                repetitions = Source.Count/5;
-                if (quant % 5 != 0) repetitions++;
-            }
-            SetSelectCardsProperties("GraveYard: ", repetitions, 0, Source, quant, target, Ready);
+            int partitions = GetPartitions(Source, 5);
+            SetSelectCardsProperties("GraveYard: ", partitions, 0, Source, quant, target, Ready);
         }
         public static void selectVisually(List<Relics> Source, int quant, InterpretAction Delegate, List<Relics> target, bool[] Ready)
         {
             SelectCards.action = Delegate;
-            int repetitions = 0;
-            if (Source.Count > 5)
+            int partitions = GetPartitions(Source, 5);
+            SetSelectCardsProperties("GraveYard: ",partitions, 0, Source, quant, target, Ready);
+        }
+        private static int GetPartitions(List<Relics> Source, int partitionLength)
+        {
+            int partitions = 0;
+            if (Source.Count > partitionLength)
             {
-                repetitions = Source.Count/5;
-                if (quant % 5 != 0) repetitions++;
+                partitions = Source.Count/partitionLength;
+                if (Source.Count % partitionLength != 0) partitions++;
             }
-            SetSelectCardsProperties("GraveYard: ",repetitions, 0, Source, quant, target, Ready);
+            for(int i = 0; i < partitions; i++)
+            {
+                if (!SelectCards.SelectedIndexes.ContainsKey(i))
+                {
+                    SelectCards.SelectedIndexes.Add(i, new List<int>());
+                }
+            }
+            return partitions;
         }
         public static void SetSelectCardsProperties(string tittle, int partitions, int actualSwipe, List<Relics> Source, int quant, List<Relics> target, bool[] Ready)
         {
@@ -66,16 +73,30 @@ namespace gameVisual
             float InitialPosition = (1010) - ((200 * (quantCards-1))/2);
             Vector2 FirstPosition = new Vector2(InitialPosition, 470);
 
+
             // Showing cards to select
             int index = 0;
             for (int i = actualSwipe*5; i < (actualSwipe*5)+5; i++)
             {
-                if (i < Source.Count)
+                
+                if (i < Source.Count && Source[i] != null)
                 {
                     Sprite Card = VisualMethods.InstanciateVisualCard(Source[i]);
                     Card.ZIndex = 7;
                     SelectCards.selectCards.Add(Card);
                     SelectMenu.AddChild(Card);
+                    GD.Print(SelectCards.SelectedIndexes[actualSwipe].Count);
+                    // Remembering selected cards
+                    if(SelectCards.SelectedIndexes[actualSwipe].Contains(i)) // Selected card
+                    {
+                        Card.Scale = new Vector2((float)0.20,(float)0.20);
+                    }
+                    else // Not selected card
+                    {
+                        Card.Scale = new Vector2((float)0.17,(float)0.17);
+                    }
+
+                    // Adjusting position of cards to quantity in source
                     if(index==0)
                     {
                         SelectCards.selectCards[index].Position = new Vector2(FirstPosition.x, FirstPosition.y);
@@ -84,6 +105,7 @@ namespace gameVisual
                     {
                         SelectCards.selectCards[index].Position = new Vector2(SelectCards.selectCards[index-1].Position.x + 200, FirstPosition.y);
                     }
+                    
                     index++;
                 }
             }

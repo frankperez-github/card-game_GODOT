@@ -52,6 +52,7 @@ text = "You must discard"
 align = 1
 
 [node name="Button" type="Button" parent="Tree"]
+visible = false
 margin_left = -35.573
 margin_top = 102.266
 margin_right = 62.427

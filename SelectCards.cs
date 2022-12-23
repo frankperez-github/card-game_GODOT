@@ -17,7 +17,7 @@ namespace gameVisual
         public static Label SelectLabel;
         public static PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
         public static Node SelectCardInstance = SelectCardsScene.Instance(); 
-        public static List<int> SelectedIndexes = new List<int>();
+        public static Dictionary<int, List<int>> SelectedIndexes = new Dictionary<int, List<int>>();
 
         public static List<Relics> Source;
         public static List<Relics> target;
@@ -102,7 +102,11 @@ namespace gameVisual
                                     // Deselecting
                                     if (selectCards[i].Scale == new Vector2((float)0.20,(float)0.20))
                                     {
-                                        SelectedIndexes.Remove(i);
+                                        // Removing selected index from partition
+                                        List<int> updatedIndexes = SelectedIndexes[actualSwipe];
+                                        updatedIndexes.Remove(i);
+                                        SelectedIndexes[actualSwipe] = updatedIndexes;
+
                                         selectQuant++;
                                         VisualMethods.SelectedCards.Remove(VisualMethods.SourceToSelect[i]);
                                         selectCards[i].Scale = new Vector2((float)0.170,(float)0.170);
@@ -110,8 +114,11 @@ namespace gameVisual
                                     // Selecting
                                     else if (selectQuant != 0)
                                     {
-                                        // GD.Print(selectCards[i].Scale);
-                                        SelectedIndexes.Add(i);
+                                        // Adding selected index to partition
+                                        List<int> updatedIndexes = SelectedIndexes[actualSwipe];
+                                        updatedIndexes.Add(i);
+                                        SelectedIndexes[actualSwipe] = updatedIndexes;
+
                                         selectQuant--;
                                         VisualMethods.SelectedCards.Add(VisualMethods.SourceToSelect[i]);
                                         selectCards[i].Scale = new Vector2((float)0.20,(float)0.20);
