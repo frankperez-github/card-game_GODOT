@@ -78,7 +78,7 @@
     },
     "type": "draw",
     "isTrap": false,
-    "effect": "(Owner.Draw.EnemyHand.1)",
+    "effect": "(Owner.Draw.Graveyard.1)",
     "description": "Roba una carta del cementerio"
   },
   {
@@ -201,7 +201,7 @@
     },
     "type": "draw",
     "isTrap": false,
-    "effect": "(Owner.Draw.Deck.random.2)",
+    "effect": "(Owner.Draw.Deck.Random.2)",
     "description": "Robas 2 cartas del deck"
   },
   {
@@ -448,20 +448,20 @@
     "type": "defense",
     "isTrap": true,
     "effect": "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)",
-    "description": "Devuelve el ataque del enemigo"
+    "description": "Aumenta la defensa en 1 punto y Te cura 5 puntos por cada carta en la mano"
   },
   {
     "cardState": 2,
     "Actions": [],
-    "id": 0,
-    "name": "Magaly",
-    "activeDuration": 0,
+    "id": 15,
+    "name": "Token",
+    "activeDuration": 1,
     "passiveDuration": 0,
-    "imgAddress": "",
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 17.05.15 - the talisman invocation in a ritual digital art.png",
     "Owner": {
       "character": null,
       "Enemy": null,
-      "nick": null,
+      "nick": "default",
       "life": 100.0,
       "hand": [],
       "state": 0,
@@ -475,7 +475,7 @@
     "Enemy": {
       "character": null,
       "Enemy": null,
-      "nick": null,
+      "nick": "default",
       "life": 100.0,
       "hand": [],
       "state": 0,
@@ -486,9 +486,9 @@
         null
       ]
     },
-    "type": "",
+    "type": "random",
     "isTrap": false,
-    "effect": " Owner.Life + = 150",
-    "description": "Durisima"
+    "effect": "",
+    "description": "Si tienes 3 de esta carta en la mano puedes activar tu ataque especial"
   }
 ]

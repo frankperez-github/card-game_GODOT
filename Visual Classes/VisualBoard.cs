@@ -12,6 +12,8 @@ namespace gameVisual
             public VisualHand visualHand1;
             public VisualHand visualHand2;
             public SceneTree Tree;
+            public bool[] SpecialAttack1 = new bool[]{false};
+            public bool[] SpecialAttack2 = new bool[]{false};
 
             public Board(Game game, Sprite GraveYard, SceneTree Tree)
             {
@@ -48,7 +50,6 @@ namespace gameVisual
                     this.graveYard = graveYard;
                     GraveYardCard = GraveYard;
                     GraveYardCard.Visible = false;
-
                 }
                 public void Show()
                 {
@@ -68,6 +69,8 @@ namespace gameVisual
                             ((Sprite)GraveYardCard.GetChild(3)).Scale = new Vector2((float)0.25, (float)0.25);
                         }
                     }
+                    else
+                        GraveYardCard.Visible = false;
                 }
             }
             public class VisualHand 
@@ -114,6 +117,14 @@ namespace gameVisual
                             if (BattleField[index].activeDuration == 1)
                             {
                                 // Removing card from battelfield
+                                foreach (var effect in BattleField[index].Actions)
+                                {
+                                    if(effect is Attack)
+                                    {
+                                        Attack Negate = new Attack("-" + effect.expressionA, effect.Relic, effect.Affected, effect.NotAffected, effect.Relic.Owner, effect.Relic.Enemy);
+                                        Negate.Effect();
+                                    }
+                                }
                                 field[index].QueueFree();
                                 field[index] = null;
                                 board.Game.GraveYard.Add(BattleField[index]);
@@ -141,6 +152,8 @@ namespace gameVisual
             {
                 UpdateVisualHand(visualHand1);
                 UpdateVisualHand(visualHand2);
+                UpdateBattleField(visualBattleField1);
+                UpdateBattleField(visualBattleField2);
                 VisualMethods.UpdatePlayersVisualProperties();
                 visualGraveYard.Show();
 
@@ -148,14 +161,52 @@ namespace gameVisual
                 {
                     if(board.Game.player1 is VirtualPlayer)
                         ((VirtualPlayer)(board.Game.player1)).Discard(board.Game.player1.hand.Count-Game.MaxInHand);
-                    else Discard(board.Game.player1.hand);
+                    else Discard(board.Game.player1.hand, board.Game.player1.hand.Count-Game.MaxInHand);
                 }
                 if (board.Game.player2.hand.Count > Game.MaxInHand)
                 {
                     if(board.Game.player2 is VirtualPlayer)
                         ((VirtualPlayer)(board.Game.player2)).Discard(board.Game.player2.hand.Count-Game.MaxInHand);
-                    else Discard(board.Game.player2.hand);
-                }    
+                    else Discard(board.Game.player2.hand, board.Game.player2.hand.Count-Game.MaxInHand);
+                }
+                if(!SpecialAttack1[0])
+                {
+                    CheckSpecialAttack(visualHand1, SpecialAttack1);
+                }
+                if(!SpecialAttack2[0])
+                {
+                    CheckSpecialAttack(visualHand2, SpecialAttack2);
+                }
+            }
+            public void CheckSpecialAttack(VisualHand player, bool[] SpecialAttack)
+            {
+                int count = 0;
+                foreach (var card in player.Hand)
+                {
+                    if(card.name == "Token")
+                    {
+                        count++;
+                    }
+                }
+                if(count == 3)
+                {
+                    SpecialAttack[0] = true;
+                    VisualMethods.Effect(player.Hand[0].Owner.character);
+                }
+            }
+            public void UpdateBattleField(VisualBattleField battleField)
+            {
+                for (int i = 0; i < battleField.BattleField.Length; i++)
+                {
+                    if(battleField.BattleField[i] == null)
+                    {   
+                        if(!(battleField.visualBattleField[i] == null))
+                        {
+                            battleField.visualBattleField[i].QueueFree();
+                            battleField.visualBattleField[i] = null;
+                        }
+                    }
+                }
             }
             public void UpdateBattleFields(Player player)
             {
@@ -181,11 +232,11 @@ namespace gameVisual
                 VisualMethods.RefreshPositionCards(VisualHand);
   
             }
-            public void Discard(List<Relics> playerHand)
+            public void Discard(List<Relics> playerHand, int count)
             {
-                if (VisualMethods.SelectedCards == null)
+                if (VisualMethods.SelectedCards.Count == 0)
                 {
-                    VisualMethods.selectVisually(playerHand, playerHand.Count-Game.MaxInHand, Discard, playerHand);
+                    VisualMethods.selectVisually(playerHand, count, Discard, playerHand, new bool[]{false});
                 }
                 else
                 {
@@ -194,7 +245,7 @@ namespace gameVisual
                         board.Game.GraveYard.Add(item);
                         playerHand.Remove(item);
                     }
-                    VisualMethods.SelectedCards = null;
+                    VisualMethods.SelectedCards = new List<Relics>();
                 }
                 UpdateVisualHand(visualHand1);
                 UpdateVisualHand(visualHand2);

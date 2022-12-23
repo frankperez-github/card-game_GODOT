@@ -8,25 +8,36 @@ namespace gameVisual
     public class VisualMethods
     {
         #region Visual Objects
+
         public static Sprite Relic = new Sprite();
         public static bool selecting = false;
-        public static List<Relics> SelectedCards;
+        public static List<Relics> SelectedCards = new List<Relics>();
         public static List<Relics> SourceToSelect;
         public static Node PauseMenu;
 
         #endregion
 
         public static Node boardNode;
-        public static void selectVisually(List<Relics> Source, int quant, System.Action<List<Relics>> Delegate, List<Relics> target)
+        public static void selectVisually(List<Relics> Source, int quant, System.Action<List<Relics>, int> Delegate, List<Relics> target, bool[] Ready)
         {
-            SelectCards.target = target;
+            SelectCards.SelectDelegate = Delegate;
+            SetSelectCardsProperties(Source, quant, target, Ready);
+        }
+        public static void selectVisually(List<Relics> Source, int quant, InterpretAction Delegate, List<Relics> target, bool[] Ready)
+        {
+            SelectCards.action = Delegate;
+            SetSelectCardsProperties(Source, quant, target, Ready);
+        }
+        public static void SetSelectCardsProperties(List<Relics> Source, int quant, List<Relics> target, bool[] Ready)
+        {
             VisualMethods.selecting = true;
             VisualMethods.SelectedCards = new List<Relics>();
+            target = VisualMethods.SelectedCards;
             SelectCards.selectCards = new List<Sprite>();
-            SelectCards.SelectDelegate = Delegate;
             VisualMethods.SourceToSelect = Source;
             SelectCards.selectQuant = quant;
-
+            SelectCards.Ready = Ready; 
+            
             Node SelectMenu = SelectCards.SelectCardsScene.Instance();
             SelectCards.SelectCardInstance = SelectMenu;
             board.child.AddChild(SelectMenu);
@@ -39,19 +50,24 @@ namespace gameVisual
             int index = 0;
             foreach (var card in Source)
             {
-                Sprite Card = VisualMethods.InstanciateVisualCard(card);
-                Card.ZIndex = 7;
-                SelectCards.selectCards.Add(Card);
-                SelectMenu.AddChild(Card);
-                if(index==0)
+                GD.Print("instanciate");
+                if(card != null)
                 {
-                    SelectCards.selectCards[index].Position = new Vector2(FirstPosition.x, FirstPosition.y);
+                    GD.Print("instanciate");
+                    Sprite Card = VisualMethods.InstanciateVisualCard(card);
+                    Card.ZIndex = 7;
+                    SelectCards.selectCards.Add(Card);
+                    SelectMenu.AddChild(Card);
+                    if(index==0)
+                    {
+                        SelectCards.selectCards[index].Position = new Vector2(FirstPosition.x, FirstPosition.y);
+                    }
+                    else
+                    {
+                        SelectCards.selectCards[index].Position = new Vector2(SelectCards.selectCards[index-1].Position.x + 200, FirstPosition.y);
+                    }
+                    index++;
                 }
-                else
-                {
-                    SelectCards.selectCards[index].Position = new Vector2(SelectCards.selectCards[index-1].Position.x + 200, FirstPosition.y);
-                }
-                index++;
             }
         }
         public static void ListenToVisualButtons()
@@ -252,7 +268,7 @@ namespace gameVisual
         {
             VisualMethods.selecting = false;
             SelectCards.selectCards = null;
-            VisualMethods.SelectedCards = null;
+            VisualMethods.SelectedCards = new List<Relics>();
             VisualMethods.SourceToSelect = null;
 
             board.child.GetParent().QueueFree();
@@ -376,7 +392,7 @@ namespace gameVisual
                 {
                     if(board.VisualBoard.visualGraveYard.graveYard.Count>0)
                     {
-                        selectVisually(board.VisualBoard.visualGraveYard.graveYard, 0, (x)=>{}, new List<Relics>());
+                        selectVisually(board.VisualBoard.visualGraveYard.graveYard, 0, (x, y)=>{}, new List<Relics>(), new bool[]{false});
                         SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("Tree/DiscardLabel");
                         SelectCards.SelectLabel.Text = "Graveyard: " ;
                         SelectCards.SelectLabel.Visible = true;
@@ -394,7 +410,7 @@ namespace gameVisual
                 board.Game.player2.AddtoBattleField(relic);
                 AddtoVisualBattleField(relic.Owner, relic);
                 board.VisualBoard.Update();
-                effect.Scan(relic);
+                relic.Effect(effect);
                 board.VisualBoard.Update();
             }
         }

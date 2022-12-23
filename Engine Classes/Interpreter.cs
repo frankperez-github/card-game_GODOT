@@ -322,129 +322,6 @@ namespace gameEngine
         }
     }
 
-
-    public class InterpreterList
-    {
-        public string condition;
-        InterpretAction action; 
-
-        public InterpreterList(string expression, InterpretAction action)
-        {
-            condition = expression;
-            this.action = action;
-        }
-        //He can ask for an specifics cards or specifics property of card  
-        public List<Relics> FullList(string condition, Player player)
-        {
-            EditExpression edit = new EditExpression();
-
-            this.condition = condition;
-            if (condition == "deck")
-            {
-                return new List<Relics>();
-            }
-            switch (edit.NextWord(condition))
-            {
-                case "Battlefield":
-                    return AddForType(edit.CutExpression(condition), player.BattleField.ToList());
-                case "Graveyard":
-                    return AddForType(edit.CutExpression(condition), board.Game.GraveYard);
-                case "Hand":
-                    return AddForType(edit.CutExpression(condition), player.hand);
-                case "Deck":
-                    return AddForType(edit.CutExpression(condition), mainMenu.Inventory.CardsInventory);
-                default:
-                    GD.Print("Place not found xd");
-                    return new List<Relics>();
-            }
-        }
-        public List<Relics> AddForType(string condition, List<Relics> list)
-        {
-            EditExpression edit = new EditExpression();
-            switch (edit.NextWord(condition))
-            {
-                case "trap":
-                    return AddFinal(edit.CutExpression(condition), list, "trap");
-                case "cure":
-                    return AddFinal(edit.CutExpression(condition), list, "cure");
-                case "damage":
-                    return AddFinal(edit.CutExpression(condition), list, "damage");
-                case "defense":
-                    return AddFinal(edit.CutExpression(condition), list, "defense");
-                case "draw":
-                    return AddFinal(edit.CutExpression(condition), list, "draw");
-                case "state":
-                    return AddFinal(edit.CutExpression(condition), list, "state");
-                case "random":
-                    return AddFinal(edit.CutExpression(condition), list, "random");
-                default:
-                    GD.Print("type not found xd");
-                    return new List<Relics>();
-            }
-        }
-        public List<Relics> AddFinal(string condition, List<Relics> list, string type)
-        {
-            EditExpression edit = new EditExpression();
-            List<Relics> result = new List<Relics>();
-            if (condition == "all")
-            {
-                foreach (var Relic in list)
-                {
-                    if (Relic != null)
-                    {
-                        if (type == "random")
-                        {
-                            result.Add(Relic);
-                        }
-                        else if (Relic.type == type)
-                        {
-                            result.Add(Relic);
-                        }
-                    }
-                }
-                return result;
-            }
-            if(type == "random")
-            {
-                if(edit.IsDigit(condition))
-                {
-                    for (int i = 0; i < int.Parse(condition); i++)
-                    {
-                        Random rnd = new Random();
-                        result.Add(list.ElementAt(rnd.Next(0, list.Count-1)));
-                    }
-                    return result;
-                }
-            }
-            foreach (var Relic in list)
-            {
-                if (Relic != null)
-                {
-                    if (type == "random")
-                    {
-                        result.Add(Relic);
-                    }
-                    else if (Relic.type == type)
-                    {
-                        result.Add(Relic);
-                    }
-                }
-            }
-            if (result.Count() != 0)
-            {
-                Console.WriteLine("Seleccione las cartas que desee:");
-                for (int i = 0; i < int.Parse(condition); i++)
-                {
-                    result.Add(result.ElementAt(int.Parse(Console.ReadLine())));
-                }
-            }
-
-            return result;
-        }
-
-    }
-
-
     public class InterpretEffect
     {
         public bool Active = false; 
@@ -456,11 +333,15 @@ namespace gameEngine
         //Metodo Recursivo
         public void Scan(string[] expression, int index, Player Owner, Player Enemy, Relics Relic)
         {
+            if(string.Join(" ", expression) == "")
+            {
+                Active = true;
+                return;
+            }
             if(index==expression.Length)
             {
                 return;
             }
-
             if (expression[index].Contains("if ("))
             {
 
@@ -523,7 +404,7 @@ namespace gameEngine
             //Si no es un if ni una accion es una llave y nos la saltamos
             else Scan(expression, index+1, Owner, Enemy, Relic);
         }
-            public static Player SetAffected(string player, Relics relics)
+        public Player SetAffected(string player, Relics relics)
         {
             if (player == "Owner")
             {
@@ -546,29 +427,24 @@ namespace gameEngine
             {
                 case "Attack":
                     Attack Attack = new Attack(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
-                    Attack Negate = new Attack("-" + Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
-                    relics.Actions.Add(Negate);
-                    Attack.Effect();
+                    GD.Print("hay que hacer la negacion del ataque dentro de UpdateBattlefield");                    
+                    relics.Actions.Add(Attack);
                     break;
                 case "Cure":
                     Cure Cure = new Cure(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
                     relics.Actions.Add(Cure);
-                    Cure.Effect();
                     break;
                 case "Draw":
                     Draw Draw = new Draw(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
                     relics.Actions.Add(Draw);
-                    Draw.Effect();
                     break;
                 case "Remove":
                     Remove Remove = new Remove(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
                     relics.Actions.Add(Remove);
-                    Remove.Effect();
                     break;
                 case "Defense":
                     Defense Defense = new Defense(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
                     relics.Actions.Add(Defense);
-                    Defense.Effect();
                     break;
                 case "ChangeState":
                     ChangeState ChangeState = new ChangeState(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
@@ -577,7 +453,6 @@ namespace gameEngine
                 case "Show":
                     Show Show = new Show(Edit.CutExpression(expression), relics, Affected, NotAffected, relics.Owner, relics.Enemy);
                     relics.Actions.Add(Show);
-                    Show.Effect();
                     break;
         }
     
@@ -592,19 +467,20 @@ namespace gameEngine
             Player Affected = SetAffected(Edit.NextWord(actualAction), relics);
             Player NotAffected = SetNotAffected(Affected);
             Action(actualAction, Affected, NotAffected, relics);
-        
         }
     }
     public class InterpretAction : Expression
     {
         public Player Affected;
         public Player NotAffected;
-        public InterpreterList FullList;
+        public bool ReadyToActive;
+        public static string condition;
+        public List<Relics> affectCards; 
         public InterpretAction(string action, Relics card, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(Owner, Enemy, action, card)
         {
             this.Affected = Affected;
             this.NotAffected = NotAffected;
-            FullList = new InterpreterList(action, this);
+            affectCards = new List<Relics>();
         }
         
         public int setFactor()
@@ -625,6 +501,132 @@ namespace gameEngine
                     return 1;
             }
         }
+        public void FullList(string conditions, Player player)
+        {
+            EditExpression edit = new EditExpression();
+
+            condition = conditions;
+            if (condition == "deck")
+            {
+                affectCards = new List<Relics>();
+                return;
+            }
+            switch (edit.NextWord(condition))
+            {
+                case "Battlefield":
+                    AddForType(edit.CutExpression(condition), player.BattleField.ToList());
+                    break;
+                case "Graveyard":
+                    AddForType(edit.CutExpression(condition), board.Game.GraveYard);
+                    break;
+                case "Hand":
+                    AddForType(edit.CutExpression(condition), player.hand);
+                    break;
+                case "Deck":
+                    AddForType(edit.CutExpression(condition), mainMenu.Inventory.CardsInventory);
+                    break;
+                default:
+                    GD.Print("Place not found xd");
+                    affectCards = new List<Relics>();
+                    break;
+            }
+        }
+        public void AddForType(string condition, List<Relics> list)
+        {
+            EditExpression edit = new EditExpression();
+            switch (edit.NextWord(condition))
+            {
+                case "trap":
+                    AddFinal(edit.CutExpression(condition), list, "trap");
+                    break;
+                case "cure":
+                    AddFinal(edit.CutExpression(condition), list, "cure");
+                    break;
+                case "damage":
+                    AddFinal(edit.CutExpression(condition), list, "damage");
+                    break;
+                case "defense":
+                    AddFinal(edit.CutExpression(condition), list, "defense");
+                    break;
+                case "draw":
+                    AddFinal(edit.CutExpression(condition), list, "draw");
+                    break;
+                case "state":
+                    AddFinal(edit.CutExpression(condition), list, "state");
+                    break;
+                default:
+                    AddFinal(condition, list, "number");
+                    break;
+            }
+        }
+        public void AddFinal(string condition, List<Relics> list, string type)
+        {
+            EditExpression edit = new EditExpression();
+            List<Relics> result = new List<Relics>();
+            if (condition == "all")
+            {
+                foreach (var Relic in list)
+                {
+                    if (Relic != null)
+                    {
+                        if (type == "random")
+                        {
+                            result.Add(Relic);
+                        }
+                        else if (Relic.type == type)
+                        {
+                            result.Add(Relic);
+                        }
+                    }
+                }
+                affectCards = result;
+                return;
+            }
+            if(type == "number")
+            {
+                if(edit.IsDigit(condition))
+                {
+                    if(Affected is VirtualPlayer)
+                    {
+                        affectCards = ((VirtualPlayer)Affected).FullList(list, int.Parse(condition));
+                    }
+                    else
+                        selectCards(list, int.Parse(condition));
+                }
+            }
+            foreach (var Relic in list)
+            {
+                if (Relic != null)
+                {
+                    if (type == "random")
+                    {
+                        result.Add(Relic);
+                    }
+                    else if (Relic.type == type)
+                    {
+                        result.Add(Relic);
+                    }
+                }
+            }
+            if (result.Count() != 0)
+            {
+                Console.WriteLine("Seleccione las cartas que desee:");
+                for (int i = 0; i < int.Parse(condition); i++)
+                {
+                    result.Add(result.ElementAt(int.Parse(Console.ReadLine())));
+                }
+            }
+            // return result;
+        }
+        public void selectCards(List<Relics> Place, int count)
+        {
+
+            bool[] Ready = new bool[]{false};
+            if(Place.Count >= count)
+            {
+                VisualMethods.selectVisually(Place, count, this, affectCards, Ready);
+            }
+        }
         public virtual void Effect(){} 
     }
     class Cure : InterpretAction
@@ -633,6 +635,7 @@ namespace gameEngine
         int factor;
         public Cure(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy)
         {
+            this.ReadyToActive = true;
             this.vida = int.Parse(NextWord(this.expressionA));
             this.factor = 1;
             if (this.expressionA.Contains("."))
@@ -660,6 +663,7 @@ namespace gameEngine
         int factor;
         public Attack(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy)
         {
+            this.ReadyToActive = true;
             this.damage = int.Parse(NextWord(this.expressionA));
             this.factor = 1;
             if (this.expressionA.Contains("."))
@@ -677,149 +681,194 @@ namespace gameEngine
         }
         public override void Effect()
         {
-
             Affected.character.attack += damage * factor;
         }
     }
     class Draw : InterpretAction
     {
-        public int cards = 1;
-        public Draw(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy){}
+        int cards = 1;
+        string expression; 
+
+        public Draw(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy)
+        {
+            this.ReadyToActive = false;
+        }
         public override void Effect()
         {
-            List<Relics> affectedCards;
-            string Place = NextWord(this.expressionA);
+            expression = this.expressionA;
+            string Place = NextWord(expression);
             switch (Place)
             {
                 case "EnemyHand":
                     //POSIBLEMENTE ESTO HAYA QUE MODIFICARLO EN UN FUTURO PARA AGREGAR LA OPCION DE QUE EL ENEMIGO PUEDA ROBA DE MI MANO
-                    this.expressionA = CutExpression(this.expressionA);
-                    if (IsDigit(NextWord(this.expressionA)))
-                    {
-                        NextDraw();
-                        for (int i = 0; i < cards; i++)
-                        {
-                            if (this.Relic.Enemy.hand.Count() != 0)
-                            {
-                                Random rnd = new Random();
-                                int random = rnd.Next(0, this.Relic.Enemy.hand.Count() - 1);
-                                int cardId = this.Relic.Enemy.hand[random].id;
-                                this.Relic.Enemy.hand.RemoveAt(random);
-                                foreach (var card in mainMenu.Inventory.CardsInventory)
-                                {
-                                    if (card.id == cardId)
-                                    {
-                                        this.Relic.Owner.hand.Add(new Relics(this.Relic.Owner, this.Relic.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration,
-                                                card.imgAddress, card.isTrap, card.type, card.effect, card.description));
-                                        break;
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                    else
-                    {
-                        this.expressionA = this.expressionA.Replace(NextWord(this.expressionA) + ".", "");
-                        List<Relics> affectedCard = FullList.FullList(this.expressionA, this.Relic.Enemy);
-                        foreach (var relic in affectedCard)
-                        {
-                            GD.Print("Carlos no ha implementado el metodo robar cartas especificas de la mano enemiga");
-                        }
-                    }
+                    DrawFromEnemyHand();
                     break;
-                case "OwnerBattleField":
-                    affectedCards = FullList.FullList(this.expressionA, this.Relic.Enemy);
-                    foreach (var relics in affectedCards)
-                    {
-                        for (int i = 0; i < this.Relic.Owner.BattleField.Length; i++)
-                        {
-                            if (this.Relic.Owner.BattleField[i] == relics)
-                            {
-                                int cardId = this.Relic.Owner.BattleField[i].id;
-                                foreach (var card in mainMenu.Inventory.CardsInventory)
-                                {
-                                    if (card.id == cardId)
-                                    {
-                                        this.Relic.Owner.hand.Add(new Relics(Affected, this.Relic.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration,
-                                                        card.imgAddress, card.isTrap, card.type, card.effect, card.description));
-                                        break;
-                                    }
-                                }
-                                this.Relic.Owner.BattleField[i] = null;
-                            }
-                        }
-                    }
+                case "OwnerBattlefield":
+                    DrawFromOwnerBattlefield();
                     break;
                 case "Graveyard":
-                    affectedCards = FullList.FullList(this.expressionA, this.Relic.Enemy);
-                    foreach (var card in affectedCards)
-                    {
-                        foreach (var Relic in board.Game.GraveYard)
-                        {
-                            if (Relic.id == card.id)
-                            {
-                                foreach (var cards in mainMenu.Inventory.CardsInventory)
-                                {
-                                    if (cards.id == card.id)
-                                    {
-                                        Affected.hand.Add(new Relics(Affected, this.Relic.Enemy, cards.id, cards.name, cards.passiveDuration, cards.activeDuration,
-                                                cards.imgAddress, cards.isTrap, cards.type, cards.effect, card.description));
-                                        break;
-                                    }
-                                }
-                                board.Game.GraveYard.Remove(Relic);
-                                break;
-                            }
-                        }
-                    }
+                    DrawfromGraveyard();
                     break;
                 case "Deck":
-                    if (IsDigit(NextWord(this.expressionA)))
-                    {
-                        NextDraw();
-                        for (int i = 0; i < cards; i++)
-                        {
-                            Random rnd = new Random();
-                            int random = rnd.Next(1, mainMenu.Inventory.CardsInventory.Count() + 1);
-                            foreach (var card in mainMenu.Inventory.CardsInventory)
-                            {
-                                if (card.id == random)
-                                {
-                                    this.Relic.Owner.hand.Add(new Relics(Affected, this.Relic.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration,
-                                                    card.imgAddress, card.isTrap, card.type, card.effect, card.description));
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        affectedCards = FullList.FullList(this.expressionA, this.Relic.Enemy);
-                        
-                        foreach (var card in affectedCards)
-                        {
-                            foreach (var cardInventory in mainMenu.Inventory.CardsInventory)
-                            {
-                                if (card.id == cardInventory.id)
-                                {
-                                    Affected.hand.Add(new Relics(Affected, this.Relic.Enemy, cardInventory.id, cardInventory.name, cardInventory.passiveDuration, cardInventory.activeDuration,
-                                            cardInventory.imgAddress, cardInventory.isTrap, cardInventory.type, cardInventory.effect, card.description));
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    DrawFromDeck();
                     break;
                 default:
                     break;
             }
         }
+        public void DrawFromDeck()
+        {
+            expression = CutExpression(expression);
+            if (IsDigit(NextWord(expression)))
+            {
+                affectCards = VisualMethods.SelectedCards;
+                if(affectCards.Count == 0)
+                {
+                    FullList("Deck."+ expression, Affected);
+                }
+                foreach (var card in affectCards)
+                {
+                    foreach (var cardInventory in mainMenu.Inventory.CardsInventory)
+                    {
+                        if (card.id == cardInventory.id)
+                        {
+                            Affected.hand.Add(new Relics(Affected, this.Relic.Enemy, cardInventory.id, cardInventory.name, cardInventory.passiveDuration, cardInventory.activeDuration,
+                                    cardInventory.imgAddress, cardInventory.isTrap, cardInventory.type, cardInventory.effect, card.description));
+                            break;
+                        }
+                    }
+                }
+                VisualMethods.SelectedCards = new List<Relics>();
+            }
+            else
+            {
+                expression = CutExpression(expression);
+                NextDraw();
+                GD.Print(cards);
+                for (int i = 0; i < cards; i++)
+                {
+                    Random rnd = new Random();
+                    int random = rnd.Next(1, mainMenu.Inventory.CardsInventory.Count() + 1);
+                    foreach (var card in mainMenu.Inventory.CardsInventory)
+                    {
+                        if (card.id == random)
+                        {
+                            this.Relic.Owner.hand.Add(new Relics(Affected, this.Relic.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration,
+                                            card.imgAddress, card.isTrap, card.type, card.effect, card.description));
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        public void DrawFromEnemyHand()
+        {
+            expression = CutExpression(expression);
+            if (IsDigit(NextWord(expression)))
+            {
+                NextDraw();
+                affectCards = VisualMethods.SelectedCards;
+                if(affectCards.Count == 0)
+                {
+                    FullList("Hand." + expression, Enemy);
+                }
+                else
+                {
+                    foreach (var card in affectCards)
+                    {
+                        int cardId = card.id;
+                        Enemy.hand.Remove(card);
+                        foreach (var card2 in mainMenu.Inventory.CardsInventory)
+                        {
+                            if (card2.id == cardId)
+                            {
+                                this.Relic.Owner.hand.Add(new Relics(this.Relic.Owner, this.Relic.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration,
+                                        card.imgAddress, card.isTrap, card.type, card.effect, card.description));
+                                break;
+                            }
+                        }
+                    }
+                    VisualMethods.SelectedCards = new List<Relics>();
+                }
+            }
+            else
+            {
+                expression = expression.Replace(NextWord(expression) + ".", "");
+                // List<Relics> affectedCard = FullList(expression, this.Relic.Enemy);
+                // foreach (var relic in affectedCard)
+                // {
+                //     GD.Print("Carlos no ha implementado el metodo robar cartas especificas de la mano enemiga");
+                // }
+            }
+        }
+        public void DrawFromOwnerBattlefield()
+        {
+
+            affectCards = VisualMethods.SelectedCards;
+            if(affectCards.Count == 0)
+            {
+                expression = CutExpression(expression);
+                FullList("Battlefield." + expression, Owner);
+            }
+            foreach (var relics in affectCards)
+            {
+                for (int i = 0; i < this.Relic.Owner.BattleField.Length; i++)
+                {
+                    if (this.Relic.Owner.BattleField[i] == relics)
+                    {
+                        int cardId = this.Relic.Owner.BattleField[i].id;
+                        foreach (var card in mainMenu.Inventory.CardsInventory)
+                        {
+                            if (card.id == cardId)
+                            {
+                                this.Relic.Owner.hand.Add(new Relics(Affected, this.Relic.Enemy, card.id, card.name, card.passiveDuration, card.activeDuration,
+                                                card.imgAddress, card.isTrap, card.type, card.effect, card.description));
+                                break;
+                            }
+                        }
+                        this.Relic.Owner.BattleField[i] = null;
+                    }
+                }
+            }
+            VisualMethods.SelectedCards = new List<Relics>();
+        }
+        public void DrawfromGraveyard()
+        {
+            affectCards = VisualMethods.SelectedCards;
+            if(affectCards.Count == 0)
+            {
+                FullList(expressionA, Enemy);
+            }
+            else
+            {
+                foreach (var card in affectCards)
+                {
+                    foreach (var Relic in board.Game.GraveYard)
+                    {
+                        if (Relic.id == card.id)
+                        {
+                            foreach (var cards in mainMenu.Inventory.CardsInventory)
+                            {
+                                if (cards.id == card.id)
+                                {
+                                    Affected.hand.Add(new Relics(Affected, Enemy, cards.id, cards.name, cards.passiveDuration, cards.activeDuration,
+                                            cards.imgAddress, cards.isTrap, cards.type, cards.effect, card.description));
+                                    break;
+                                }
+                            }
+                            board.Game.GraveYard.Remove(Relic);
+                            break;
+                        }
+                    }
+                }
+                VisualMethods.SelectedCards = new List<Relics>();
+            }
+        }
         public void NextDraw()
         {
-            this.cards = int.Parse(NextWord(this.expressionA));
+            this.cards = int.Parse(NextWord(expression));
             int factor = 1;
-            if (NextWord(this.expressionA) != "")
+            if (NextWord(expression) != "")
             {
                 factor = setFactor();
             }
@@ -832,6 +881,7 @@ namespace gameEngine
         double factor;
         public Defense(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy)
         {
+            this.ReadyToActive = true;
             this.defense = int.Parse(NextWord(this.expressionA));
             this.factor = 1;
             if (this.expressionA.Contains("."))
@@ -856,6 +906,7 @@ namespace gameEngine
     {
         public ChangeState(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy)
         {
+            this.ReadyToActive = true;
             switch (action)
             {
                 case "Freezed":
@@ -875,15 +926,16 @@ namespace gameEngine
     }
     class Remove : InterpretAction
     {
-        public Remove(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy){}
-
+        public Remove(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy)
+        {
+            this.ReadyToActive = false;
+        }
         public override void Effect()
         {
             string place = NextWord(this.expressionA);
             this.expressionA = this.expressionA.Replace(place + ".", "");
             switch (place)
             {
-
                 case "OwnerHand":
                     if (IsDigit(NextWord(this.expressionA)))
                     {
@@ -912,6 +964,7 @@ namespace gameEngine
         {
             int cards = int.Parse(NextWord(this.expressionA));
             int factor = 1;
+            expressionA = CutExpression(expressionA);
             if (NextWord(this.expressionA) != "")
             {
                 factor = setFactor();
@@ -931,38 +984,41 @@ namespace gameEngine
         }
         void RemoveForList(List<Relics> Place)
         {
-            List<Relics> affectedCards = FullList.FullList(this.expressionA, this.Relic.Enemy);
-            foreach (var listCard in affectedCards)
-            {
-                foreach (var cardPlace in Place)
-                {
-                    if (listCard == cardPlace)
-                    {
-                        Place.Remove(listCard);
-                    }
-                }
-            }
+            // List<Relics> affectedCards = FullList(this.expressionA, this.Relic.Enemy);
+            // foreach (var listCard in affectedCards)
+            // {
+            //     foreach (var cardPlace in Place)
+            //     {
+            //         if (listCard == cardPlace)
+            //         {
+            //             Place.Remove(listCard);
+            //         }
+            //     }
+            // }
         }
         void RemoveForBattlefiel(Relics[] Battlefield)
         {
-            List<Relics> affectedCards = FullList.FullList(this.expressionA, this.Relic.Enemy);
-            for (int i = 0; i < Battlefield.Length; i++)
-            {
-                foreach (var listCard in affectedCards)
-                {
-                    if (listCard == Battlefield[i])
-                    {
-                        Battlefield[i] = null;
-                        break;
-                    }
-                }
-            }
+            // List<Relics> affectedCards = FullList(this.expressionA, this.Relic.Enemy);
+            // for (int i = 0; i < Battlefield.Length; i++)
+            // {
+            //     foreach (var listCard in affectedCards)
+            //     {
+            //         if (listCard == Battlefield[i])
+            //         {
+            //             Battlefield[i] = null;
+            //             break;
+            //         }
+            //     }
+            // }
         }
     }
     class Show : InterpretAction
     {
         int cards;
-        public Show(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy){}
+        public Show(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy)
+        {
+            this.ReadyToActive = true;
+        }
         public override void Effect()
         {
             string count = NextWord(this.expressionA);
@@ -992,14 +1048,15 @@ namespace gameEngine
                 }
             }
             //Metodo que debe hacer Frank para visualizar las cartas
-            ShowCards(show);
+            ShowCards(show, 0);
         }
-        public void ShowCards(List<Relics> show)
+        public void ShowCards(List<Relics> show, int count)
         {
-            VisualMethods.selectVisually(show, 0, (x)=>{}, new List<Relics>());
+            VisualMethods.selectVisually(show, 0, (x, y)=>{}, new List<Relics>(), new bool[]{false});
             SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("Tree/DiscardLabel");
             SelectCards.SelectLabel.Text = "EnemyHand: " ;
             SelectCards.SelectLabel.Visible = true;
+            VisualMethods.SelectedCards = new List<Relics>();
         }
     }
 }

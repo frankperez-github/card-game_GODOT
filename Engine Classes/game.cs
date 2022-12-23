@@ -15,12 +15,11 @@ namespace gameEngine
         {
             this.player1 = player1;
             this.player2 = player2;
-            player1.Enemy = player2;
-            player2.Enemy = player1;
             turn = 1;
             GraveYard = new List<Relics>();
             player1.TakeFromDeck(5);
             player2.TakeFromDeck(5);
+
         }
         public void resetGame()
         {

@@ -38,7 +38,15 @@ namespace gameEngine
             this.Actions = new List<InterpretAction>();
         }
         
-        
+        public void Effect(InterpretEffect effect)
+        {
+            effect.Scan(this);
+
+            foreach (InterpretAction action in Actions)
+            {
+                action.Effect();
+            }
+        }
         
         }
     public class Character : Relics

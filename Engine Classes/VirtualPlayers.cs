@@ -12,6 +12,7 @@ namespace gameEngine
         }
         public abstract void Play();
         public abstract void Discard(int count);
+        public abstract List<Relics> FullList(List<Relics> Place, int count);
     }
 
     public class RandomVirtPlayer : VirtualPlayer
@@ -44,6 +45,11 @@ namespace gameEngine
             board.VisualBoard.UpdateVisualHand(board.VisualBoard.visualHand1);
             VisualMethods.UpdatePlayersVisualProperties();
             board.VisualBoard.visualGraveYard.Show();
+        }
+
+        public override List<Relics> FullList(List<Relics> Place, int count)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -116,6 +122,11 @@ namespace gameEngine
             board.VisualBoard.UpdateVisualHand(board.VisualBoard.visualHand1);
             VisualMethods.UpdatePlayersVisualProperties();
             board.VisualBoard.visualGraveYard.Show();
+        }
+
+        public override List<Relics> FullList(List<Relics> Place, int count)
+        {
+            throw new NotImplementedException();
         }
     }
 }

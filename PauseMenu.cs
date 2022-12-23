@@ -16,7 +16,7 @@ namespace gameVisual
             Continue = GetNode<Button>("PauseMenu/Continue");
             Capitulation = GetNode<Button>("PauseMenu/Continue/Capitulation");
         }
-
+        //List<>
         public override void _Process(float delta)
         {
             if (Quit.Pressed)
@@ -34,6 +34,7 @@ namespace gameVisual
                 GetTree().Paused = false;
                 GetTree().ChangeScene("res://mainMenu.tscn");
             }
+            
         }
         // public override void _Input(InputEvent @event)
         // {

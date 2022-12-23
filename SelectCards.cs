@@ -2,7 +2,6 @@ using Godot;
 using System.Collections.Generic;
 using System;
 using gameEngine;
-
 namespace gameVisual
 {
     public class SelectCards : Sprite
@@ -10,14 +9,16 @@ namespace gameVisual
         public static Button AcceptButton;
         public static int selectQuant = 1;
         public static List<Sprite> selectCards;
-        public static Action<List<Relics>> SelectDelegate;
-        public static List<Relics> target;
+        public static Action<List<Relics>, int> SelectDelegate;
+        public static InterpretAction action; 
+        public static bool[] Ready;
         public static Label SelectLabel;
         public static PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
         public static Node SelectCardInstance = SelectCardsScene.Instance(); 
 
         public override void _Ready()
         {
+            Ready = new bool[]{false};
             PauseMode = PauseModeEnum.Process;
             AcceptButton = GetNode<Button>("Tree/Button");
             SelectLabel = GetNode<Label>("Tree/DiscardLabel");
@@ -29,7 +30,7 @@ namespace gameVisual
         public override void _Process(float delta)
         {
             // SHOW SELECT CARDS SCENE
-            if(selectQuant == 0)
+            if(selectQuant == 0 || selectCards.Count == 0)
             {
                 AcceptButton.Visible = true;
             }
@@ -43,8 +44,18 @@ namespace gameVisual
             if(AcceptButton.Pressed)
             {
                 board.child.GetTree().Paused = false;
+                Ready[0] = true;
                 this.QueueFree();
-                SelectDelegate(target);
+                if(action != null)
+                {
+                    action.Effect();
+                    board.VisualBoard.Update();
+                    action = null;
+                }
+                else
+                {
+                    SelectDelegate(VisualMethods.SelectedCards, -1);
+                }
             }
 
         }
