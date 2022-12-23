@@ -14,11 +14,11 @@ namespace gameVisual
             }
             else if (board.Game.player1.life == 0)
             {
-                winner = board.Game.player1.nick+" wins";
+                winner = board.Game.player2.nick+" wins";
             }
             else
             {
-                winner = board.Game.player2.nick+" wins";
+                winner = board.Game.player1.nick+" wins";
             }
             Label winnerLabel = GetNode<Label>("Tree/wins");
             winnerLabel.Text = winner;
