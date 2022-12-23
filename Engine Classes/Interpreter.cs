@@ -924,18 +924,21 @@ namespace gameEngine
     }
     class Remove : InterpretAction
     {
+        public string expression;
         public Remove(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy)
         {
             this.ReadyToActive = false;
+            expression = expressionA;
         }
         public override void Effect()
         {
-            string place = NextWord(this.expressionA);
-            this.expressionA = this.expressionA.Replace(place + ".", "");
+            expression = expressionA;
+            string place = NextWord(this.expression);
+            this.expression = this.expression.Replace(place + ".", "");
             switch (place)
             {
                 case "OwnerHand":
-                    if (IsDigit(NextWord(this.expressionA)))
+                    if (IsDigit(NextWord(this.expression)))
                     {
                         RemoveForint(this.Relic.Owner.hand);
                         break;
@@ -943,7 +946,7 @@ namespace gameEngine
                     RemoveForList(this.Relic.Owner.hand);
                     break;
                 case "EnemyHand":
-                    if (IsDigit(NextWord(this.expressionA)))
+                    if (IsDigit(NextWord(this.expression)))
                     {
                         RemoveForint(this.Relic.Enemy.hand);
                         break;
@@ -951,19 +954,19 @@ namespace gameEngine
                     RemoveForList(this.Relic.Enemy.hand);
                     break;
                 case "OwnerBattlefield":
-                    RemoveForBattlefiel(this.Relic.Owner.BattleField);
+                    RemoveForBattlefiel(this.Relic.Owner.BattleField, this.Relic.Owner);
                     break;
                 case "EnemyBattlefield":
-                    RemoveForBattlefiel(this.Relic.Enemy.BattleField);
+                    RemoveForBattlefiel(this.Relic.Enemy.BattleField, this.Relic.Enemy);
                     break;
             }
         }
         void RemoveForint(List<Relics> Place)
         {
-            int cards = int.Parse(NextWord(this.expressionA));
+            int cards = int.Parse(NextWord(this.expression));
             int factor = 1;
-            expressionA = CutExpression(expressionA);
-            if (NextWord(this.expressionA) != "")
+            expression = CutExpression(expression);
+            if (NextWord(this.expression) != "")
             {
                 factor = setFactor();
             }
@@ -982,7 +985,7 @@ namespace gameEngine
         }
         void RemoveForList(List<Relics> Place)
         {
-            // List<Relics> affectedCards = FullList(this.expressionA, this.Relic.Enemy);
+            // List<Relics> affectedCards = FullList(this.expression, this.Relic.Enemy);
             // foreach (var listCard in affectedCards)
             // {
             //     foreach (var cardPlace in Place)
@@ -994,20 +997,26 @@ namespace gameEngine
             //     }
             // }
         }
-        void RemoveForBattlefiel(Relics[] Battlefield)
+        void RemoveForBattlefiel(Relics[] Battlefield, Player Affected)
         {
-            // List<Relics> affectedCards = FullList(this.expressionA, this.Relic.Enemy);
-            // for (int i = 0; i < Battlefield.Length; i++)
-            // {
-            //     foreach (var listCard in affectedCards)
-            //     {
-            //         if (listCard == Battlefield[i])
-            //         {
-            //             Battlefield[i] = null;
-            //             break;
-            //         }
-            //     }
-            // }
+            affectCards = VisualMethods.SelectedCards;
+            if(affectCards.Count == 0)
+            {
+                AddForType(CutExpression(expression), Affected.BattleField.ToList());
+            }
+
+            foreach (var listCard in affectCards)
+            {
+                for (int i = 0; i < Battlefield.Length; i++)
+                {
+                    GD.Print(listCard.name + " && " + Battlefield[i].name);
+                    if (listCard == Battlefield[i])
+                    {
+                        Battlefield[i] = null;
+                        break;
+                    }
+                }
+            }
         }
     }
     class Show : InterpretAction
