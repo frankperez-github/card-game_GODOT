@@ -4,15 +4,11 @@ namespace gameVisual
 {
     public class GameOver : Node
     {
-        // Declare member variables here. Examples:
-        // private int a = 2;
-        // private string b = "text";
-
-        // Called when the node enters the scene tree for the first time.
+        Button MainMenu;
         public override void _Ready()
         {
             string winner;
-            if (board.Game.player1.life == 0 && board.Game.player1.life == 0)
+            if (board.Game.player1.life == 0 && board.Game.player2.life == 0)
             {
                 winner = "Empate";
             }
@@ -26,12 +22,19 @@ namespace gameVisual
             }
             Label winnerLabel = GetNode<Label>("Tree/wins");
             winnerLabel.Text = winner;
+
+            GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D").Play(0);
+            MainMenu = GetNode<Button>("Tree/Button");
+
         }
 
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    //  public override void _Process(float delta)
-    //  {
-    //      
-    //  }
+        public override void _Process(float delta)
+        {
+            if(MainMenu.Pressed)
+            {
+                VisualMethods.resetVisualGame();
+                GetTree().ChangeScene("res://mainMenu.tscn");
+            }
+        }
     }
 }

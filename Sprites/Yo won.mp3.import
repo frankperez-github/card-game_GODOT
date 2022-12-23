@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Yo won.mp3-c0870fcbd002129db5f7066ceb52cdc3.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Yo won.mp3"
+dest_files=[ "res://.import/Yo won.mp3-c0870fcbd002129db5f7066ceb52cdc3.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
