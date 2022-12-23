@@ -482,9 +482,9 @@ namespace gameEngine
             affectCards = new List<Relics>();
         }
         
-        public int setFactor()
+        public int setFactor(string expression)
         {
-            switch (this.expressionA)
+            switch (expression)
             {
                 case "EnemyHand":
                     return this.Relic.Enemy.hand.Count();
@@ -647,7 +647,7 @@ namespace gameEngine
                 }
                 else
                 {
-                    this.factor = setFactor();
+                    this.factor = setFactor(expressionA);
                 }
             }
         }
@@ -674,7 +674,7 @@ namespace gameEngine
                 }
                 else
                 {
-                    this.factor = setFactor();
+                    this.factor = setFactor(expressionA);
                 }
             }
         }
@@ -868,7 +868,7 @@ namespace gameEngine
             int factor = 1;
             if (NextWord(expression) != "")
             {
-                factor = setFactor();
+                factor = setFactor(expression);
             }
             this.cards = this.cards * factor;
         }
@@ -891,7 +891,7 @@ namespace gameEngine
                 }
                 else
                 {
-                    this.factor = setFactor();
+                    this.factor = setFactor(expressionA);
                 }
             }
         }
@@ -963,12 +963,13 @@ namespace gameEngine
         }
         void RemoveForint(List<Relics> Place)
         {
-            int cards = int.Parse(NextWord(this.expression));
+            GD.Print(expression);
+            int cards = int.Parse(NextWord(expression));
             int factor = 1;
             expression = CutExpression(expression);
-            if (NextWord(this.expression) != "")
+            if (NextWord(expression) != "")
             {
-                factor = setFactor();
+                factor = setFactor(expression);
             }
             cards = cards * factor;
             for (int i = 0; i < cards; i++)
