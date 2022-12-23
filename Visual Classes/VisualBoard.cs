@@ -68,6 +68,8 @@ namespace gameVisual
                             ((Sprite)GraveYardCard.GetChild(3)).Scale = new Vector2((float)0.25, (float)0.25);
                         }
                     }
+                    else
+                        GraveYardCard.Visible = false;
                 }
             }
             public class VisualHand 
@@ -141,6 +143,8 @@ namespace gameVisual
             {
                 UpdateVisualHand(visualHand1);
                 UpdateVisualHand(visualHand2);
+                UpdateBattleField(visualBattleField1);
+                UpdateBattleField(visualBattleField2);
                 VisualMethods.UpdatePlayersVisualProperties();
                 visualGraveYard.Show();
 
@@ -148,14 +152,28 @@ namespace gameVisual
                 {
                     if(board.Game.player1 is VirtualPlayer)
                         ((VirtualPlayer)(board.Game.player1)).Discard(board.Game.player1.hand.Count-Game.MaxInHand);
-                    else Discard(board.Game.player1.hand);
+                    else Discard(board.Game.player1.hand, board.Game.player1.hand.Count-Game.MaxInHand);
                 }
                 if (board.Game.player2.hand.Count > Game.MaxInHand)
                 {
                     if(board.Game.player2 is VirtualPlayer)
                         ((VirtualPlayer)(board.Game.player2)).Discard(board.Game.player2.hand.Count-Game.MaxInHand);
-                    else Discard(board.Game.player2.hand);
+                    else Discard(board.Game.player2.hand, board.Game.player2.hand.Count-Game.MaxInHand);
                 }    
+            }
+            public void UpdateBattleField(VisualBattleField battleField)
+            {
+                for (int i = 0; i < battleField.BattleField.Length; i++)
+                {
+                    if(battleField.BattleField[i] == null)
+                    {   
+                        if(!(battleField.visualBattleField[i] == null))
+                        {
+                            battleField.visualBattleField[i].QueueFree();
+                            battleField.visualBattleField[i] = null;
+                        }
+                    }
+                }
             }
             public void UpdateBattleFields(Player player)
             {
@@ -181,11 +199,11 @@ namespace gameVisual
                 VisualMethods.RefreshPositionCards(VisualHand);
   
             }
-            public void Discard(List<Relics> playerHand)
+            public void Discard(List<Relics> playerHand, int count)
             {
                 if (VisualMethods.SelectedCards == null)
                 {
-                    VisualMethods.selectVisually(playerHand, playerHand.Count-Game.MaxInHand, Discard, playerHand);
+                    VisualMethods.selectVisually(playerHand, count, Discard, playerHand, new bool[]{false});
                 }
                 else
                 {

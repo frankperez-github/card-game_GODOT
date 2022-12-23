@@ -78,7 +78,7 @@
     },
     "type": "draw",
     "isTrap": false,
-    "effect": "(Owner.Draw.EnemyHand.1)",
+    "effect": "(Owner.Draw.Graveyard.1)",
     "description": "Roba una carta del cementerio"
   },
   {
