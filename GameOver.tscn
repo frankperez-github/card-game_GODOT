@@ -6,7 +6,7 @@
 [ext_resource path="res://Sprites/Yo won.mp3" type="AudioStream" id=4]
 
 [sub_resource type="DynamicFontData" id=3]
-font_path = "res://Sprites/Tipografia/BlackOpsOne-Regular.ttf"
+font_path = "res://Sprites/Tipografia/excelsiorcomics.ttf"
 
 [sub_resource type="DynamicFont" id=1]
 size = 160
