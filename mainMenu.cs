@@ -24,6 +24,7 @@ namespace gameVisual
             {
                 GetTree().ChangeScene("res://SelectPlayer.tscn");
                 Inventory.ImportJsonContent();
+                Inventory.ResetActiveDuration();
             }
 
             Button HumanPlayer = GetNode<Button>("Start/Human");
