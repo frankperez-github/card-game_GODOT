@@ -14,21 +14,25 @@ namespace gameVisual
         public static List<Relics> SelectedCards = new List<Relics>();
         public static List<Relics> SourceToSelect;
         public static Node PauseMenu;
+        const int partitionLength = 5;
 
         #endregion
 
+
         public static Node boardNode;
-        public static void selectVisually(List<Relics> Source, int quant, System.Action<List<Relics>, int> Delegate, List<Relics> target, bool[] Ready)
+        public static void selectVisually(string sourceName, List<Relics> Source, int quant, System.Action<List<Relics>, int> Delegate, List<Relics> target, bool[] Ready)
         {
+            SelectCards.selectName = sourceName;
             SelectCards.SelectDelegate = Delegate;
-            int partitions = GetPartitions(Source, 5);
-            SetSelectCardsProperties("GraveYard: ", partitions, 0, Source, quant, target, Ready);
+            int partitions = GetPartitions(Source, partitionLength);
+            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant, target, Ready);
         }
-        public static void selectVisually(List<Relics> Source, int quant, InterpretAction Delegate, List<Relics> target, bool[] Ready)
+        public static void selectVisually(string sourceName, List<Relics> Source, int quant, InterpretAction Delegate, List<Relics> target, bool[] Ready)
         {
+            SelectCards.selectName = sourceName;
             SelectCards.action = Delegate;
-            int partitions = GetPartitions(Source, 5);
-            SetSelectCardsProperties("GraveYard: ",partitions, 0, Source, quant, target, Ready);
+            int partitions = GetPartitions(Source, partitionLength);
+            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant, target, Ready);
         }
         private static int GetPartitions(List<Relics> Source, int partitionLength)
         {
@@ -68,7 +72,7 @@ namespace gameVisual
             board.child.GetTree().Paused = true;
 
             int quantCards = Source.Count;
-            if(quantCards > 5) quantCards = 5;
+            if(quantCards > partitionLength) quantCards = partitionLength;
             
             float InitialPosition = (1010) - ((200 * (quantCards-1))/2);
             Vector2 FirstPosition = new Vector2(InitialPosition, 470);
@@ -76,7 +80,7 @@ namespace gameVisual
 
             // Showing cards to select
             int index = 0;
-            for (int i = actualSwipe*5; i < (actualSwipe*5)+5; i++)
+            for (int i = actualSwipe*partitionLength; i < (actualSwipe*partitionLength)+partitionLength; i++)
             {
                 
                 if (i < Source.Count && Source[i] != null)
@@ -446,7 +450,7 @@ namespace gameVisual
                 {
                     if(board.VisualBoard.visualGraveYard.graveYard.Count>0)
                     {
-                        selectVisually(board.VisualBoard.visualGraveYard.graveYard, 0, (x, y)=>{}, new List<Relics>(), new bool[]{false});
+                        selectVisually("GraveYard: ", board.VisualBoard.visualGraveYard.graveYard, 0, (x, y)=>{}, new List<Relics>(), new bool[]{false});
                     }
                 }
                     break;
