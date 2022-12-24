@@ -88,6 +88,10 @@ namespace gameVisual
                     Card.ZIndex = 7;
                     SelectCards.selectCards.Add(Card);
                     SelectMenu.AddChild(Card);
+<<<<<<< HEAD
+=======
+                    // GD.Print(SelectCards.SelectedIndexes[actualSwipe].Count);
+>>>>>>> a2bf174a24779636563a1298d556c926aaf1366c
                     // Remembering selected cards
                     try
                     {

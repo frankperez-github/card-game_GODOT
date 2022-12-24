@@ -113,7 +113,6 @@ namespace gameVisual
                     {
                         if (BattleField[index] != null)
                         {
-                            GD.Print(BattleField[index].name + " pasiveDuration: " + BattleField[index].passiveDuration + " activeDuration: " + BattleField[index].activeDuration);
                             if (BattleField[index].activeDuration == 1)
                             {
                                 // Removing card from battelfield
@@ -272,7 +271,6 @@ namespace gameVisual
                         playerHand[0].Owner.hand.Remove(VisualMethods.SelectedCards[i]);
                     }
                     VisualMethods.SelectedCards = new List<Relics>();
-                    GD.Print(playerHand.Count);
                 }
                 UpdateVisualHand(visualHand1);
                 UpdateVisualHand(visualHand2);

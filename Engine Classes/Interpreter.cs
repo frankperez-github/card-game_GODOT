@@ -79,7 +79,7 @@ namespace gameEngine
                     {
                         this.leftExpression = expressionA.Substring(1, i - 1);
                         this.Operator = expressionA[i + 1] + "";
-                        this.rightExpression = expressionA.Substring(i + 2, ((expressionA.Length) - (i + 2)));
+                        this.rightExpression = expressionA.Substring(i + 3, ((expressionA.Length) - (i + 4)));
                         break;
                     }
                 }
@@ -93,11 +93,13 @@ namespace gameEngine
         public AlgEx(string expression, Player Owner, Player Enemy, Relics relics) : base(Owner, Enemy, expression, relics){}
         public int Evaluate()
         {
+
             if (IsDigit(this.expressionA))
             {
                 return int.Parse(this.expressionA);
             }
             ScanExpression Scan = new ScanExpression(this.expressionA);
+
             if(Scan.leftExpression == null && Scan.rightExpression == null)
             {
                 return IsVariable(this.expressionA);
@@ -346,8 +348,7 @@ namespace gameEngine
             }
             if (expression[index].Contains("if ("))
             {
-
-                string condition = expression[index].Substring(expression[index].IndexOf("("), expression[index].Length -2 - expression[index].IndexOf("("));
+                string condition = expression[index].Substring(expression[index].IndexOf("(")+1, expression[index].Length -2 - expression[index].IndexOf("("));
                 if (new BoolEx(condition, Owner, Enemy, Relic).Evaluate())
                 {
                     if (!Active)
@@ -498,6 +499,18 @@ namespace gameEngine
                     return this.Relic.Owner.BattleField.Length;
                 case "Graveyard":
                     return board.Game.GraveYard.Count();
+                case "OwnerAttack":
+                    return (int)this.Relic.Owner.character.attack;
+                case "EnemyAttack":
+                    return (int)this.Relic.Enemy.character.attack;
+                case "OwnerLife":
+                    return (int)this.Relic.Owner.life;
+                case "EnemyLife":
+                    return (int)this.Relic.Enemy.life;
+                case "OwnerDefense":
+                    return (int)this.Relic.Owner.character.defense;
+                case "EnemyDefense":
+                    return (int)this.Relic.Enemy.character.defense;
                 default:
                     return 1;
             }
@@ -661,21 +674,23 @@ namespace gameEngine
     {
         int damage;
         int factor;
+        string expression;
         public Attack(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy)
         {
             this.ReadyToActive = true;
-            this.damage = int.Parse(NextWord(this.expressionA));
+            expression = expressionA;
+            this.damage = int.Parse(NextWord(expression));
             this.factor = 1;
-            if (this.expressionA.Contains("."))
+            if (expression.Contains("."))
             {
-                this.expressionA = CutExpression(this.expressionA);
-                if (IsDigit(this.expressionA))
+                expression = CutExpression(expression);
+                if (IsDigit(expression))
                 {
-                    factor = int.Parse(this.expressionA);
+                    factor = int.Parse(expression);
                 }
                 else
                 {
-                    this.factor = setFactor(expressionA);
+                    this.factor = setFactor(expression);
                 }
             }
         }
@@ -695,7 +710,7 @@ namespace gameEngine
         }
         public override void Effect()
         {
-            expression = this.expressionA;
+            expression = expressionA;
             string Place = NextWord(expression);
             switch (Place)
             {
@@ -878,10 +893,12 @@ namespace gameEngine
     {
         int defense;
         double factor;
+        string expression;
         public Defense(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy)
         {
             this.ReadyToActive = true;
-            this.defense = int.Parse(NextWord(this.expressionA));
+            expression = this.expressionA;
+            this.defense = int.Parse(NextWord(expressionA));
             this.factor = 1;
             if (this.expressionA.Contains("."))
             {
