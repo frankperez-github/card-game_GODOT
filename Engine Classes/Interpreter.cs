@@ -1077,7 +1077,7 @@ namespace gameEngine
         }
         public void ShowCards(List<Relics> show, int count)
         {
-            if(!show[0].Owner is VirtualPlayer)
+            if(!(show[0].Owner is VirtualPlayer))
             {
                 VisualMethods.selectVisually("EnemyHand: ", show, 0, (x, y)=>{}, new List<Relics>(), new bool[]{false});
                 VisualMethods.SelectedCards = new List<Relics>();
