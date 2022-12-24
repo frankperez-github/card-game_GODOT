@@ -15,6 +15,7 @@ namespace gameVisual
             gameType = "virtual";
             Inventory = new inventory();
             GetTree().SetScreenStretch(SceneTree.StretchMode.Mode2d, SceneTree.StretchAspect.Keep, new Vector2(1920, 1080), 1);
+            Inventory.ImportJsonContent();
         }
 
         public override void _Process(float delta)

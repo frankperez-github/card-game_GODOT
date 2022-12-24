@@ -39,6 +39,18 @@ namespace gameEngine
             string jsonContent = JsonConvert.SerializeObject(CharactersInventory, Formatting.Indented);
             System.IO.File.AppendAllText(JSONcharactersPath, jsonContent);
         }
+        public void OverrideJson()
+        {
+            if (System.IO.File.Exists(JSONcardsPath))
+            {
+                string jsonContent = JsonConvert.SerializeObject(CardsInventory, Formatting.Indented);
+                System.IO.File.WriteAllText(JSONcharactersPath, jsonContent);
+            }
+            else
+            {
+                GD.Print("No cards-inventory.json FOUNDED");
+            }
+        }
         public void ImportJsonContent()
         {
             if (System.IO.File.Exists(JSONcardsPath))

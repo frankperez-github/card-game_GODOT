@@ -4,8 +4,8 @@
     "Actions": [],
     "id": 0,
     "name": "Espada del destino",
-    "activeDuration": 2,
-    "passiveDuration": 1,
+    "activeDuration": 3,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 13.46.09 - Sword of destiny.png",
     "Owner": {
       "character": null,
@@ -46,7 +46,7 @@
     "id": 2,
     "name": "Capsula del Tiempo",
     "activeDuration": 1,
-    "passiveDuration": 1,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.53.40 - antique time capsule in center of galaxy digital art.png",
     "Owner": {
       "character": null,
@@ -78,7 +78,7 @@
     },
     "type": "draw",
     "isTrap": false,
-    "effect": "(Owner.Draw.Graveyard.1)",
+    "effect": "(Owner.Draw.EnemyHand.1)",
     "description": "Roba una carta del cementerio"
   },
   {
@@ -87,7 +87,7 @@
     "id": 3,
     "name": "Anillo de Zeus",
     "activeDuration": 1,
-    "passiveDuration": 1,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.55.09 - god's ring in zeus' hand digital art.png",
     "Owner": {
       "character": null,
@@ -128,7 +128,7 @@
     "id": 4,
     "name": "Escudo de la pobreza",
     "activeDuration": 1,
-    "passiveDuration": 1,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.27.55 - the cursed shield digital art (4).png",
     "Owner": {
       "character": null,
@@ -169,7 +169,7 @@
     "id": 5,
     "name": "Libro de los secretos",
     "activeDuration": 1,
-    "passiveDuration": 1,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.39.14 - The Book of the Dead in a temple digital art.png",
     "Owner": {
       "character": null,
@@ -201,7 +201,7 @@
     },
     "type": "draw",
     "isTrap": false,
-    "effect": "(Owner.Draw.Deck.Random.2)",
+    "effect": "(Owner.Draw.Deck.random.2)",
     "description": "Robas 2 cartas del deck"
   },
   {
@@ -210,7 +210,7 @@
     "id": 6,
     "name": "Caliz de la Venganza",
     "activeDuration": 1,
-    "passiveDuration": 1,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.34.49 -  chalice of blood digital art.png",
     "Owner": {
       "character": null,
@@ -251,7 +251,7 @@
     "id": 8,
     "name": "Objetivo Enemigo",
     "activeDuration": 1,
-    "passiveDuration": 1,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.39.18 - The mohoho's  curse digital art.png",
     "Owner": {
       "character": null,
@@ -283,7 +283,7 @@
     },
     "type": "trap",
     "isTrap": false,
-    "effect": "(Owner.Remove.EnemyBattlefield.Battlefield.1)",
+    "effect": "(Enemy.Remove.EnemyBattlefield.Battlefield.random.1)",
     "description": "Destruye 1 reliquia que tenga activa enemigo"
   },
   {
@@ -292,7 +292,7 @@
     "id": 9,
     "name": "El ojo blanco",
     "activeDuration": 2,
-    "passiveDuration": 1,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.30.30 - the talisman invocation in a ritual digital art.png",
     "Owner": {
       "character": null,
@@ -333,7 +333,7 @@
     "id": 11,
     "name": "La lanza de la muerte",
     "activeDuration": 1,
-    "passiveDuration": 1,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.50.46 - mystic dagger of revenge in a magic envoirment digital art.png",
     "Owner": {
       "character": null,
@@ -371,10 +371,10 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 10,
+    "id": 13,
     "name": "Espejo de impaciencia",
     "activeDuration": 1,
-    "passiveDuration": 1,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.47.44 - magic mirror reflecting powerfull attack of sauron.png",
     "Owner": {
       "character": null,
@@ -412,10 +412,10 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 7,
+    "id": 14,
     "name": "El arco del último momento",
     "activeDuration": 1,
-    "passiveDuration": 1,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.55.31 - revenge crossbow with a lake behind digital art.png",
     "Owner": {
       "character": null,
@@ -448,88 +448,6 @@
     "type": "defense",
     "isTrap": true,
     "effect": "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)",
-    "description": "Aumenta la defensa en 1 punto y Te cura 5 puntos por cada carta en la mano"
-  },
-  {
-    "cardState": 2,
-    "Actions": [],
-    "id": 1,
-    "name": "Token",
-    "activeDuration": 1,
-    "passiveDuration": 1,
-    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 17.05.15 - the talisman invocation in a ritual digital art.png",
-    "Owner": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "Enemy": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "type": "random",
-    "isTrap": false,
-    "effect": "",
-    "description": "Si tienes 3 de esta carta en la mano puedes activar tu ataque especial, si el efecto de esta carta es activado, esta carta es removida del juego"
-  },
-  {
-    "cardState": 2,
-    "Actions": [],
-    "id": 11,
-    "name": "Resfriado",
-    "activeDuration": 2,
-    "passiveDuration": 2,
-    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.30.45 - the cursed shield digital art.png",
-    "Owner": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "Enemy": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "type": "trap",
-    "isTrap": false,
-    "effect": "(Enemy.ChangeState.Freezed)",
-    "description": "Congela al rival impidiendole atacar durante 2 turnos"
+    "description": "Devuelve el ataque del enemigo"
   }
 ]
