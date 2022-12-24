@@ -1,9 +1,10 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Editor.cs" type="Script" id=2]
 [ext_resource path="res://Relic.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sprites/Tipografia/excelsiorcomics.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Sprites/Tipografia/BlackOpsOne-Regular.ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 54
@@ -26,6 +27,12 @@ font_data = ExtResource( 1 )
 [sub_resource type="DynamicFont" id=13]
 size = 31
 font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=15]
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=16]
+font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 21
@@ -65,7 +72,7 @@ script = ExtResource( 2 )
 [node name="Code" type="Tree" parent="."]
 margin_right = 620.0
 margin_bottom = 1074.0
-rect_pivot_offset = Vector2( 202, 193 )
+rect_pivot_offset = Vector2( 141, 850 )
 
 [node name="Label" type="Label" parent="Code"]
 margin_left = 30.0
@@ -184,9 +191,35 @@ mode = 0
 access = 2
 show_hidden_files = true
 
-[node name="Button" type="Button" parent="Code"]
-margin_right = 12.0
+[node name="Label3" type="Label" parent="Code"]
+margin_left = 37.0
+margin_top = 808.0
+margin_right = 192.0
+margin_bottom = 829.0
+custom_fonts/font = SubResource( 15 )
+text = "passive duration: "
+
+[node name="pDuration" type="TextEdit" parent="Code/Label3"]
+margin_left = 155.0
+margin_top = 2.0
+margin_right = 199.0
 margin_bottom = 20.0
+custom_fonts/font = SubResource( 16 )
+
+[node name="Label6" type="Label" parent="Code"]
+margin_left = 37.0
+margin_top = 836.0
+margin_right = 161.0
+margin_bottom = 850.0
+custom_fonts/font = SubResource( 15 )
+text = "active duration: "
+
+[node name="aDuration" type="TextEdit" parent="Code/Label6"]
+margin_left = 148.0
+margin_top = 2.0
+margin_right = 192.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 16 )
 
 [node name="Options" type="Tree" parent="."]
 margin_left = 627.0
