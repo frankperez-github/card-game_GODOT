@@ -1060,7 +1060,7 @@ namespace gameEngine
                     show.Add(card);
                 }
             }
-            //Metodo que debe hacer Frank para visualizar las cartas
+            
             ShowCards(show, 0);
         }
         public void ShowCards(List<Relics> show, int count)
