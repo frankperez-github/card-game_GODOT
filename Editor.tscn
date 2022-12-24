@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Editor.cs" type="Script" id=2]
 [ext_resource path="res://Relic.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Sprites/Tipografia/excelsiorcomics.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 54
@@ -53,6 +54,10 @@ font_data = ExtResource( 1 )
 [sub_resource type="DynamicFont" id=11]
 size = 59
 font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=14]
+size = 31
+font_data = ExtResource( 4 )
 
 [node name="Node" type="Node"]
 script = ExtResource( 2 )
@@ -126,18 +131,18 @@ custom_fonts/font = SubResource( 3 )
 text = "Guardar"
 
 [node name="IsTrap" type="CheckBox" parent="Code"]
-margin_left = 73.0
-margin_top = 670.0
-margin_right = 101.0
-margin_bottom = 698.0
+margin_left = 323.0
+margin_top = 825.0
+margin_right = 436.0
+margin_bottom = 855.0
 custom_fonts/font = SubResource( 13 )
 text = "Trap Card"
 
 [node name="Types" type="Label" parent="Code"]
-margin_left = 77.0
-margin_top = 724.0
-margin_right = 174.0
-margin_bottom = 763.0
+margin_left = 35.0
+margin_top = 697.0
+margin_right = 223.0
+margin_bottom = 736.0
 rect_pivot_offset = Vector2( 148, 12 )
 custom_fonts/font = SubResource( 1 )
 text = "Type of card:"
@@ -179,12 +184,16 @@ mode = 0
 access = 2
 show_hidden_files = true
 
+[node name="Button" type="Button" parent="Code"]
+margin_right = 12.0
+margin_bottom = 20.0
+
 [node name="Options" type="Tree" parent="."]
 margin_left = 627.0
 margin_top = -4.0
 margin_right = 1314.0
 margin_bottom = 1073.0
-rect_pivot_offset = Vector2( 272, 352 )
+rect_pivot_offset = Vector2( 465, 468 )
 custom_fonts/font = SubResource( 4 )
 
 [node name="Operators" type="Label" parent="Options"]
@@ -377,7 +386,6 @@ margin_top = -1.0
 margin_right = 218.0
 margin_bottom = 28.0
 custom_fonts/font = SubResource( 10 )
-text = "number"
 
 [node name="Properties" type="Label" parent="Options"]
 margin_left = 37.0
@@ -386,14 +394,6 @@ margin_right = 282.0
 margin_bottom = 414.0
 custom_fonts/font = SubResource( 7 )
 text = "Properties:"
-
-[node name="Button5" type="Button" parent="Options/Properties"]
-margin_left = 261.0
-margin_top = 63.0
-margin_right = 374.0
-margin_bottom = 96.0
-custom_fonts/font = SubResource( 9 )
-text = "Defense"
 
 [node name="Button6" type="Button" parent="Options/Properties"]
 margin_left = 133.0
@@ -428,17 +428,17 @@ custom_fonts/font = SubResource( 9 )
 text = "Owner"
 
 [node name="Actions" type="Label" parent="Options"]
-margin_left = 34.0
-margin_top = 627.0
-margin_right = 158.0
-margin_bottom = 669.0
+margin_left = 32.0
+margin_top = 571.0
+margin_right = 156.0
+margin_bottom = 613.0
 custom_fonts/font = SubResource( 11 )
 text = "Actions"
 
 [node name="Button8" type="Button" parent="Options/Actions"]
-margin_left = 145.0
+margin_left = 144.0
 margin_top = 61.0
-margin_right = 258.0
+margin_right = 254.0
 margin_bottom = 94.0
 custom_fonts/font = SubResource( 9 )
 text = "Draw"
@@ -451,11 +451,51 @@ margin_bottom = 94.0
 custom_fonts/font = SubResource( 9 )
 text = "Attack"
 
+[node name="Button9" type="Button" parent="Options/Actions"]
+margin_left = 11.0
+margin_top = 128.0
+margin_right = 124.0
+margin_bottom = 161.0
+custom_fonts/font = SubResource( 9 )
+text = "Cure"
+
+[node name="Button10" type="Button" parent="Options/Actions"]
+margin_left = 268.0
+margin_top = 127.0
+margin_right = 388.0
+margin_bottom = 160.0
+custom_fonts/font = SubResource( 9 )
+text = "Change State"
+
+[node name="Button5" type="Button" parent="Options/Actions"]
+margin_left = 141.0
+margin_top = 128.0
+margin_right = 254.0
+margin_bottom = 161.0
+custom_fonts/font = SubResource( 9 )
+text = "Remove"
+
+[node name="Button11" type="Button" parent="Options/Actions"]
+margin_left = 268.0
+margin_top = 62.0
+margin_right = 381.0
+margin_bottom = 95.0
+custom_fonts/font = SubResource( 9 )
+text = "Show"
+
+[node name="BackSpace" type="Button" parent="Options"]
+margin_left = 471.0
+margin_top = 298.0
+margin_right = 648.0
+margin_bottom = 349.0
+custom_fonts/font = SubResource( 14 )
+text = "<--- BackSpace"
+
 [node name="Preview" type="Tree" parent="."]
 margin_left = 1319.0
 margin_right = 1942.0
 margin_bottom = 1076.0
 
 [node name="Relic" parent="Preview" instance=ExtResource( 3 )]
-position = Vector2( 297, 511 )
-scale = Vector2( 0.623307, 0.669405 )
+position = Vector2( 299, 511 )
+scale = Vector2( 0.429429, 0.417113 )

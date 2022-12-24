@@ -87,6 +87,7 @@ namespace gameEngine
         }
     }
 
+
     class AlgEx : Expression
     {
         public AlgEx(string expression, Player Owner, Player Enemy, Relics relics) : base(Owner, Enemy, expression, relics){}
@@ -321,6 +322,7 @@ namespace gameEngine
             return false;
         }
     }
+
 
     public class InterpretEffect
     {
