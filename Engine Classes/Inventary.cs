@@ -98,4 +98,48 @@ namespace gameEngine
         }
         
 }
+/*
+    CARTAS ESPECIALES
+  {
+    "cardState": 2,
+    "Actions": [],
+    "id": 13,
+    "name": "Espejo de impaciencia",
+    "activeDuration": 1,
+    "passiveDuration": 0,
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.47.44 - magic mirror reflecting powerfull attack of sauron.png",
+    "Owner": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "Enemy": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "type": "defense",
+    "isTrap": true,
+    "effect": "(Owner.Defense.1.1)",
+    "description": "Se activa cuando el adversario ataca y evita el ataque"
+  },
+  */
 }

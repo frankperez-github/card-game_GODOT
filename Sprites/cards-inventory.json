@@ -4,7 +4,7 @@
     "Actions": [],
     "id": 0,
     "name": "Espada del destino",
-    "activeDuration": 3,
+    "activeDuration": 1,
     "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 13.46.09 - Sword of destiny.png",
     "Owner": {
@@ -292,7 +292,7 @@
     "id": 9,
     "name": "El ojo blanco",
     "activeDuration": 2,
-    "passiveDuration": 0,
+    "passiveDuration": 1,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.30.30 - the talisman invocation in a ritual digital art.png",
     "Owner": {
       "character": null,
@@ -371,47 +371,6 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 13,
-    "name": "Espejo de impaciencia",
-    "activeDuration": 1,
-    "passiveDuration": 0,
-    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.47.44 - magic mirror reflecting powerfull attack of sauron.png",
-    "Owner": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "Enemy": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "type": "defense",
-    "isTrap": true,
-    "effect": "(Owner.Defense.1.1)",
-    "description": "Se activa cuando el adversario ataca y evita el ataque"
-  },
-  {
-    "cardState": 2,
-    "Actions": [],
     "id": 14,
     "name": "El arco del último momento",
     "activeDuration": 1,
@@ -448,7 +407,6 @@
     "type": "defense",
     "isTrap": true,
     "effect": "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)",
-<<<<<<< HEAD
     "description": "Aumenta la defensa en 1 punto y Te cura 5 puntos por cada carta en la mano"
   },
   {
@@ -457,7 +415,7 @@
     "id": 1,
     "name": "Token",
     "activeDuration": 1,
-    "passiveDuration": 1,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 17.05.15 - the talisman invocation in a ritual digital art.png",
     "Owner": {
       "character": null,
@@ -497,7 +455,7 @@
     "Actions": [],
     "id": 11,
     "name": "Resfriado",
-    "activeDuration": 2,
+    "activeDuration": 4,
     "passiveDuration": 2,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.30.45 - the cursed shield digital art.png",
     "Owner": {
@@ -656,7 +614,6 @@
     "effect": "(Owner.ChangeState.Safe)",
     "description": "Te cura de cualquier estado negativo"
   },
-  
   {
     "cardState": 2,
     "Actions": [],
@@ -697,8 +654,5 @@
     "isTrap": false,
     "effect": "if (Owner.Life<85)\n{\n(Owner.Defense.3)\n}",
     "description": "Si tu vida es menor que 25, tu defensa sube en 3 puntos"
-=======
-    "description": "Devuelve el ataque del enemigo"
->>>>>>> a90d0d064cc551c47fb4be0464f5c7c2146c1e3b
   }
 ]
