@@ -66,19 +66,6 @@ namespace gameEngine
                 GD.Print("No cards-inventory.json FOUNDED");
             }
 
-            // if (System.IO.File.Exists(JSONcharactersPath))
-            // {
-            //     string jsonContent = System.IO.File.ReadAllText(JSONcharactersPath);
-            //     if (jsonContent != "")
-            //     {
-            //         CharactersInventory = JsonConvert.DeserializeObject<List<CharacterProperties>>(jsonContent);
-            //     }
-
-            // }
-            // else
-            // {
-            //     GD.Print("No characters-inventory.json FOUNDED");
-            // }
     }
         public void ResetActiveDuration()
         {

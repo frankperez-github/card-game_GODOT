@@ -36,15 +36,5 @@ namespace gameVisual
             }
             
         }
-        // public override void _Input(InputEvent @event)
-        // {
-        //     // Deactivate Pause Menu
-        //     if (@event is InputEventKey eventKey && eventKey.Scancode == (int)KeyList.Escape)
-        //     {
-        //         GetTree().Paused = false;
-        //         VisualMethods.PauseMenu.QueueFree();
-        //         GD.Print(this.Name);
-        //     }
-        // }
     }
 }
