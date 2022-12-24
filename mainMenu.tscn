@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://mainMenu.cs" type="Script" id=1]
 [ext_resource path="res://Sprites/Tipografia/Cinzel-Bold.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Sprites/1671655712654.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/IMG_20221221_152133 (2).webp" type="Texture" id=5]
 [ext_resource path="res://Sprites/Tipografia/excelsiorcomics.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://Sprites/IMG_20221221_152133.webp" type="Texture" id=7]
 
 [sub_resource type="DynamicFont" id=6]
 size = 131
@@ -17,6 +18,18 @@ font_path = "res://Sprites/Tipografia/excelsiorcomics.ttf"
 [sub_resource type="DynamicFont" id=1]
 size = 57
 font_data = SubResource( 3 )
+
+[sub_resource type="StyleBoxTexture" id=15]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1734, 725 )
+
+[sub_resource type="StyleBoxTexture" id=16]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1734, 725 )
+
+[sub_resource type="StyleBoxTexture" id=17]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 1734, 725 )
 
 [sub_resource type="StyleBoxTexture" id=12]
 
@@ -86,6 +99,9 @@ margin_top = 381.0
 margin_right = 1120.87
 margin_bottom = 494.268
 custom_fonts/font = SubResource( 1 )
+custom_styles/hover = SubResource( 15 )
+custom_styles/pressed = SubResource( 16 )
+custom_styles/focus = SubResource( 17 )
 custom_styles/disabled = SubResource( 12 )
 custom_styles/normal = SubResource( 13 )
 icon_align = 1
