@@ -139,6 +139,7 @@ namespace gameVisual
                                 if (BattleField[index].passiveDuration != 0)
                                 {
                                     BattleField[index].passiveDuration--;
+                                    BattleField[index].activeDuration--;
                                 }
                                 else
                                 {
