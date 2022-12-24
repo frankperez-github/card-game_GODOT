@@ -28,6 +28,7 @@ custom_fonts/font = SubResource( 2 )
 text = "Name"
 
 [node name="Image" type="Sprite" parent="."]
+visible = false
 position = Vector2( 8.39746, -228.668 )
 scale = Vector2( 16.0571, 13.1966 )
 z_index = -1

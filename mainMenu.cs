@@ -28,20 +28,20 @@ namespace gameVisual
                 Inventory.ResetActiveDuration();
             }
 
-            Button HumanPlayer = GetNode<Button>("Start/Human");
+            Button HumanPlayer = GetNode<Button>("Human");
             if (HumanPlayer.Pressed)
             {
                 gameType = "Human";
                 GetTree().ChangeScene("res://SelectPlayer.tscn");
             }
 
-            Button Edit = GetNode<Button>("Start/Edit");
+            Button Edit = GetNode<Button>("Edit");
             if (Edit.Pressed)
             {
                 GetTree().ChangeScene("res://EditDeck.tscn");
             }
 
-            Button Quit = GetNode<Button>("Start/Quit");
+            Button Quit = GetNode<Button>("Quit");
             if (Quit.Pressed)
             {
                 GetTree().Quit();
