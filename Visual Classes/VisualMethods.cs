@@ -89,7 +89,6 @@ namespace gameVisual
                     Card.ZIndex = 7;
                     SelectCards.selectCards.Add(Card);
                     SelectMenu.AddChild(Card);
-                    GD.Print(SelectCards.SelectedIndexes[actualSwipe].Count);
                     // Remembering selected cards
                     if(SelectCards.SelectedIndexes[actualSwipe].Contains(i)) // Selected card
                     {

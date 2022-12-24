@@ -531,5 +531,170 @@
     "isTrap": false,
     "effect": "(Enemy.ChangeState.Freezed)",
     "description": "Congela al rival impidiendole atacar durante 2 turnos"
+  },
+  {
+    "cardState": 2,
+    "Actions": [],
+    "id": 12,
+    "name": "Ofrenda",
+    "activeDuration": 1,
+    "passiveDuration": 0,
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 17.01.26 - the talisman invocation in a ritual digital art.png",
+    "Owner": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "Enemy": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "type": "draw",
+    "isTrap": false,
+    "effect": "(Owner.Draw.EnemyHand.1)",
+    "description": "Roba una carta de la mano del enemigo"
+  },
+  {
+    "cardState": 2,
+    "Actions": [],
+    "id": 13,
+    "name": "Imapcto",
+    "activeDuration": 1,
+    "passiveDuration": 0,
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.45.38 - The mohoho's  curse digital art.png",
+    "Owner": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "Enemy": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "type": "draw",
+    "isTrap": false,
+    "effect": "(Owner.Attack.1.OwnerAttack)",
+    "description": "Te duplica el ataque durante 1 turno"
+  },
+  {
+    "cardState": 2,
+    "Actions": [],
+    "id": 14,
+    "name": "Bendición celestial",
+    "activeDuration": 1,
+    "passiveDuration": 0,
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.57.10 - chalice of dreams in a cloud digital art.png",
+    "Owner": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "Enemy": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "type": "changeState",
+    "isTrap": false,
+    "effect": "(Owner.ChangeState.Safe)",
+    "description": "Te cura de cualquier estado negativo"
+  },
+  
+  {
+    "cardState": 2,
+    "Actions": [],
+    "id": 15,
+    "name": "Ultima defensa",
+    "activeDuration": 1,
+    "passiveDuration": 0,
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.39.32 - The Book of the Dead in a temple digital art.png",
+    "Owner": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "Enemy": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "type": "defense",
+    "isTrap": false,
+    "effect": "if (Owner.Life<85)\n{\n(Owner.Defense.3)\n}",
+    "description": "Si tu vida es menor que 25, tu defensa sube en 3 puntos"
   }
 ]
