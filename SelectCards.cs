@@ -94,7 +94,7 @@ namespace gameVisual
                 switch ((ButtonList)mouseEvent.ButtonIndex)
                 {
                     case ButtonList.Left:
-                        if (VisualMethods.selecting)
+                        if (VisualMethods.selecting && selectQuant > 0)
                         {
                             for(int i = 0; i < selectCards.Count; i++)
                             {

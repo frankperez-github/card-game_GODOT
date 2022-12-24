@@ -82,24 +82,27 @@ namespace gameVisual
             int index = 0;
             for (int i = actualSwipe*partitionLength; i < (actualSwipe*partitionLength)+partitionLength; i++)
             {
-                
                 if (i < Source.Count && Source[i] != null)
                 {
                     Sprite Card = VisualMethods.InstanciateVisualCard(Source[i]);
                     Card.ZIndex = 7;
                     SelectCards.selectCards.Add(Card);
                     SelectMenu.AddChild(Card);
-                    // GD.Print(SelectCards.SelectedIndexes[actualSwipe].Count);
                     // Remembering selected cards
-                    if(SelectCards.SelectedIndexes[actualSwipe].Contains(i)) // Selected card
+                    try
                     {
-                        Card.Scale = new Vector2((float)0.20,(float)0.20);
+                        if(SelectCards.SelectedIndexes[actualSwipe].Contains(i)) // Selected card
+                        {
+                            Card.Scale = new Vector2((float)0.20,(float)0.20);
+                        }
+                        else // Not selected card
+                        {
+                            Card.Scale = new Vector2((float)0.17,(float)0.17);
+                        }
                     }
-                    else // Not selected card
-                    {
-                        Card.Scale = new Vector2((float)0.17,(float)0.17);
-                    }
-
+                    catch (System.Exception)
+                    {}
+                    
                     // Adjusting position of cards to quantity in source
                     if(index==0)
                     {

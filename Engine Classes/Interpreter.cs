@@ -808,11 +808,6 @@ namespace gameEngine
             else
             {
                 expression = expression.Replace(NextWord(expression) + ".", "");
-                // List<Relics> affectedCard = FullList(expression, this.Relic.Enemy);
-                // foreach (var relic in affectedCard)
-                // {
-                //     GD.Print("Carlos no ha implementado el metodo robar cartas especificas de la mano enemiga");
-                // }
             }
         }
         public void DrawFromOwnerBattlefield()
@@ -1077,13 +1072,16 @@ namespace gameEngine
                     show.Add(card);
                 }
             }
-            //Metodo que debe hacer Frank para visualizar las cartas
+            
             ShowCards(show, 0);
         }
         public void ShowCards(List<Relics> show, int count)
         {
-            VisualMethods.selectVisually("EnemyHand: ", show, 0, (x, y)=>{}, new List<Relics>(), new bool[]{false});
-            VisualMethods.SelectedCards = new List<Relics>();
+            if(!show[0].Owner is VirtualPlayer)
+            {
+                VisualMethods.selectVisually("EnemyHand: ", show, 0, (x, y)=>{}, new List<Relics>(), new bool[]{false});
+                VisualMethods.SelectedCards = new List<Relics>();
+            }
         }
     }
 }
