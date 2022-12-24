@@ -71,7 +71,7 @@ size = 41
 font_data = ExtResource( 6 )
 
 [node name="PauseMenu" type="Sprite"]
-z_index = 6
+z_index = 20
 script = ExtResource( 2 )
 
 [node name="PruebaTransparenciaMesaDeTrabajo1" type="Sprite" parent="."]

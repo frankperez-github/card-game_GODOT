@@ -259,7 +259,7 @@ namespace gameVisual
             {
                 if (VisualMethods.SelectedCards.Count == 0)
                 {
-                    VisualMethods.selectVisually(playerHand, count, Discard, playerHand, new bool[]{false});
+                    VisualMethods.selectVisually("Select to discard",playerHand, count, Discard, playerHand, new bool[]{false});
                 }
                 else
                 {

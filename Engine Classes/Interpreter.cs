@@ -615,7 +615,6 @@ namespace gameEngine
                     result.Add(result.ElementAt(int.Parse(Console.ReadLine())));
                 }
             }
-            // return result;
         }
         public void selectCards(List<Relics> Place, int count)
         {
@@ -623,7 +622,7 @@ namespace gameEngine
             bool[] Ready = new bool[]{false};
             if(Place.Count >= count)
             {
-                VisualMethods.selectVisually(Place, count, this, affectCards, Ready);
+                VisualMethods.selectVisually("Select: ", Place, count, this, affectCards, Ready);
             }
         }
         public virtual void Effect(){} 
@@ -1064,10 +1063,7 @@ namespace gameEngine
         }
         public void ShowCards(List<Relics> show, int count)
         {
-            VisualMethods.selectVisually(show, 0, (x, y)=>{}, new List<Relics>(), new bool[]{false});
-            SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("Tree/DiscardLabel");
-            SelectCards.SelectLabel.Text = "EnemyHand: " ;
-            SelectCards.SelectLabel.Visible = true;
+            VisualMethods.selectVisually("EnemyHand: ", show, 0, (x, y)=>{}, new List<Relics>(), new bool[]{false});
             VisualMethods.SelectedCards = new List<Relics>();
         }
     }

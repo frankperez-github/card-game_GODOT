@@ -23,6 +23,7 @@ namespace gameVisual
         public static List<Relics> target;
         public static int actualSwipe = 0;
         public static int partitions = 0;
+        public static string selectName;
 
         public override void _Ready()
         {
@@ -55,7 +56,6 @@ namespace gameVisual
             {
                 board.child.GetTree().Paused = false;
                 Ready[0] = true;
-                this.QueueFree();
                 if(action != null)
                 {
                     action.Effect();
@@ -66,6 +66,7 @@ namespace gameVisual
                 {
                     SelectDelegate(VisualMethods.SelectedCards, -1);
                 }
+                this.QueueFree();
             }
 
             Left.Disabled = false;
@@ -75,12 +76,12 @@ namespace gameVisual
 
             if(Left.Pressed)
             {
-                VisualMethods.SetSelectCardsProperties("GraveYard: ",partitions, actualSwipe-1, Source, selectQuant, target, Ready);
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant, target, Ready);
                 this.QueueFree();
             }
             if(Right.Pressed)
             {
-                VisualMethods.SetSelectCardsProperties("GraveYard: ",partitions, actualSwipe+1, Source, selectQuant, target, Ready);
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant, target, Ready);
                 this.QueueFree();
             }
 
