@@ -316,6 +316,7 @@ namespace gameVisual
                 if(field[i] == null)
                 {
                     field[i] = InstanciateVisualCard(relic);
+                    board.child.AddChild(field[i]);
                     break;
                 }
             }
@@ -325,7 +326,7 @@ namespace gameVisual
             {
                 if (field[slot] != null)
                 {
-                    board.child.AddChild(field[slot]);
+                    // board.child.AddChild(field[slot]);
                     field[slot].Position = position[slot];
                 }
             }
@@ -436,7 +437,7 @@ namespace gameVisual
                             {
                                 if  (board.VisualBoard.visualHand1.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand1.visualHand[i].ToLocal(mouseEvent.Position)))
                                 {
-                                    Effect(board.Game.player1.hand[i]);
+                                    Effect(board.Game.player1.hand[i], false);
                                 }
                             }
                         }
@@ -451,7 +452,7 @@ namespace gameVisual
                                 {
                                     if  (board.VisualBoard.visualHand2.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand2.visualHand[i].ToLocal(mouseEvent.Position)))
                                     {
-                                        Effect(board.Game.player2.hand[i]);
+                                        Effect(board.Game.player2.hand[i], false);
                                     }
                                 }
                             }
@@ -475,7 +476,7 @@ namespace gameVisual
             }
             return true;
         }
-        public static void Effect(Relics relic)
+        public static void Effect(Relics relic, bool ItsAlreadyActive)
         {
             InterpretEffect effect = new InterpretEffect();
             effect.Scan(relic);

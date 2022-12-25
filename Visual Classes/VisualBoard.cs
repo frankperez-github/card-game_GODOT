@@ -205,7 +205,7 @@ namespace gameVisual
                             count++;
                         }
                     }
-                    VisualMethods.Effect(player.Hand[0].Owner.character);
+                    VisualMethods.Effect(player.Hand[0].Owner.character, false);
                 }
             }
             public void UpdateBattleField(VisualBattleField battleField)

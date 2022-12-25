@@ -24,12 +24,12 @@ namespace gameEngine
             System.Random rnd = new System.Random();
             if(this.hand.Count > 1)
             {
-                int random = rnd.Next(1, hand.Count-1);
-                VisualMethods.Effect(this.hand[random]);
+                int random = rnd.Next(0, hand.Count-1);
+                VisualMethods.Effect(this.hand[random], false);
             }
             else if(this.hand.Count == 1)
             {
-                VisualMethods.Effect(this.hand[0]);
+                VisualMethods.Effect(this.hand[0], false);
             }
         }
         public override void Discard(int count)
@@ -106,7 +106,7 @@ namespace gameEngine
             //Playing all selected cards
             foreach (var item in cardsToPlay)
             {
-                VisualMethods.Effect(item);
+                VisualMethods.Effect(item, false);
             }
         }
         public override void Discard(int count)
