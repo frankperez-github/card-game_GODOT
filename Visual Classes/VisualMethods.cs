@@ -61,7 +61,6 @@ namespace gameVisual
             SelectCards.target = target;
             SelectCards.partitions = partitions;
             SelectCards.actualSwipe = actualSwipe;
-            GD.Print(partitions);
             Node SelectMenu = SelectCards.SelectCardsScene.Instance();
             SelectCards.SelectCardInstance = SelectMenu;
             SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("Tree/DiscardLabel");
@@ -87,19 +86,14 @@ namespace gameVisual
                     SelectCards.selectCards.Add(Card);
                     SelectMenu.AddChild(Card);
                     // Remembering selected cards
-                    // try
-                    // {
-                        if(SelectCards.SelectedIndexes[actualSwipe].Contains(i)) // Selected card
-                        {
-                            Card.Scale = new Vector2((float)0.20,(float)0.20);
-                        }
-                        else // Not selected card
-                        {
-                            Card.Scale = new Vector2((float)0.17,(float)0.17);
-                        }
-                    // }
-                    // catch (System.Exception)
-                    // {}
+                    if(SelectCards.SelectedIndexes[actualSwipe].Contains(i)) // Selected card
+                    {
+                        Card.Scale = new Vector2((float)0.20,(float)0.20);
+                    }
+                    else // Not selected card
+                    {
+                        Card.Scale = new Vector2((float)0.17,(float)0.17);
+                    }
                     
                     // Adjusting position of cards to quantity in source
                     if(index==0)
@@ -179,6 +173,14 @@ namespace gameVisual
                 board.Game.player2.TakeFromDeck(1);
                 board.VisualBoard.UpdateBattleFields(board.Game.player2);
                 board.VisualBoard.UpdateBattleFields(board.Game.player1);
+                for (int i = 0; i < board.Game.player2.BattleField.Length; i++)
+                {
+                    if(board.Game.player2.BattleField[i] != null && board.Game.player2.BattleField[i].passiveDuration == 0)
+                    {
+                        InterpretEffect effect = new InterpretEffect();
+                        board.Game.player2.BattleField[i].Effect(effect);
+                    }
+                }
             }
             else
             {
@@ -186,6 +188,14 @@ namespace gameVisual
                 board.Game.player1.TakeFromDeck(1);
                 board.VisualBoard.UpdateBattleFields(board.Game.player1);
                 board.VisualBoard.UpdateBattleFields(board.Game.player2);
+                for (int i = 0; i < board.Game.player1.BattleField.Length; i++)
+                {
+                    if(board.Game.player1.BattleField[i] != null && board.Game.player1.BattleField[i].passiveDuration == 0)
+                    {
+                        InterpretEffect effect = new InterpretEffect();
+                        board.Game.player1.BattleField[i].Effect(effect);
+                    }
+                }
             }
                 board.VisualBoard.Update();
         }

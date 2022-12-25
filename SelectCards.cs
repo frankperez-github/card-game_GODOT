@@ -53,6 +53,7 @@ namespace gameVisual
             if(AcceptButton.Pressed)
             {
                 board.child.GetTree().Paused = false;
+                SelectedIndexes = new Dictionary<int, List<int>>();
                 if(action != null)
                 {
                     action.Effect();
@@ -69,7 +70,7 @@ namespace gameVisual
             Left.Disabled = false;
             if (actualSwipe == 0) Left.Disabled = true;
             Right.Disabled = false;
-            if (actualSwipe == partitions) Right.Disabled = true;
+            if (actualSwipe+1 == partitions) Right.Disabled = true;
 
             if(Left.Pressed)
             {

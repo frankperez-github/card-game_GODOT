@@ -757,6 +757,7 @@ namespace gameEngine
             {
                 expression = CutExpression(expression);
                 NextDraw();
+                GD.Print(cards);
                 for (int i = 0; i < cards; i++)
                 {
                     Random rnd = new Random();

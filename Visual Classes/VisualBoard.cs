@@ -12,8 +12,6 @@ namespace gameVisual
             public VisualHand visualHand1;
             public VisualHand visualHand2;
             public SceneTree Tree;
-            public bool[] SpecialAttack1 = new bool[]{false};
-            public bool[] SpecialAttack2 = new bool[]{false};
 
             public Board(Game game, Sprite GraveYard, SceneTree Tree)
             {
@@ -152,8 +150,6 @@ namespace gameVisual
                                         Defaultpassive = mainMenu.Inventory.CardsInventory[BattleField[index].id].passiveDuration;
                                     }
                                     BattleField[index].passiveDuration = Defaultpassive;
-                                    InterpretEffect effect = new InterpretEffect();
-                                    BattleField[index].Effect(effect);
                                     BattleField[index].activeDuration--;
                                 }
                             }
@@ -185,16 +181,10 @@ namespace gameVisual
                     else 
                     Discard(visualHand2.Hand, visualHand2.Hand.Count-Game.MaxInHand);
                 }
-                if(!SpecialAttack1[0])
-                {
-                    CheckSpecialAttack(visualHand1, SpecialAttack1);
-                }
-                if(!SpecialAttack2[0])
-                {
-                    CheckSpecialAttack(visualHand2, SpecialAttack2);
-                }
+                CheckSpecialAttack(visualHand1);
+                CheckSpecialAttack(visualHand2);
             }
-            public void CheckSpecialAttack(VisualHand player, bool[] SpecialAttack)
+            public void CheckSpecialAttack(VisualHand player)
             {
                 int count = 0;
                 foreach (var card in player.Hand)
@@ -215,7 +205,6 @@ namespace gameVisual
                             count++;
                         }
                     }
-                    SpecialAttack[0] = true;
                     VisualMethods.Effect(player.Hand[0].Owner.character);
                 }
             }
