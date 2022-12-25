@@ -26,9 +26,9 @@ namespace gameEngine
             this.id = id;
             this.name = name;
             this.imgAddress = imgAddress;
-            this.passiveDuration = passiveDuration;
+            this.passiveDuration = passiveDuration*2;
             if(activeDuration == 1) this.activeDuration = 1;
-            else this.activeDuration = activeDuration * 2;
+            else this.activeDuration = (activeDuration * 2) - 1;
             this.Owner = Owner;
             this.Enemy = Enemy;
             this.cardState = CardState.OnHand;
@@ -149,9 +149,9 @@ namespace gameEngine
         {
             this.id = id;
             this.name = Name;
-            this.passiveDuration = passiveDuration;
+            this.passiveDuration = passiveDuration*2;
             if(activeDuration == 1) this.activeDuration = 1;
-            else this.activeDuration = activeDuration * 2;
+            else this.activeDuration = (activeDuration * 2) - 1;
             this.imgAddress = imgAddress;
             this.effect = effect;
             this.description = description;

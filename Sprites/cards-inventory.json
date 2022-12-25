@@ -4,7 +4,7 @@
     "Actions": [],
     "id": 0,
     "name": "Espada del destino",
-    "activeDuration": 1,
+    "activeDuration": 2,
     "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 13.46.09 - Sword of destiny.png",
     "Owner": {
@@ -48,7 +48,7 @@
     "name": "Token",
     "activeDuration": 1,
     "passiveDuration": 0,
-    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 17.05.13 - the talisman invocation in a ritual digital art.png",
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 17.05.15 - the talisman invocation in a ritual digital art.png",
     "Owner": {
       "character": null,
       "Enemy": null,
@@ -499,8 +499,8 @@
     "Actions": [],
     "id": 12,
     "name": "Resfriado",
-    "activeDuration": 4,
-    "passiveDuration": 2,
+    "activeDuration": 2,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.30.45 - the cursed shield digital art.png",
     "Owner": {
       "character": null,

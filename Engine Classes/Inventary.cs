@@ -72,7 +72,8 @@ namespace gameEngine
             foreach (Relics relic in CardsInventory)
             {
                 if(relic.activeDuration != 1)
-                    relic.activeDuration = relic.activeDuration / 2;
+                    relic.activeDuration = (relic.activeDuration + 1) / 2;
+                relic.passiveDuration = relic.passiveDuration / 2;
             }
         }
         public void ResetActiveDuration(List<CharacterProperties> Character)
@@ -80,7 +81,8 @@ namespace gameEngine
             foreach (CharacterProperties character in Character)
             {
                 if(character.activeDuration != 1)
-                    character.activeDuration = character.activeDuration / 2;
+                    character.activeDuration = (character.activeDuration + 1) / 2;
+                character.passiveDuration = character.passiveDuration / 2;
             }
         }
         

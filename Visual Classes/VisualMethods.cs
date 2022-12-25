@@ -156,14 +156,15 @@ namespace gameVisual
             board.Game.turn++;
             boardNode.GetParent().GetNode<Label>("TurnLabel").Text = "Turno: " + board.Game.turn;
             board.Attack.Disabled = false;
+            board.VisualBoard.UpdateBattleFields(board.Game.player2);
+            board.VisualBoard.UpdateBattleFields(board.Game.player1);
+
             if(player.Enemy.state == State.Poisoned)
             {
                 player.Enemy.life -= 10;
             }
             if(player.Enemy.state == State.Asleep)
             {
-                board.VisualBoard.UpdateBattleFields(board.Game.player2);
-                board.VisualBoard.UpdateBattleFields(board.Game.player1);
                 board.VisualBoard.Update();
                 EndButtonFunction(player.Enemy);
             }
@@ -171,8 +172,6 @@ namespace gameVisual
             {
                 // Next Player takes a card
                 board.Game.player2.TakeFromDeck(1);
-                board.VisualBoard.UpdateBattleFields(board.Game.player2);
-                board.VisualBoard.UpdateBattleFields(board.Game.player1);
                 for (int i = 0; i < board.Game.player2.BattleField.Length; i++)
                 {
                     if(board.Game.player2.BattleField[i] != null && board.Game.player2.BattleField[i].passiveDuration == 0)
@@ -186,8 +185,6 @@ namespace gameVisual
             {
                 // Next Player takes a card
                 board.Game.player1.TakeFromDeck(1);
-                board.VisualBoard.UpdateBattleFields(board.Game.player1);
-                board.VisualBoard.UpdateBattleFields(board.Game.player2);
                 for (int i = 0; i < board.Game.player1.BattleField.Length; i++)
                 {
                     if(board.Game.player1.BattleField[i] != null && board.Game.player1.BattleField[i].passiveDuration == 0)
@@ -448,11 +445,14 @@ namespace gameVisual
                     {
                         if (!(board.Game.player2 is VirtualPlayer))
                         {
-                            for(int i = 0; i < board.VisualBoard.visualHand2.visualHand.Count; i++)
+                            if(!FullBattlefield(board.VisualBoard.visualBattleField2))
                             {
-                                if  (board.VisualBoard.visualHand2.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand2.visualHand[i].ToLocal(mouseEvent.Position)))
+                                for(int i = 0; i < board.VisualBoard.visualHand2.visualHand.Count; i++)
                                 {
-                                    Effect(board.Game.player2.hand[i]);
+                                    if  (board.VisualBoard.visualHand2.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand2.visualHand[i].ToLocal(mouseEvent.Position)))
+                                    {
+                                        Effect(board.Game.player2.hand[i]);
+                                    }
                                 }
                             }
                         }
@@ -467,6 +467,14 @@ namespace gameVisual
                     break;
             }
         }     
+        public static bool FullBattlefield(Board.VisualBattleField battleField)
+        {
+            foreach (var relic in battleField.BattleField)
+            {
+                if(relic == null) return false;
+            }
+            return true;
+        }
         public static void Effect(Relics relic)
         {
             InterpretEffect effect = new InterpretEffect();

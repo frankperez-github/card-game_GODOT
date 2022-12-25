@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://mainMenu.cs" type="Script" id=1]
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Sprites/Tipografia/excelsiorcomics.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Sprites/1671655712654.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/Tipografia/Cinzel-Bold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Sprites/1671659940098 (1).png" type="Texture" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 57
@@ -41,8 +42,8 @@ size = 57
 font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxTexture" id=10]
-texture = ExtResource( 6 )
-region_rect = Rect2( 0, 0, 205, 70 )
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 315, 100 )
 
 [sub_resource type="StyleBoxTexture" id=11]
 texture = ExtResource( 6 )
@@ -57,8 +58,8 @@ texture = ExtResource( 6 )
 region_rect = Rect2( 0, 0, 205, 70 )
 
 [sub_resource type="StyleBoxTexture" id=14]
-texture = ExtResource( 6 )
-region_rect = Rect2( 0, 0, 205, 70 )
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 315, 100 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 57
@@ -157,9 +158,9 @@ align = 1
 valign = 1
 
 [node name="Game\'s Name" type="Label" parent="."]
-margin_left = 373.933
-margin_top = 189.132
-margin_right = 1525.93
-margin_bottom = 373.132
+margin_left = 405.933
+margin_top = 189.143
+margin_right = 1557.93
+margin_bottom = 373.143
 custom_fonts/font = SubResource( 16 )
 text = "BEASTS OF WAR"
