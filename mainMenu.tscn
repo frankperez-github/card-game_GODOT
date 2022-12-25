@@ -167,3 +167,4 @@ margin_right = 1557.93
 margin_bottom = 373.143
 custom_fonts/font = SubResource( 16 )
 text = "BEASTS OF WAR"
+align = 1

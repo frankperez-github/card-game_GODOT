@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://SelectPlayer.cs" type="Script" id=2]
+[ext_resource path="res://Sprites/buttonPress grande.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/botones grande.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 49
@@ -10,6 +12,14 @@ font_data = ExtResource( 1 )
 [sub_resource type="DynamicFont" id=2]
 size = 40
 font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 315, 100 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 41
@@ -28,28 +38,31 @@ margin_bottom = 1110.0
 
 [node name="Choose" type="Label" parent="Tree"]
 margin_left = 58.0
-margin_top = 84.0
-margin_right = 687.0
-margin_bottom = 157.0
+margin_top = 57.0
+margin_right = 487.0
+margin_bottom = 130.0
 custom_fonts/font = SubResource( 1 )
 text = "Player 1 choose your character:
 "
 
 [node name="Continue" type="Button" parent="Tree"]
-margin_left = 1617.0
-margin_top = 940.0
-margin_right = 1788.0
-margin_bottom = 999.0
+margin_left = 819.0
+margin_top = 902.0
+margin_right = 990.0
+margin_bottom = 961.0
 custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
 text = "Continue"
 
 [node name="Label" type="Label" parent="Tree"]
-margin_left = 230.0
-margin_top = 940.0
-margin_right = 578.0
-margin_bottom = 985.0
+margin_left = 726.0
+margin_top = 147.0
+margin_right = 1074.0
+margin_bottom = 192.0
 custom_fonts/font = SubResource( 4 )
-text = "Type a nick to your player here"
+text = "Type a nick to your player:"
+align = 1
 
 [node name="Nick" type="TextEdit" parent="Tree/Label"]
 margin_top = 45.0

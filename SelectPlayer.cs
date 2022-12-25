@@ -20,11 +20,11 @@ namespace gameVisual
         {
             Vector2[] charactPositions = new Vector2[5]
             {
-                new Vector2(400,400),
-                new Vector2(650, 400),
-                new Vector2(900,400),
-                new Vector2(1150,400),
-                new Vector2(1400,400)
+                new Vector2(400,550),
+                new Vector2(650, 550),
+                new Vector2(900,550),
+                new Vector2(1150,550),
+                new Vector2(1400,550)
             };
             characters = new List<Sprite>();
 

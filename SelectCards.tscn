@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Sprites/Tipografia/MarkaziText-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://SelectCards.cs" type="Script" id=2]
@@ -6,16 +6,27 @@
 [ext_resource path="res://Sprites/SelectCards.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Tipografia/BlackOpsOne-Regular.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Sprites/Tipografia/excelsiorcomics.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://Sprites/botones grande.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/buttonPress grande.png" type="Texture" id=8]
 
 [sub_resource type="Theme" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 19
+use_filter = true
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 15
 font_data = ExtResource( 5 )
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 7 )
+region_rect = Rect2( 0, 0, 315, 100 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 70
@@ -30,11 +41,12 @@ z_index = 6
 script = ExtResource( 2 )
 
 [node name="PruebaTransparenciaMesaDeTrabajo1" type="Sprite" parent="."]
-position = Vector2( 978, 552 )
+position = Vector2( 1425.83, 183.782 )
 rotation = 1.57326
 scale = Vector2( 0.658258, 0.705069 )
 z_index = -1
 texture = ExtResource( 3 )
+offset = Vector2( 561.056, 633.862 )
 
 [node name="Tree" type="Sprite" parent="."]
 position = Vector2( 978, 506 )
@@ -42,10 +54,10 @@ scale = Vector2( 2.5019, 1.93612 )
 texture = ExtResource( 4 )
 
 [node name="DiscardLabel" type="Label" parent="Tree"]
-margin_left = -83.9363
-margin_top = -186.971
-margin_right = 97.0637
-margin_bottom = -161.971
+margin_left = -84.0
+margin_top = -187.0
+margin_right = 79.0
+margin_bottom = -162.0
 theme = SubResource( 3 )
 custom_fonts/font = SubResource( 1 )
 text = "You must discard"
@@ -58,6 +70,8 @@ margin_right = 62.427
 margin_bottom = 135.266
 theme = SubResource( 3 )
 custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/normal = SubResource( 6 )
 text = "Aceptar"
 
 [node name="Left" type="Button" parent="."]

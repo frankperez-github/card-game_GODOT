@@ -19,13 +19,14 @@ texture = ExtResource( 2 )
 normal_map = SubResource( 1 )
 
 [node name="Name" type="Label" parent="."]
-margin_left = -292.38
-margin_top = -765.438
-margin_right = 107.62
-margin_bottom = -696.438
+margin_left = -287.0
+margin_top = -768.0
+margin_right = 332.0
+margin_bottom = -699.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "Name"
+align = 1
 
 [node name="Image" type="Sprite" parent="."]
 position = Vector2( 8.39746, -228.668 )
