@@ -13,7 +13,6 @@ namespace gameVisual
         public static List<Sprite> selectCards;
         public static Action<List<Relics>, int> SelectDelegate;
         public static InterpretAction action; 
-        public static bool[] Ready;
         public static Label SelectLabel;
         public static PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
         public static Node SelectCardInstance = SelectCardsScene.Instance(); 
@@ -27,7 +26,6 @@ namespace gameVisual
 
         public override void _Ready()
         {
-            Ready = new bool[]{false};
             PauseMode = PauseModeEnum.Process;
             AcceptButton = GetNode<Button>("Tree/Button");
             SelectLabel = GetNode<Label>("Tree/DiscardLabel");
@@ -55,7 +53,6 @@ namespace gameVisual
             if(AcceptButton.Pressed)
             {
                 board.child.GetTree().Paused = false;
-                Ready[0] = true;
                 if(action != null)
                 {
                     action.Effect();
@@ -76,12 +73,12 @@ namespace gameVisual
 
             if(Left.Pressed)
             {
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant, target, Ready);
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant, target);
                 this.QueueFree();
             }
             if(Right.Pressed)
             {
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant, target, Ready);
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant, target);
                 this.QueueFree();
             }
 

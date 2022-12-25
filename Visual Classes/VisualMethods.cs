@@ -20,23 +20,21 @@ namespace gameVisual
 
 
         public static Node boardNode;
-        public static void selectVisually(string sourceName, List<Relics> Source, int quant, System.Action<List<Relics>, int> Delegate, List<Relics> target, bool[] Ready)
+        public static void selectVisually(string sourceName, List<Relics> Source, int quant, Action<List<Relics>, int> Delegate, List<Relics> target)
         {
-            SelectCards.selectName = sourceName;
             SelectCards.SelectDelegate = Delegate;
             int partitions = GetPartitions(Source, partitionLength);
-            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant, target, Ready);
+            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant, target);
         }
-        public static void selectVisually(string sourceName, List<Relics> Source, int quant, InterpretAction Delegate, List<Relics> target, bool[] Ready)
+        public static void selectVisually(string sourceName, List<Relics> Source, int quant, InterpretAction Delegate, List<Relics> target)
         {
-            SelectCards.selectName = sourceName;
             SelectCards.action = Delegate;
             int partitions = GetPartitions(Source, partitionLength);
-            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant, target, Ready);
+            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant, target);
         }
         private static int GetPartitions(List<Relics> Source, int partitionLength)
         {
-            int partitions = 0;
+            int partitions = 1;
             if (Source.Count > partitionLength)
             {
                 partitions = Source.Count/partitionLength;
@@ -51,19 +49,19 @@ namespace gameVisual
             }
             return partitions;
         }
-        public static void SetSelectCardsProperties(string tittle, int partitions, int actualSwipe, List<Relics> Source, int quant, List<Relics> target, bool[] Ready)
+        public static void SetSelectCardsProperties(string tittle, int partitions, int actualSwipe, List<Relics> Source, int quant, List<Relics> target)
         {
+            SelectCards.selectName = tittle;
             VisualMethods.selecting = true;
             VisualMethods.SelectedCards = new List<Relics>();
             SelectCards.selectCards = new List<Sprite>();
             VisualMethods.SourceToSelect = Source;
             SelectCards.selectQuant = quant;
-            SelectCards.Ready = Ready; 
             SelectCards.Source = Source;
             SelectCards.target = target;
             SelectCards.partitions = partitions;
             SelectCards.actualSwipe = actualSwipe;
-            
+            GD.Print(partitions);
             Node SelectMenu = SelectCards.SelectCardsScene.Instance();
             SelectCards.SelectCardInstance = SelectMenu;
             SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("Tree/DiscardLabel");
@@ -89,8 +87,8 @@ namespace gameVisual
                     SelectCards.selectCards.Add(Card);
                     SelectMenu.AddChild(Card);
                     // Remembering selected cards
-                    try
-                    {
+                    // try
+                    // {
                         if(SelectCards.SelectedIndexes[actualSwipe].Contains(i)) // Selected card
                         {
                             Card.Scale = new Vector2((float)0.20,(float)0.20);
@@ -99,9 +97,9 @@ namespace gameVisual
                         {
                             Card.Scale = new Vector2((float)0.17,(float)0.17);
                         }
-                    }
-                    catch (System.Exception)
-                    {}
+                    // }
+                    // catch (System.Exception)
+                    // {}
                     
                     // Adjusting position of cards to quantity in source
                     if(index==0)
@@ -453,7 +451,7 @@ namespace gameVisual
                 {
                     if(board.VisualBoard.visualGraveYard.graveYard.Count>0)
                     {
-                        selectVisually("GraveYard: ", board.VisualBoard.visualGraveYard.graveYard, 0, (x, y)=>{}, new List<Relics>(), new bool[]{false});
+                        selectVisually("GraveYard: ", board.VisualBoard.visualGraveYard.graveYard, 0, (x, y)=>{}, new List<Relics>());
                     }
                 }
                     break;
