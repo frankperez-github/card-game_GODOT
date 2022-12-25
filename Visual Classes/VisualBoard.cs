@@ -24,10 +24,10 @@ namespace gameVisual
                 };
                 Vector2[] Player1FieldPositions = new Vector2[4]
                 {
-                    new Vector2(575, 330),
-                    new Vector2(860, 330),
-                    new Vector2(1145, 330),
-                    new Vector2(1430, 330)
+                    new Vector2(575, 310),
+                    new Vector2(860, 310),
+                    new Vector2(1145, 310),
+                    new Vector2(1430, 310)
                 };
                 this.visualGraveYard = new VisualGraveYard(game.GraveYard, GraveYard);
                 this.visualBattleField1 = new VisualBattleField(game.player1.BattleField, Player1FieldPositions);

@@ -3,7 +3,7 @@
 [ext_resource path="res://Sprites/Tipografia/MarkaziText-VariableFont_wght.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://SelectCards.cs" type="Script" id=2]
 [ext_resource path="res://Sprites/prueba transparencia_Mesa de trabajo 1.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/1671655080359 (1).png" type="Texture" id=4]
+[ext_resource path="res://Sprites/SelectCards.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Tipografia/BlackOpsOne-Regular.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Sprites/Tipografia/excelsiorcomics.ttf" type="DynamicFontData" id=6]
 
@@ -52,7 +52,6 @@ text = "You must discard"
 align = 1
 
 [node name="Button" type="Button" parent="Tree"]
-visible = false
 margin_left = -35.573
 margin_top = 102.266
 margin_right = 62.427

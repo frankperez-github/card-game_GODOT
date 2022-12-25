@@ -317,17 +317,8 @@ namespace gameVisual
                 {
                     field[i] = InstanciateVisualCard(relic);
                     board.child.AddChild(field[i]);
+                    field[i].Position = position[i];
                     break;
-                }
-            }
-            
-            // Fulling (visually) battlefield
-            for (int slot = 0; slot < field.Length; slot++)
-            {
-                if (field[slot] != null)
-                {
-                    // board.child.AddChild(field[slot]);
-                    field[slot].Position = position[slot];
                 }
             }
         }
