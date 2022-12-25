@@ -1,185 +1,79 @@
-<<<<<<< HEAD
-[gd_scene load_steps=24 format=2]
-=======
-[gd_scene load_steps=25 format=2]
->>>>>>> a12ee28594ee824c46986640cc8f74f789838bb7
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://mainMenu.cs" type="Script" id=1]
-[ext_resource path="res://Sprites/Tipografia/Cinzel-Bold.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Sprites/WhatsApp Image 2022-12-07 at 11.20.16 PM.jpeg" type="Texture" id=3]
-[ext_resource path="res://Sprites/1671655712654.png" type="Texture" id=4]
-[ext_resource path="res://Sprites/IMG_20221221_152133 (2).webp" type="Texture" id=5]
-[ext_resource path="res://Sprites/Tipografia/excelsiorcomics.ttf" type="DynamicFontData" id=6]
-<<<<<<< HEAD
-[ext_resource path="res://Sprites/1671659940098 (1).png" type="Texture" id=7]
-=======
-[ext_resource path="res://Sprites/IMG_20221221_152133.webp" type="Texture" id=7]
->>>>>>> a12ee28594ee824c46986640cc8f74f789838bb7
-
-[sub_resource type="DynamicFont" id=6]
-size = 131
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFontData" id=3]
-font_path = "res://Sprites/Tipografia/excelsiorcomics.ttf"
+[ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Sprites/board-texture.jpeg" type="Texture" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 57
-font_data = SubResource( 3 )
-
-[sub_resource type="StyleBoxTexture" id=15]
-texture = ExtResource( 7 )
-region_rect = Rect2( 0, 0, 1734, 725 )
-
-[sub_resource type="StyleBoxTexture" id=16]
-texture = ExtResource( 7 )
-region_rect = Rect2( 0, 0, 1734, 725 )
-
-[sub_resource type="StyleBoxTexture" id=17]
-texture = ExtResource( 7 )
-region_rect = Rect2( 0, 0, 1734, 725 )
-
-[sub_resource type="StyleBoxTexture" id=12]
-
-[sub_resource type="StyleBoxTexture" id=13]
-texture = ExtResource( 5 )
-region_rect = Rect2( 0, 0, 355, 135 )
-
-[sub_resource type="DynamicFont" id=14]
-size = 70
-font_data = ExtResource( 6 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 57
-font_data = SubResource( 3 )
+font_data = ExtResource( 2 )
 
-[sub_resource type="StyleBoxTexture" id=7]
-texture = ExtResource( 7 )
-region_rect = Rect2( 0, 0, 315, 100 )
-
-[sub_resource type="StyleBoxTexture" id=8]
-texture = ExtResource( 4 )
-region_rect = Rect2( 0, 0, 205, 70 )
-
-[sub_resource type="StyleBoxTexture" id=9]
-texture = ExtResource( 4 )
-region_rect = Rect2( 0, 0, 205, 70 )
-
-[sub_resource type="StyleBoxTexture" id=10]
-texture = ExtResource( 4 )
-region_rect = Rect2( 0, 0, 205, 70 )
-
-[sub_resource type="StyleBoxTexture" id=11]
-texture = ExtResource( 7 )
-region_rect = Rect2( 0, 0, 315, 100 )
-
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=3]
 size = 57
-font_data = SubResource( 3 )
-
-[sub_resource type="StyleBoxTexture" id=15]
-texture = ExtResource( 7 )
-region_rect = Rect2( 0, 0, 315, 100 )
-
-[sub_resource type="StyleBoxTexture" id=16]
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 57
-font_data = SubResource( 3 )
+font_data = ExtResource( 2 )
 
 [node name="mainMenu" type="Node2D"]
 rotation = -0.000353929
 script = ExtResource( 1 )
 
 [node name="Board-texturejpeg" type="Sprite" parent="."]
-position = Vector2( 2054.05, -135.273 )
-rotation = 1.56762
-scale = Vector2( 2.08166, 2.25526 )
+position = Vector2( -13.0145, -21.0509 )
+scale = Vector2( 6.97495, 6.01587 )
 texture = ExtResource( 3 )
 centered = false
 
-[node name="Label" type="Label" parent="."]
-margin_left = 422.945
-margin_top = 154.15
-margin_right = 1504.95
-margin_bottom = 331.15
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_fonts/font = SubResource( 6 )
-text = "BEASTS OF WAR"
-
 [node name="Start" type="Button" parent="."]
-margin_left = 755.866
-margin_top = 381.0
-margin_right = 1120.87
-margin_bottom = 494.268
+margin_left = 768.919
+margin_top = 229.272
+margin_right = 1107.92
+margin_bottom = 320.272
 custom_fonts/font = SubResource( 1 )
-custom_styles/hover = SubResource( 15 )
-custom_styles/pressed = SubResource( 16 )
-custom_styles/focus = SubResource( 17 )
-custom_styles/disabled = SubResource( 12 )
-custom_styles/normal = SubResource( 13 )
-icon_align = 1
+text = "vs virtual player"
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Label" type="Label" parent="Start"]
-margin_left = 147.985
-margin_top = 42.3199
-margin_right = 243.985
-margin_bottom = 96.3199
-custom_fonts/font = SubResource( 14 )
-text = "Play"
-
-[node name="Human" type="Button" parent="."]
-visible = false
-margin_left = 773.808
-margin_top = 542.273
-margin_right = 1115.81
-margin_bottom = 632.273
+[node name="Human" type="Button" parent="Start"]
+margin_left = 0.948761
+margin_top = 145.0
+margin_right = 342.949
+margin_bottom = 235.0
 custom_fonts/font = SubResource( 2 )
-custom_styles/hover = SubResource( 7 )
-custom_styles/pressed = SubResource( 8 )
-custom_styles/focus = SubResource( 9 )
-custom_styles/disabled = SubResource( 10 )
-custom_styles/normal = SubResource( 11 )
 text = "vs Human Player"
 
-[node name="Edit" type="Button" parent="."]
-anchor_left = 0.00559417
-anchor_top = -0.0536308
-anchor_right = 0.0055942
-anchor_bottom = -0.0536308
-margin_left = 776.756
-margin_top = 543.393
-margin_right = 1111.76
-margin_bottom = 633.393
-custom_fonts/font = SubResource( 5 )
-custom_styles/hover = SubResource( 15 )
-custom_styles/pressed = SubResource( 16 )
-custom_styles/focus = SubResource( 9 )
-custom_styles/disabled = SubResource( 10 )
-custom_styles/normal = SubResource( 11 )
+[node name="Edit" type="Button" parent="Start"]
+anchor_left = 0.00543915
+anchor_top = 1.57275
+anchor_right = 0.00543915
+anchor_bottom = 1.57275
+margin_left = 2.0
+margin_top = 151.0
+margin_right = 337.0
+margin_bottom = 241.0
+custom_fonts/font = SubResource( 3 )
 text = "Editar Deck"
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Quit" type="Button" parent="."]
-anchor_left = 0.00559417
-anchor_top = -0.0536311
-anchor_right = 0.0055942
-anchor_bottom = -0.0536311
-margin_left = 775.756
-margin_top = 690.393
-margin_right = 1114.76
-margin_bottom = 777.393
+[node name="Quit" type="Button" parent="Start"]
+anchor_left = 0.00543915
+anchor_top = 1.57275
+anchor_right = 0.00543915
+anchor_bottom = 1.57275
+margin_left = 1.0
+margin_top = 298.0
+margin_right = 340.0
+margin_bottom = 385.0
 custom_fonts/font = SubResource( 4 )
-custom_styles/hover = SubResource( 7 )
-custom_styles/pressed = SubResource( 8 )
-custom_styles/focus = SubResource( 9 )
-custom_styles/disabled = SubResource( 10 )
-custom_styles/normal = SubResource( 11 )
 text = "Salir del juego"
 __meta__ = {
 "_edit_use_anchors_": true

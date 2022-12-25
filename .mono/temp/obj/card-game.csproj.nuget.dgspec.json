@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone\\card-game_GODOT\\card-game.csproj": {}
+    "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone final este siiiiiiiiiiii\\card-game_GODOT\\card-game.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone\\card-game_GODOT\\card-game.csproj": {
+    "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone final este siiiiiiiiiiii\\card-game_GODOT\\card-game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone\\card-game_GODOT\\card-game.csproj",
+        "projectUniqueName": "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone final este siiiiiiiiiiii\\card-game_GODOT\\card-game.csproj",
         "projectName": "card-game",
-        "projectPath": "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone\\card-game_GODOT\\card-game.csproj",
+        "projectPath": "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone final este siiiiiiiiiiii\\card-game_GODOT\\card-game.csproj",
         "packagesPath": "C:\\Users\\bathr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone\\card-game_GODOT\\.mono\\temp\\obj\\",
+        "outputPath": "C:\\Users\\bathr\\OneDrive\\Desktop\\Clone final este siiiiiiiiiiii\\card-game_GODOT\\.mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
