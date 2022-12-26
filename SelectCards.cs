@@ -26,6 +26,7 @@ namespace gameVisual
 
         public override void _Ready()
         {
+            board.music.PauseMode = PauseModeEnum.Process;
             PauseMode = PauseModeEnum.Process;
             AcceptButton = GetNode<Button>("Tree/Button");
             SelectLabel = GetNode<Label>("Tree/DiscardLabel");

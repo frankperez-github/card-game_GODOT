@@ -1,9 +1,8 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Sprites/Tipografia/BlackOpsOne-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://GameOver.cs" type="Script" id=2]
 [ext_resource path="res://Sprites/1671655712654.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/Yo won.mp3" type="AudioStream" id=4]
 [ext_resource path="res://Sprites/MainButton PauseMenu.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/MainButton press4 PauseMenu .png" type="Texture" id=6]
 [ext_resource path="res://Sprites/zyro-image (1).png" type="Texture" id=7]
@@ -48,11 +47,6 @@ region_rect = Rect2( 0, 0, 346, 150 )
 z_index = 10
 z_as_relative = false
 script = ExtResource( 2 )
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 4 )
-volume_db = 0.234
-autoplay = true
 
 [node name="Tree" type="Tree" parent="."]
 margin_right = 1973.0

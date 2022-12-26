@@ -13,10 +13,11 @@ namespace gameVisual
         public static Button endButton;
         public Stopwatch watch;
         public bool VirtualPlay = true;
-
+        public static AudioStreamPlayer2D music;
        
         public override void _Ready()
         {
+            music = GetNode<AudioStreamPlayer2D>("music");
             child = new Node();
             AddChild(child);
             Game = new Game(SelectPlayer.player1, SelectPlayer.player2);
