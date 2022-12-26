@@ -367,7 +367,7 @@
     },
     "type": "trap",
     "isTrap": false,
-    "effect": "(Enemy.Remove.EnemyBattlefield.Battlefield.random.1)",
+    "effect": "(Enemy.Remove.EnemyBattlefield.Battlefield.1)",
     "description": "Destruye 1 reliquia que tenga activa enemigo"
   },
   {

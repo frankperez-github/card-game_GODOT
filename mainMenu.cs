@@ -13,6 +13,7 @@ namespace gameVisual
         public override void _Ready()
         {
             gameType = "virtual";
+
             Inventory = new inventory();
             GetTree().SetScreenStretch(SceneTree.StretchMode.Mode2d, SceneTree.StretchAspect.Keep, new Vector2(1920, 1080), 1);
             Inventory.ImportJsonContent();
@@ -23,6 +24,7 @@ namespace gameVisual
             Button Start = GetNode<Button>("Start");
             if (Start.Pressed)
             {
+                GetNode<AudioStreamPlayer2D>("Start/click").Play();
                 GetTree().ChangeScene("res://SelectPlayer.tscn");
                 Inventory.ImportJsonContent();
                 Inventory.ResetActiveDuration();

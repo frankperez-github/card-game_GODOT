@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://mainMenu.cs" type="Script" id=1]
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Sprites/buttonPress grande.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/Adobe_20221225_155524.png" type="Texture" id=10]
 [ext_resource path="res://Sprites/MainButton PauseMenu.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/Bones_Filtered_Instrumental_Imagine_Dragons_ZufcGXdoxKg_140.mp3" type="AudioStream" id=12]
+[ext_resource path="res://Sprites/audio_2022-12-25_18-19-48 (online-audio-converter.com).mp3" type="AudioStream" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 57
@@ -101,6 +103,10 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
+[node name="click" type="AudioStreamPlayer2D" parent="Start"]
+position = Vector2( 0, 6.10352e-05 )
+stream = ExtResource( 13 )
+
 [node name="Human" type="Button" parent="Start"]
 visible = false
 margin_left = 0.948761
@@ -168,3 +174,7 @@ margin_bottom = 373.143
 custom_fonts/font = SubResource( 16 )
 text = "BEASTS OF WAR"
 align = 1
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+autoplay = true

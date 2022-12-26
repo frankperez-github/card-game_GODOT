@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/audio_2022-12-25_18-19-48 (online-audio-converter.com).mp3-d4081eedc96948269f4ca1f84a8153e8.mp3str"
+
+[deps]
+
+source_file="res://Sprites/audio_2022-12-25_18-19-48 (online-audio-converter.com).mp3"
+dest_files=[ "res://.import/audio_2022-12-25_18-19-48 (online-audio-converter.com).mp3-d4081eedc96948269f4ca1f84a8153e8.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

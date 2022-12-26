@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/click.mp3-3e00756756e626f71ccd55bd315c8f89.mp3str"
+
+[deps]
+
+source_file="res://Sprites/click.mp3"
+dest_files=[ "res://.import/click.mp3-3e00756756e626f71ccd55bd315c8f89.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

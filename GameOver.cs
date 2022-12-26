@@ -23,7 +23,7 @@ namespace gameVisual
             Label winnerLabel = GetNode<Label>("Tree/wins");
             winnerLabel.Text = winner;
 
-            GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D").Play(0);
+            // GetNode<AudioStreamPlayer2D>("Tree/AudioStreamPlayer2D").Play();
             MainMenu = GetNode<Button>("Tree/Button");
 
         }

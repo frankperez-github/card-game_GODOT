@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Bones_Filtered_Instrumental_Imagine_Dragons_ZufcGXdoxKg_140.mp3-14a539a387a411bc12e7eafdb2a319c0.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Bones_Filtered_Instrumental_Imagine_Dragons_ZufcGXdoxKg_140.mp3"
+dest_files=[ "res://.import/Bones_Filtered_Instrumental_Imagine_Dragons_ZufcGXdoxKg_140.mp3-14a539a387a411bc12e7eafdb2a319c0.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

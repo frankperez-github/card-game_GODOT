@@ -153,6 +153,8 @@ namespace gameVisual
         }
         public static void EndButtonFunction(Player player)
         {
+            // AudioStreamPlayer2D click = boardNode.GetParent().GetNode<AudioStreamPlayer2D>("endButton/click");
+            // click.Play();
             board.Game.turn++;
             boardNode.GetParent().GetNode<Label>("TurnLabel").Text = "Turno: " + board.Game.turn;
             board.Attack.Disabled = false;

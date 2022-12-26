@@ -548,6 +548,7 @@ namespace gameEngine
         public void AddForType(string condition, List<Relics> list)
         {
             EditExpression edit = new EditExpression();
+
             switch (edit.NextWord(condition))
             {
                 case "trap":
@@ -596,44 +597,25 @@ namespace gameEngine
                 affectCards = result;
                 return;
             }
+
             if(type == "number")
             {
+                    GD.Print(condition);
+
                 if(edit.IsDigit(condition))
                 {
-                    if(Affected is VirtualPlayer)
+                    if(Owner is VirtualPlayer)
                     {
-                        affectCards = ((VirtualPlayer)Affected).FullList(list, int.Parse(condition));
+                        affectCards = ((VirtualPlayer)Owner).FullList(list, int.Parse(condition));
                     }
                     else
                         selectCards(list, int.Parse(condition));
                 }
             }
-            foreach (var Relic in list)
-            {
-                if (Relic != null)
-                {
-                    if (type == "random")
-                    {
-                        result.Add(Relic);
-                    }
-                    else if (Relic.type == type)
-                    {
-                        result.Add(Relic);
-                    }
-                }
-            }
-            if (result.Count() != 0)
-            {
-                Console.WriteLine("Seleccione las cartas que desee:");
-                for (int i = 0; i < int.Parse(condition); i++)
-                {
-                    result.Add(result.ElementAt(int.Parse(Console.ReadLine())));
-                }
-            }
         }
         public void selectCards(List<Relics> Place, int count)
         {
-            if(Place.Count >= count)
+            if(Place.Count >= count && Place.Count > 0)
             {
                 VisualMethods.selectVisually("Select: ", Place, count, this, affectCards);
             }
@@ -965,10 +947,10 @@ namespace gameEngine
                     RemoveForList(this.Relic.Enemy.hand);
                     break;
                 case "OwnerBattlefield":
-                    RemoveForBattlefiel(this.Relic.Owner.BattleField, this.Relic.Owner);
+                    RemoveForBattlefield(this.Relic.Owner.BattleField, this.Relic.Owner);
                     break;
                 case "EnemyBattlefield":
-                    RemoveForBattlefiel(this.Relic.Enemy.BattleField, this.Relic.Enemy);
+                    RemoveForBattlefield(this.Relic.Enemy.BattleField, this.Relic.Enemy);
                     break;
             }
         }
@@ -1008,29 +990,36 @@ namespace gameEngine
             //     }
             // }
         }
-        void RemoveForBattlefiel(Relics[] Battlefield, Player Affected)
+        void RemoveForBattlefield(Relics[] Battlefield, Player Affected)
         {
             affectCards = VisualMethods.SelectedCards;
-            foreach (var item in Battlefield)
+            if(affectCards.Count == 0)
             {
-                if (item != null)
+                FullList(expression, Affected);
+            }
+            else
+            {
+                foreach (var item in Battlefield)
                 {
-                    if(affectCards.Count == 0)
+                    if (item != null)
                     {
-                        AddForType(CutExpression(expression), Affected.BattleField.ToList());
-                    }
-                    foreach (var listCard in affectCards)
-                    {
-                        for (int i = 0; i < Battlefield.Length; i++)
+                        if(affectCards.Count == 0)
                         {
-                            if (listCard == Battlefield[i])
+                            AddForType(CutExpression(expression), Affected.BattleField.ToList());
+                        }
+                        foreach (var listCard in affectCards)
+                        {
+                            for (int i = 0; i < Battlefield.Length; i++)
                             {
-                                Battlefield[i] = null;
-                                break;
+                                if (listCard == Battlefield[i])
+                                {
+                                    Battlefield[i] = null;
+                                    break;
+                                }
                             }
                         }
+                        break;
                     }
-                    break;
                 }
             }
         }
