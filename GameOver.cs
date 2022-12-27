@@ -8,11 +8,11 @@ namespace gameVisual
         public override void _Ready()
         {
             string winner;
-            if (board.Game.player1.life == 0 && board.Game.player2.life == 0)
+            if (board.Game.player1.life <= 0 && board.Game.player2.life <= 0)
             {
                 winner = "Empate";
             }
-            else if (board.Game.player1.life == 0)
+            else if (board.Game.player1.life <= 0)
             {
                 winner = board.Game.player2.nick+" wins";
             }

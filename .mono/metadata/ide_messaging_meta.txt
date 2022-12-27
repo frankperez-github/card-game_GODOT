@@ -1,7 +1,2 @@
-<<<<<<< HEAD
-﻿8001
+﻿6224
 D:/PROGRAMACION/Godot_v3.5.1-stable_mono_win64/Godot_v3.5.1-stable_mono_win64.exe
-=======
-﻿39053
-/media/frankperez/Local Disk/Local Disk/Godot_v3.5.1-stable_mono_x11_64/Godot_v3.5.1-stable_mono_x11.64
->>>>>>> 86f9d0ad8dd3c0a518fcaf1f73af58a308ab3b84
