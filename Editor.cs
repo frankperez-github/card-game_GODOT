@@ -135,6 +135,45 @@ namespace gameVisual
                 }
                 catch (System.InvalidCastException){}
             }
+
+            //Action Buttons
+            Label Actions = GetNode<Label>("Options/Actions");
+            for (int i = 0; i < Actions.GetChildCount(); i++)
+            {
+                try  // Actions has children that are not buttons
+                {
+                    Button child = Actions.GetChild<Button>(i);
+                    child.Disabled = false;
+                    if (child.Pressed)
+                    {
+                        string effect;
+                        if (Effect.Text == "")
+                        {
+                            effect = " "+child.Text;
+                        }
+                        else if (operators.Contains(lastPressed))
+                        {
+                            effect = Effect.Text +" "+ child.Text;
+                        }
+                        else if (lastPressed == "}")
+                        {
+                            effect = Effect.Text + child.Text;
+                        }
+                        else if (lastPressed == "{")
+                        {
+                            effect = Effect.Text + "   "+child.Text;
+                        }
+                        else 
+                        {
+                            effect = Effect.Text +"."+child.Text;
+                        }
+                        Effect.Text = effect;
+                        lastPressed = child.Text;
+                        child.Disabled = true;
+                    } 
+                }
+                catch (System.InvalidCastException){}
+            }
             
             // Type of card
             Label Types = GetNode<Label>("Code/Types");

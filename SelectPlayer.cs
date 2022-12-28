@@ -20,11 +20,11 @@ namespace gameVisual
         {
             Vector2[] charactPositions = new Vector2[5]
             {
-                new Vector2(400,550),
-                new Vector2(650, 550),
-                new Vector2(900,550),
-                new Vector2(1150,550),
-                new Vector2(1400,550)
+                new Vector2(400,450),
+                new Vector2(650, 450),
+                new Vector2(900,450),
+                new Vector2(1150,450),
+                new Vector2(1400,450)
             };
             characters = new List<Sprite>();
 
@@ -40,7 +40,7 @@ namespace gameVisual
                 charact.Scale = new Vector2((float)0.25,(float)0.26);
             }
 
-            player1initial = new Player("player1");
+            player1initial = new Player("Player1");
             player2initial = new Player("Player2");
             
             player2initial.Enemy = player1initial;
@@ -64,25 +64,39 @@ namespace gameVisual
             {
                 if (Nick.Text != "")
                 {
-
                     if (mainMenu.gameType.ToLower() == "virtual")
                     {
-                        player1initial = new OffensiveVirtPlayer("virtualPl");
-                        player1initial.Enemy = player2initial;
-                        player2initial.Enemy = player1initial;
+                        if (player2.character == null) // VS virtual player
+                        {
+                            player2initial.nick = Nick.Text;
+                            player2initial.SetCharacter(character1);
+                            player2initial.Enemy = player1initial;
+                            player2 = player2initial;
+                            player1initial = new OffensiveVirtPlayer("virtualPl");
+                            player1initial.SetCharacter(character1);
+                            player1initial.Enemy = player2initial;
+                            player1 = player1initial;
+                        }
+                        else // VS human player
+                        {
+                            player1initial.nick = Nick.Text;
+                            player1initial.SetCharacter(character1);
+                            player1initial.Enemy = player1initial;
+                            player1 = player1initial;
+                        }
 
-                        player1initial.SetCharacter(character1);
-
-                        player2initial.nick = Nick.Text;
-                        player2initial.SetCharacter(character1);
-                        player1 = player1initial;
-                        player2 = player2initial;
                     }
 
                     if (mainMenu.gameType.ToLower() == "human")
                     {
-                        GetTree().ChangeScene("res://SelectPlayer.tscn");
+                        //Setting First human player
+                        player2initial.nick = Nick.Text;
+                        player2initial.SetCharacter(character1);
+                        player2initial.Enemy = player1initial;
+                        player2 = player2initial;
+
                         mainMenu.gameType = "virtual";
+                        GetTree().ChangeScene("res://SelectPlayer.tscn");
                     }
                     else
                     {

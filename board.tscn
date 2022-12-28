@@ -209,7 +209,7 @@ position = Vector2( 693, 575 )
 scale = Vector2( 2.27989, 0.878155 )
 
 [node name="Card-placeholder(2)" type="Sprite" parent="battleField/Sprite"]
-position = Vector2( -200.448, -387.175 )
+position = Vector2( -199.132, -387.175 )
 scale = Vector2( 0.238518, 0.625944 )
 texture = ExtResource( 3 )
 

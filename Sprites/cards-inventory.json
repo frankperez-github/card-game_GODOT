@@ -37,8 +37,8 @@
     },
     "type": "damage",
     "isTrap": false,
-    "effect": "(Owner.Attack.13)",
-    "description": "Te suma 13 de ataque"
+    "effect": "(Owner.Attack.15)",
+    "description": "Te suma 15 de ataque"
   },
   
   {
@@ -80,7 +80,7 @@
     "type": "random",
     "isTrap": false,
     "effect": "",
-    "description": "Si tienes 3 de esta carta en la mano puedes activar tu ataque especial, si el efecto de esta carta es activado, esta carta es removida del juego"
+    "description": "Si tienes 2 de esta carta en la mano puedes activar tu ataque especial, si el efecto de esta carta es activado, esta carta es removida del juego"
   },
   {
     "cardState": 2,
@@ -612,7 +612,7 @@
         null
       ]
     },
-    "type": "draw",
+    "type": "damage",
     "isTrap": false,
     "effect": "(Owner.Attack.1.OwnerAttack)",
     "description": "Te duplica el ataque durante 1 turno"

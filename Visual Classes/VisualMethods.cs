@@ -392,7 +392,40 @@ namespace gameVisual
                 VisualHand.visualHand[i].ZIndex = 1;
             }
         }
-        
+        public static void Remove(Relics[] Battlefield, Relics relic)
+        {
+            foreach (var effect in relic.Actions)
+            {
+                if(effect is Attack)
+                {
+                    int temp = TotalActive(mainMenu.Inventory.CardsInventory[relic.id], relic);
+                    effect.Affected.character.attack -= (((Attack)effect).damage * ((Attack)effect).factor) * temp;
+                }
+                else if(effect is ChangeState)
+                {
+                    effect.Affected.state = State.Safe;
+                }
+            }
+            board.Game.GraveYard.Add(relic);
+            for (int i = 0; i < Battlefield.Length; i++)
+            {
+                if(Battlefield[i] != null && Battlefield[i] == relic)
+                    Battlefield[i] = null;
+            }
+        }
+        static int TotalActive(Relics DefaultRelic, Relics relic)
+        {
+            int temp1 = 1;
+            if(DefaultRelic.passiveDuration != 0)
+                if(DefaultRelic.activeDuration != 1)
+                    {
+                        temp1 += ((((DefaultRelic.activeDuration * 2) - 1) - relic.activeDuration) / (DefaultRelic.passiveDuration * 2));
+                        if(temp1 == 0)
+                            temp1 = 1;
+                    }
+            return temp1;
+        }
+
         #region Input Methods
         public static void PreviewHandCards(Board.VisualHand Hand, InputEventMouse mouseMove)
         {

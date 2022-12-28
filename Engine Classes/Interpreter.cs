@@ -600,8 +600,6 @@ namespace gameEngine
 
             if(type == "number")
             {
-                    GD.Print(condition);
-
                 if(edit.IsDigit(condition))
                 {
                     if(Owner is VirtualPlayer)
@@ -652,8 +650,8 @@ namespace gameEngine
     }
     class Attack : InterpretAction
     {
-        int damage;
-        int factor;
+        public int damage;
+        public int factor;
         string expression;
         public Attack(string action, Relics Relic, Player Affected, Player NotAffected, Player Owner, Player Enemy) : base(action, Relic, Affected, NotAffected, Owner, Enemy)
         {
@@ -933,24 +931,30 @@ namespace gameEngine
                 case "OwnerHand":
                     if (IsDigit(NextWord(this.expression)))
                     {
-                        RemoveForint(this.Relic.Owner.hand);
+                        if(!Empty(this.Relic.Owner.hand))
+                            RemoveForint(this.Relic.Owner.hand);
                         break;
                     }
-                    RemoveForList(this.Relic.Owner.hand);
+                    if(!Empty(this.Relic.Owner.hand))
+                        RemoveForList(this.Relic.Owner.hand);
                     break;
                 case "EnemyHand":
                     if (IsDigit(NextWord(this.expression)))
                     {
-                        RemoveForint(this.Relic.Enemy.hand);
+                        if(!Empty(this.Relic.Enemy.hand))
+                            RemoveForint(this.Relic.Enemy.hand);
                         break;
                     }
-                    RemoveForList(this.Relic.Enemy.hand);
+                    if(!Empty(this.Relic.Enemy.hand))
+                        RemoveForList(this.Relic.Enemy.hand);
                     break;
                 case "OwnerBattlefield":
-                    RemoveForBattlefield(this.Relic.Owner.BattleField, this.Relic.Owner);
+                    if(!Empty(this.Relic.Owner.BattleField.ToList()))
+                        RemoveForBattlefield(this.Relic.Owner.BattleField, this.Relic.Owner);
                     break;
                 case "EnemyBattlefield":
-                    RemoveForBattlefield(this.Relic.Enemy.BattleField, this.Relic.Enemy);
+                    if(!Empty(this.Relic.Enemy.BattleField.ToList()))
+                        RemoveForBattlefield(this.Relic.Enemy.BattleField, this.Relic.Enemy);
                     break;
             }
         }
@@ -999,29 +1003,22 @@ namespace gameEngine
             }
             else
             {
-                foreach (var item in Battlefield)
+                foreach (var listCard in affectCards)
                 {
-                    if (item != null)
-                    {
-                        if(affectCards.Count == 0)
-                        {
-                            AddForType(CutExpression(expression), Affected.BattleField.ToList());
-                        }
-                        foreach (var listCard in affectCards)
-                        {
-                            for (int i = 0; i < Battlefield.Length; i++)
-                            {
-                                if (listCard == Battlefield[i])
-                                {
-                                    Battlefield[i] = null;
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    }
+                    VisualMethods.Remove(Battlefield, listCard);
                 }
             }
+        }
+        bool Empty(List<Relics> Place)
+        {
+            for (int i = 0; i < Place.Count; i++)
+            {
+                if(Place[i] != null)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
     class Show : InterpretAction

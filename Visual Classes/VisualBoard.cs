@@ -108,27 +108,12 @@ namespace gameVisual
                     Sprite[] field = visualBattleField;
                     for (int index = 0; index < BattleField.Length; index++)
                     {
-                        if (BattleField[index] != null)
+                        if (BattleField[index] != null && !Expires(BattleField[index], index))
                         {
                             if (BattleField[index].activeDuration == 1)
                             {
                                 // Removing card from battelfield
-                                foreach (var effect in BattleField[index].Actions)
-                                {
-                                    if(effect is Attack)
-                                    {
-                                        Attack Negate = new Attack("-" + effect.expressionA, effect.Relic, effect.Affected, effect.NotAffected, effect.Relic.Owner, effect.Relic.Enemy);
-                                        Negate.Effect();
-                                    }
-                                    else if(effect is ChangeState)
-                                    {
-                                        ChangeState Negate = new ChangeState("Safe", effect.Relic, effect.Affected, effect.NotAffected, effect.Relic.Owner, effect.Relic.Enemy);
-                                    }
-                                }
-                                field[index].QueueFree();
-                                field[index] = null;
-                                board.Game.GraveYard.Add(BattleField[index]);
-                                BattleField[index] = null; 
+                                VisualMethods.Remove(BattleField, BattleField[index]);
                             }
                             else
                             {
@@ -146,14 +131,71 @@ namespace gameVisual
                                     }
                                     else
                                     {
-                                        Defaultpassive = mainMenu.Inventory.CardsInventory[BattleField[index].id].passiveDuration;
+                                        Defaultpassive = (mainMenu.Inventory.CardsInventory[BattleField[index].id].passiveDuration*2)-1;
                                     }
                                     BattleField[index].passiveDuration = Defaultpassive;
+                                    if(Defaultpassive == 0) 
+                                    {
+                                        Defaultpassive = BattleField[index].activeDuration;
+                                        BattleField[index].passiveDuration--;
+                                    }
                                     BattleField[index].activeDuration--;
                                 }
                             }
                         }
                     }
+                }
+                // void Remove(int index)
+                // {
+                //     foreach (var effect in BattleField[index].Actions)
+                //     {
+                //         if(effect is Attack)
+                //         {
+                //             effect.Affected.character.attack -= (((Attack)effect).damage * ((Attack)effect).factor) * (mainMenu.Inventory.CardsInventory[BattleField[index].id].passiveDuration - BattleField[index].passiveDuration);
+                //         }
+                //         else if(effect is ChangeState)
+                //         {
+                //             effect.Affected.state = State.Safe;
+                //         }
+                //     }
+                //     visualBattleField[index].QueueFree();
+                //     visualBattleField[index] = null;
+                //     board.Game.GraveYard.Add(BattleField[index]);
+                //     BattleField[index] = null;
+                // }
+                bool Expires(Relics relic, int index)
+                {
+                    foreach (var effect in relic.Actions)
+                    {
+                        if(effect is ChangeState)
+                        {
+                            if(state(effect.expressionA) != effect.Affected.state)
+                            {
+                                visualBattleField[index].QueueFree();
+                                visualBattleField[index] = null;
+                                board.Game.GraveYard.Add(relic);
+                                BattleField[index] = null;
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                }
+                State state(string effect)
+                {
+                    if(effect.Contains("Poisoned"))
+                    {
+                        return State.Poisoned;
+                    }
+                    if(effect.Contains("Asslep"))
+                    {
+                        return State.Asleep;
+                    }
+                    if(effect.Contains("Freezed"))
+                    {
+                        return State.Freezed;
+                    }
+                    return State.Safe;
                 }
             }
             public void Update()
@@ -197,13 +239,18 @@ namespace gameVisual
                     count = 0;
                     for (int i = 0; i < player.Hand.Count; i++)
                     {
-                        if(count < 2 || player.Hand[i].name == "Token")
+                        if(i==player.Hand.Count)
+                            break;
+                        if(count < 2 && player.Hand[i].name == "Token")
                         {
                             player.Hand.Remove(player.Hand[i]);
+                            i--;
                             count++;
                         }
                     }
-                    VisualMethods.Effect(player.Hand[0].Owner.character, false);
+                    if(board.Game.turn != 1)
+                        VisualMethods.Effect(player.Hand[0].Owner.character, false);
+                    CheckSpecialAttack(player);
                 }
             }
             public void UpdateBattleField(VisualBattleField battleField)

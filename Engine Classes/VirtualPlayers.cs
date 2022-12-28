@@ -19,7 +19,7 @@ namespace gameEngine
     {
         public RandomVirtPlayer(string nick) : base(nick){}
 
-        public override void Play() //////////////////AGREGAR QUE ACTIVE UN NUMERO RANDOM DE CARTAS RANDOM
+        public override void Play() 
         {
             System.Random rnd = new System.Random();
             if(this.hand.Count > 1)
@@ -87,7 +87,6 @@ namespace gameEngine
                         {
                             if(words[i] == "Attack" )
                             {
-                                
                                 // If condition of card is true applying effect (don't waste a chance)
                                 InterpretEffect effect = new InterpretEffect();
                                 effect.Scan(item);
