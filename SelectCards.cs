@@ -19,6 +19,7 @@ namespace gameVisual
             public static Dictionary<int, List<int>> SelectedIndexes = new Dictionary<int, List<int>>();
 
             public static List<Relics> Source;
+        public static List<Relics> target;
         public static int actualSwipe = 0;
         public static int partitions = 0;
         public static string selectName;
@@ -75,12 +76,12 @@ namespace gameVisual
             if(Left.Pressed)
             {
                 this.QueueFree();
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant);
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant, target);
             }
             if(Right.Pressed)
             {
                 this.QueueFree();
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant);
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant, target);
             }
 
         }
@@ -107,7 +108,7 @@ namespace gameVisual
                                         SelectedIndexes[actualSwipe] = updatedIndexes;
 
                                         selectQuant++;
-                                        VisualMethods.SelectedCards.Remove(SelectCards.Source[i]);
+                                        VisualMethods.SelectedCards.Remove(VisualMethods.SourceToSelect[i]);
                                         selectCards[i].Scale = new Vector2((float)0.170,(float)0.170);
                                     }
                                     // Selecting
@@ -119,7 +120,7 @@ namespace gameVisual
                                         SelectedIndexes[actualSwipe] = updatedIndexes;
 
                                         selectQuant--;
-                                        VisualMethods.SelectedCards.Add(SelectCards.Source[i]);
+                                        VisualMethods.SelectedCards.Add(VisualMethods.SourceToSelect[i]);
                                         selectCards[i].Scale = new Vector2((float)0.185,(float)0.185);
                                     }
                                     break;
@@ -157,7 +158,6 @@ namespace gameVisual
             SelectLabel = selectLabel;
             selectCards = new List<Sprite>();
             selectQuant = quant;
-            Source = SetSource(Sourse);
         }
 
         public Select(Action<List<Relics>, int> selectDelegate, Label selectLabel, int quant, List<Relics> Sourse)
@@ -168,12 +168,6 @@ namespace gameVisual
             SelectLabel = selectLabel;
             selectCards = new List<Sprite>();
             selectQuant = quant;
-            Source = SetSource(Sourse);
-
-        }
-        public Dictionary<int, List<Relics>> SetSource(List<Relics> Source)
-        {
-            return new Dictionary<int, List<Relics>>();
         }
     }
 }
