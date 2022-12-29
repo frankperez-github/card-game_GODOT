@@ -11,9 +11,8 @@ namespace gameVisual
             public VisualBattleField visualBattleField2;
             public VisualHand visualHand1;
             public VisualHand visualHand2;
-            public SceneTree Tree;
 
-            public Board(Game game, Sprite GraveYard, SceneTree Tree)
+            public Board(Game game, Sprite GraveYard)
             {
                 Vector2[] Player2FieldPositions = new Vector2[4]
                 {
@@ -32,9 +31,8 @@ namespace gameVisual
                 this.visualGraveYard = new VisualGraveYard(game.GraveYard, GraveYard);
                 this.visualBattleField1 = new VisualBattleField(game.player1.BattleField, Player1FieldPositions);
                 this.visualBattleField2 = new VisualBattleField(game.player2.BattleField, Player2FieldPositions);
-                this.visualHand1 = new VisualHand(game.player1.hand, Tree, 50, "RelicsNodes1");
-                this.visualHand2 = new VisualHand(game.player2.hand, Tree, 1000, "RelicsNodes2");
-                this.Tree = Tree;
+                this.visualHand1 = new VisualHand(game.player1.hand, 50, "RelicsNodes1");
+                this.visualHand2 = new VisualHand(game.player2.hand, 1000, "RelicsNodes2");
             }
 
             public class VisualGraveYard 
@@ -76,16 +74,14 @@ namespace gameVisual
                 static List<Sprite> PlayerVisualHand;
                 public List<Relics> Hand;
                 public List<Sprite> visualHand;
-                SceneTree Tree;
                 public Vector2 VisualHandPosition;
                 public string group;
 
-                public VisualHand(List<Relics> Hand, SceneTree Tree, int Position, string group)
+                public VisualHand(List<Relics> Hand, int Position, string group)
                 {
                     this.Hand = Hand;
                     this.visualHand = new List<Sprite>();
                     PlayerVisualHand = new List<Sprite>();
-                    this.Tree = Tree;
                     VisualHandPosition = new Vector2(500 - (Hand.Count * 5), Position);
                     this.group = group;
                 }
@@ -145,24 +141,6 @@ namespace gameVisual
                         }
                     }
                 }
-                // void Remove(int index)
-                // {
-                //     foreach (var effect in BattleField[index].Actions)
-                //     {
-                //         if(effect is Attack)
-                //         {
-                //             effect.Affected.character.attack -= (((Attack)effect).damage * ((Attack)effect).factor) * (mainMenu.Inventory.CardsInventory[BattleField[index].id].passiveDuration - BattleField[index].passiveDuration);
-                //         }
-                //         else if(effect is ChangeState)
-                //         {
-                //             effect.Affected.state = State.Safe;
-                //         }
-                //     }
-                //     visualBattleField[index].QueueFree();
-                //     visualBattleField[index] = null;
-                //     board.Game.GraveYard.Add(BattleField[index]);
-                //     BattleField[index] = null;
-                // }
                 bool Expires(Relics relic, int index)
                 {
                     foreach (var effect in relic.Actions)

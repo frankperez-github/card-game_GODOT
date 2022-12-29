@@ -21,7 +21,7 @@ namespace gameVisual
             child = new Node();
             AddChild(child);
             Game = new Game(SelectPlayer.player1, SelectPlayer.player2);
-            VisualBoard = new Board(Game, GetNode<Sprite>("GraveYard/Relic"), GetTree());
+            VisualBoard = new Board(Game, GetNode<Sprite>("GraveYard/Relic"));
 
             GetNode<Sprite>("Preview/Relic").Visible = false;
             Attack = GetNode<Button>("Attack");

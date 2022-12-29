@@ -12,14 +12,13 @@ namespace gameVisual
         public static int selectQuant = 1;
         public static List<Sprite> selectCards;
         public static Action<List<Relics>, int> SelectDelegate;
-        public static InterpretAction action; 
+        public static InterpretAction action;
         public static Label SelectLabel;
         public static PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
         public static Node SelectCardInstance = SelectCardsScene.Instance(); 
         public static Dictionary<int, List<int>> SelectedIndexes = new Dictionary<int, List<int>>();
 
         public static List<Relics> Source;
-        public static List<Relics> target;
         public static int actualSwipe = 0;
         public static int partitions = 0;
         public static string selectName;
@@ -53,6 +52,7 @@ namespace gameVisual
             // Selection Finished
             if(AcceptButton.Pressed)
             {
+                partitions = 0;
                 board.child.GetTree().Paused = false;
                 SelectedIndexes = new Dictionary<int, List<int>>();
                 if(action != null)
@@ -75,13 +75,11 @@ namespace gameVisual
 
             if(Left.Pressed)
             {
-                this.QueueFree();
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant, target);
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant);
             }
             if(Right.Pressed)
             {
-                this.QueueFree();
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant, target);
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant);
             }
 
         }
@@ -108,7 +106,7 @@ namespace gameVisual
                                         SelectedIndexes[actualSwipe] = updatedIndexes;
 
                                         selectQuant++;
-                                        VisualMethods.SelectedCards.Remove(VisualMethods.SourceToSelect[i]);
+                                        VisualMethods.SelectedCards.Remove(SelectCards.Source[i+actualSwipe*VisualMethods.partitionLength]);
                                         selectCards[i].Scale = new Vector2((float)0.170,(float)0.170);
                                     }
                                     // Selecting
@@ -120,7 +118,7 @@ namespace gameVisual
                                         SelectedIndexes[actualSwipe] = updatedIndexes;
 
                                         selectQuant--;
-                                        VisualMethods.SelectedCards.Add(VisualMethods.SourceToSelect[i]);
+                                        VisualMethods.SelectedCards.Add(SelectCards.Source[i+actualSwipe*VisualMethods.partitionLength]);
                                         selectCards[i].Scale = new Vector2((float)0.185,(float)0.185);
                                     }
                                     break;
@@ -136,6 +134,45 @@ namespace gameVisual
             {
                 VisualMethods.ActiveEscapeMenu();
             }
+        }
+    }
+    public class Select
+    {
+        public PackedScene SelectCardsScene;
+        public InterpretAction action;
+        public Action<List<Relics>, int> SelectDelegate;
+        public Label SelectLabel;
+        public List<Sprite> selectCards;
+        public int selectQuant;
+        public static Node SelectCardInstance;
+        Dictionary<int, List<Relics>> Source; 
+
+
+        public Select(InterpretAction action, Label selectLabel, int quant, List<Relics> Sourse)
+        {
+            SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
+            SelectCardInstance = SelectCardsScene.Instance();
+            this.action = action;
+            SelectLabel = selectLabel;
+            selectCards = new List<Sprite>();
+            selectQuant = quant;
+            Source = SetSource(Sourse);
+        }
+
+        public Select(Action<List<Relics>, int> selectDelegate, Label selectLabel, int quant, List<Relics> Sourse)
+        {
+            SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
+            SelectCardInstance = SelectCardsScene.Instance();
+            SelectDelegate = selectDelegate;
+            SelectLabel = selectLabel;
+            selectCards = new List<Sprite>();
+            selectQuant = quant;
+            Source = SetSource(Sourse);
+
+        }
+        public Dictionary<int, List<Relics>> SetSource(List<Relics> Source)
+        {
+            return new Dictionary<int, List<Relics>>();
         }
     }
 }
