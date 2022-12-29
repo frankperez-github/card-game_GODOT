@@ -10,7 +10,11 @@ namespace gameVisual
         #region Visual Objects
         public static bool selecting = false;
         public static List<Relics> SelectedCards = new List<Relics>();
+<<<<<<< HEAD
         public const int partitionLength = 5;
+=======
+        const int partitionLength = 5;
+>>>>>>> c4ab7ea3d0f6be2ff2135c8a9adffea6ff738811
         #endregion
 
         public static Node boardNode;
@@ -56,7 +60,11 @@ namespace gameVisual
             SelectCards.selectName = tittle;
             VisualMethods.selecting = true;
             VisualMethods.SelectedCards = new List<Relics>();
+<<<<<<< HEAD
             RemoveSprites(SelectCards.selectCards);
+=======
+            SelectCards.selectCards = new List<Sprite>();
+>>>>>>> c4ab7ea3d0f6be2ff2135c8a9adffea6ff738811
             SelectCards.Source = Source;
             SelectCards.selectQuant = quant;
             SelectCards.Source = Source;
