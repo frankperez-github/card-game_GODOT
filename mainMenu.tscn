@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://mainMenu.cs" type="Script" id=1]
 [ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Sprites/MainButton PauseMenu.png" type="Texture" id=11]
 [ext_resource path="res://Sprites/Bones_Filtered_Instrumental_Imagine_Dragons_ZufcGXdoxKg_140.mp3" type="AudioStream" id=12]
 [ext_resource path="res://Sprites/audio_2022-12-25_18-19-48 (online-audio-converter.com).mp3" type="AudioStream" id=13]
+[ext_resource path="res://Sprites/botones grande.png" type="Texture" id=14]
 
 [sub_resource type="DynamicFont" id=1]
 size = 57
@@ -41,6 +42,26 @@ region_rect = Rect2( 0, 0, 346, 150 )
 [sub_resource type="DynamicFont" id=2]
 size = 57
 font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxTexture" id=17]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="StyleBoxTexture" id=18]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="StyleBoxTexture" id=19]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="StyleBoxTexture" id=20]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="StyleBoxTexture" id=21]
+texture = ExtResource( 14 )
+region_rect = Rect2( 0, 0, 315, 100 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 57
@@ -108,19 +129,23 @@ position = Vector2( 0, 6.10352e-05 )
 stream = ExtResource( 13 )
 
 [node name="Human" type="Button" parent="Start"]
-visible = false
-margin_left = 0.948761
-margin_top = 145.0
-margin_right = 342.949
-margin_bottom = 235.0
+margin_left = 20.9456
+margin_top = 153.008
+margin_right = 362.946
+margin_bottom = 243.008
 custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 17 )
+custom_styles/pressed = SubResource( 18 )
+custom_styles/focus = SubResource( 19 )
+custom_styles/disabled = SubResource( 20 )
+custom_styles/normal = SubResource( 21 )
 text = "vs Human Player"
 
 [node name="Edit" type="Button" parent="Start"]
-anchor_left = 0.0641998
-anchor_top = 8.22885e-05
-anchor_right = 0.0641998
-anchor_bottom = 8.22885e-05
+anchor_left = 0.0613941
+anchor_top = 1.17079
+anchor_right = 0.0613942
+anchor_bottom = 1.17079
 margin_left = 2.0
 margin_top = 151.0
 margin_right = 337.0
@@ -137,10 +162,10 @@ __meta__ = {
 }
 
 [node name="Quit" type="Button" parent="Start"]
-anchor_left = 0.0640732
-anchor_top = -0.123859
-anchor_right = 0.0640732
-anchor_bottom = -0.123859
+anchor_left = 0.0612675
+anchor_top = 1.04684
+anchor_right = 0.0612675
+anchor_bottom = 1.04684
 margin_left = 1.0
 margin_top = 298.0
 margin_right = 340.0

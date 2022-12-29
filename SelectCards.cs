@@ -75,13 +75,13 @@ namespace gameVisual
 
             if(Left.Pressed)
             {
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant, target);
                 this.QueueFree();
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant, target);
             }
             if(Right.Pressed)
             {
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant, target);
                 this.QueueFree();
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant, target);
             }
 
         }
@@ -93,14 +93,14 @@ namespace gameVisual
                 switch ((ButtonList)mouseEvent.ButtonIndex)
                 {
                     case ButtonList.Left:
-                        if (VisualMethods.selecting && selectQuant > 0)
+                        if (VisualMethods.selecting && selectQuant >= 0)
                         {
                             for(int i = 0; i < selectCards.Count; i++)
                             {
                                 if (selectCards[i].GetRect().HasPoint(selectCards[i].ToLocal(mouseEvent.Position)))
                                 {
                                     // Deselecting
-                                    if (selectCards[i].Scale == new Vector2((float)0.20,(float)0.20))
+                                    if (selectCards[i].Scale == new Vector2((float)0.185,(float)0.185))
                                     {
                                         // Removing selected index from partition
                                         List<int> updatedIndexes = SelectedIndexes[actualSwipe];
@@ -121,7 +121,7 @@ namespace gameVisual
 
                                         selectQuant--;
                                         VisualMethods.SelectedCards.Add(VisualMethods.SourceToSelect[i]);
-                                        selectCards[i].Scale = new Vector2((float)0.20,(float)0.20);
+                                        selectCards[i].Scale = new Vector2((float)0.185,(float)0.185);
                                     }
                                     break;
                                 }

@@ -62,9 +62,9 @@ text = "Continue"
 
 [node name="Label" type="Label" parent="Tree"]
 margin_left = 726.0
-margin_top = 147.0
+margin_top = 763.0
 margin_right = 1074.0
-margin_bottom = 192.0
+margin_bottom = 808.0
 custom_fonts/font = SubResource( 4 )
 text = "Type a nick to your player:"
 align = 1
