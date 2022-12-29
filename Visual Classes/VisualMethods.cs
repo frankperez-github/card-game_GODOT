@@ -18,13 +18,13 @@ namespace gameVisual
         {
             SelectCards.SelectDelegate = Delegate;
             int partitions = GetPartitions(Source, partitionLength);
-            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant, target);
+            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant);
         }
         public static void selectVisually(string sourceName, List<Relics> Source, int quant, InterpretAction Delegate, List<Relics> target)
         {
             SelectCards.action = Delegate;
             int partitions = GetPartitions(Source, partitionLength);
-            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant, target);
+            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant);
         }
         private static int GetPartitions(List<Relics> Source, int partitionLength)
         {
@@ -43,7 +43,7 @@ namespace gameVisual
             }
             return partitions;
         }
-        public static void SetSelectCardsProperties(string tittle, int partitions, int actualSwipe, List<Relics> Source, int quant, List<Relics> target)
+        public static void SetSelectCardsProperties(string tittle, int partitions, int actualSwipe, List<Relics> Source, int quant)
         {
             SelectCards.selectName = tittle;
             VisualMethods.selecting = true;
@@ -52,7 +52,6 @@ namespace gameVisual
             SelectCards.Source = Source;
             SelectCards.selectQuant = quant;
             SelectCards.Source = Source;
-            SelectCards.target = target;
             SelectCards.partitions = partitions;
             SelectCards.actualSwipe = actualSwipe;
             Node SelectMenu = SelectCards.SelectCardsScene.Instance();

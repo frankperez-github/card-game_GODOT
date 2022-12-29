@@ -19,7 +19,6 @@ namespace gameVisual
             public static Dictionary<int, List<int>> SelectedIndexes = new Dictionary<int, List<int>>();
 
             public static List<Relics> Source;
-        public static List<Relics> target;
         public static int actualSwipe = 0;
         public static int partitions = 0;
         public static string selectName;
@@ -76,12 +75,12 @@ namespace gameVisual
             if(Left.Pressed)
             {
                 this.QueueFree();
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant, target);
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant);
             }
             if(Right.Pressed)
             {
                 this.QueueFree();
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant, target);
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant);
             }
 
         }
