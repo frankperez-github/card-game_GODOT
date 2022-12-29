@@ -66,16 +66,16 @@ namespace gameVisual
                 {
                     if (mainMenu.gameType.ToLower() == "virtual")
                     {
-                        if (player2.character == null) // VS virtual player
+                        if (player2initial.character == null) // VS virtual player
                         {
-                            player2initial.nick = Nick.Text;
-                            player2initial.SetCharacter(character1);
-                            player2initial.Enemy = player1initial;
-                            player2 = player2initial;
                             player1initial = new OffensiveVirtPlayer("virtualPl");
                             player1initial.SetCharacter(character1);
                             player1initial.Enemy = player2initial;
                             player1 = player1initial;
+                            player2initial.nick = Nick.Text;
+                            player2initial.SetCharacter(character1);
+                            player2initial.Enemy = player1initial;
+                            player2 = player2initial;
                         }
                         else // VS human player
                         {
