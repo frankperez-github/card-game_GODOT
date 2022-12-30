@@ -45,7 +45,6 @@ namespace gameVisual
             
             player2initial.Enemy = player1initial;
             player1initial.Enemy = player2initial;
-
         }
        
         public override void _Process(float delta)
@@ -84,7 +83,6 @@ namespace gameVisual
                             player1initial.Enemy = player1initial;
                             player1 = player1initial;
                         }
-
                     }
 
                     if (mainMenu.gameType.ToLower() == "human")

@@ -12,10 +12,7 @@ namespace gameVisual
         public static Sprite Relic = new Sprite();
         public static bool selecting = false;
         public static List<Relics> SelectedCards = new List<Relics>();
-        public static List<Relics> SourceToSelect;
-        public static Node PauseMenu;
         const int partitionLength = 5;
-
         #endregion
 
 
@@ -51,21 +48,27 @@ namespace gameVisual
         }
         public static void SetSelectCardsProperties(string tittle, int partitions, int actualSwipe, List<Relics> Source, int quant, List<Relics> target)
         {
+            Node SelectMenu = null;
+            if (SelectCards.partitions == 0)
+            {
+                SelectMenu = SelectCards.SelectCardsScene.Instance();
+                board.child.AddChild(SelectMenu);
+                SelectCards.SelectCardInstance = SelectMenu;
+                SelectCards.selectCards = new List<Sprite>();
+            }
             SelectCards.selectName = tittle;
             VisualMethods.selecting = true;
             VisualMethods.SelectedCards = new List<Relics>();
             SelectCards.selectCards = new List<Sprite>();
-            VisualMethods.SourceToSelect = Source;
+>>>>>>> c4ab7ea3d0f6be2ff2135c8a9adffea6ff738811
+            SelectCards.Source = Source;
             SelectCards.selectQuant = quant;
             SelectCards.Source = Source;
             SelectCards.target = target;
             SelectCards.partitions = partitions;
             SelectCards.actualSwipe = actualSwipe;
-            Node SelectMenu = SelectCards.SelectCardsScene.Instance();
-            SelectCards.SelectCardInstance = SelectMenu;
             SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("Tree/DiscardLabel");
             SelectCards.SelectLabel.Text = tittle;
-            board.child.AddChild(SelectMenu);
             board.child.GetTree().Paused = true;
 
             int quantCards = Source.Count;
@@ -77,6 +80,7 @@ namespace gameVisual
 
             // Showing cards to select
             int index = 0;
+            SelectCards.selectCards = new List<Sprite>();
             for (int i = actualSwipe*partitionLength; i < (actualSwipe*partitionLength)+partitionLength; i++)
             {
                 if (i < Source.Count && Source[i] != null)
@@ -84,7 +88,7 @@ namespace gameVisual
                     Sprite Card = VisualMethods.InstanciateVisualCard(Source[i]);
                     Card.ZIndex = 7;
                     SelectCards.selectCards.Add(Card);
-                    SelectMenu.AddChild(Card);
+                    SelectCards.SelectCardInstance.AddChild(Card);
                     // Remembering selected cards
                     if(SelectCards.SelectedIndexes[actualSwipe].Contains(i)) // Selected card
                     {
@@ -424,6 +428,19 @@ namespace gameVisual
                             temp1 = 1;
                     }
             return temp1;
+        }
+
+        /// <summary>
+        /// Removes sprites and reset source to an empty list
+        /// </summary>
+        /// <param name="source"></param>
+        static void RemoveSprites(List<Sprite> source)
+        {
+            foreach (var sprite in source)
+            {
+                sprite.QueueFree();
+            }
+            source = new List<Sprite>();
         }
 
         #region Input Methods

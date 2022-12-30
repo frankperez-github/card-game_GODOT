@@ -9,6 +9,18 @@ namespace gameVisual
         public static Button AcceptButton;
         Button Left;
         Button Right;
+<<<<<<< HEAD
+        public static int selectQuant = 1;
+        public static List<Sprite> selectCards;
+        public static Action<List<Relics>, int> SelectDelegate;
+        public static InterpretAction action;
+        public static Label SelectLabel;
+        public static PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
+        public static Node SelectCardInstance = SelectCardsScene.Instance(); 
+        public static Dictionary<int, List<int>> SelectedIndexes = new Dictionary<int, List<int>>();
+
+        public static List<Relics> Source;
+=======
             public static int selectQuant = 1;
             public static List<Sprite> selectCards;
             public static Action<List<Relics>, int> SelectDelegate;
@@ -19,7 +31,7 @@ namespace gameVisual
             public static Dictionary<int, List<int>> SelectedIndexes = new Dictionary<int, List<int>>();
 
             public static List<Relics> Source;
-        public static List<Relics> target;
+>>>>>>> c4ab7ea3d0f6be2ff2135c8a9adffea6ff738811
         public static int actualSwipe = 0;
         public static int partitions = 0;
         public static string selectName;
@@ -53,6 +65,7 @@ namespace gameVisual
             // Selection Finished
             if(AcceptButton.Pressed)
             {
+                partitions = 0;
                 board.child.GetTree().Paused = false;
                 SelectedIndexes = new Dictionary<int, List<int>>();
                 if(action != null)
@@ -75,13 +88,19 @@ namespace gameVisual
 
             if(Left.Pressed)
             {
+<<<<<<< HEAD
+=======
                 this.QueueFree();
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant, target);
+>>>>>>> c4ab7ea3d0f6be2ff2135c8a9adffea6ff738811
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant);
             }
             if(Right.Pressed)
             {
+<<<<<<< HEAD
+=======
                 this.QueueFree();
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant, target);
+>>>>>>> c4ab7ea3d0f6be2ff2135c8a9adffea6ff738811
+                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant);
             }
 
         }
@@ -108,7 +127,11 @@ namespace gameVisual
                                         SelectedIndexes[actualSwipe] = updatedIndexes;
 
                                         selectQuant++;
-                                        VisualMethods.SelectedCards.Remove(VisualMethods.SourceToSelect[i]);
+<<<<<<< HEAD
+                                        VisualMethods.SelectedCards.Remove(SelectCards.Source[i+actualSwipe*VisualMethods.partitionLength]);
+=======
+                                        VisualMethods.SelectedCards.Remove(SelectCards.Source[i]);
+>>>>>>> c4ab7ea3d0f6be2ff2135c8a9adffea6ff738811
                                         selectCards[i].Scale = new Vector2((float)0.170,(float)0.170);
                                     }
                                     // Selecting
@@ -120,7 +143,11 @@ namespace gameVisual
                                         SelectedIndexes[actualSwipe] = updatedIndexes;
 
                                         selectQuant--;
-                                        VisualMethods.SelectedCards.Add(VisualMethods.SourceToSelect[i]);
+<<<<<<< HEAD
+                                        VisualMethods.SelectedCards.Add(SelectCards.Source[i+actualSwipe*VisualMethods.partitionLength]);
+=======
+                                        VisualMethods.SelectedCards.Add(SelectCards.Source[i]);
+>>>>>>> c4ab7ea3d0f6be2ff2135c8a9adffea6ff738811
                                         selectCards[i].Scale = new Vector2((float)0.185,(float)0.185);
                                     }
                                     break;
