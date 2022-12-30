@@ -21,13 +21,13 @@ namespace gameVisual
         {
             SelectCards.SelectDelegate = Delegate;
             int partitions = GetPartitions(Source, partitionLength);
-            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant, target);
+            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant);
         }
         public static void selectVisually(string sourceName, List<Relics> Source, int quant, InterpretAction Delegate, List<Relics> target)
         {
             SelectCards.action = Delegate;
             int partitions = GetPartitions(Source, partitionLength);
-            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant, target);
+            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant);
         }
         private static int GetPartitions(List<Relics> Source, int partitionLength)
         {
@@ -46,7 +46,7 @@ namespace gameVisual
             }
             return partitions;
         }
-        public static void SetSelectCardsProperties(string tittle, int partitions, int actualSwipe, List<Relics> Source, int quant, List<Relics> target)
+        public static void SetSelectCardsProperties(string tittle, int partitions, int actualSwipe, List<Relics> Source, int quant)
         {
             Node SelectMenu = null;
             if (SelectCards.partitions == 0)
@@ -60,11 +60,9 @@ namespace gameVisual
             VisualMethods.selecting = true;
             VisualMethods.SelectedCards = new List<Relics>();
             SelectCards.selectCards = new List<Sprite>();
->>>>>>> c4ab7ea3d0f6be2ff2135c8a9adffea6ff738811
             SelectCards.Source = Source;
             SelectCards.selectQuant = quant;
             SelectCards.Source = Source;
-            SelectCards.target = target;
             SelectCards.partitions = partitions;
             SelectCards.actualSwipe = actualSwipe;
             SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("Tree/DiscardLabel");
@@ -333,7 +331,6 @@ namespace gameVisual
             VisualMethods.selecting = false;
             SelectCards.selectCards = null;
             VisualMethods.SelectedCards = new List<Relics>();
-            VisualMethods.SourceToSelect = null;
 
             board.child.GetParent().QueueFree();
             board.child.QueueFree();
@@ -535,7 +532,7 @@ namespace gameVisual
         public static void ActiveEscapeMenu()
         {
                 PackedScene EscMenu = (PackedScene)GD.Load("res://PauseMenu.tscn");
-                PauseMenu = (Node)(EscMenu.Instance());
+                Node PauseMenu = (Node)(EscMenu.Instance());
                 boardNode.AddChild(PauseMenu);
                 boardNode.GetTree().Paused = true; 
         }
