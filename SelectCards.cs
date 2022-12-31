@@ -98,7 +98,7 @@ namespace gameVisual
                                 if (selectCards[i].GetRect().HasPoint(selectCards[i].ToLocal(mouseEvent.Position)))
                                 {
                                     // Deselecting
-                                    if (selectCards[i].Scale == new Vector2((float)0.17,(float)0.17))
+                                    if (selectCards[i].Scale == new Vector2((float)0.185,(float)0.185))
                                     {
                                         // Removing selected index from partition
                                         List<int> updatedIndexes = SelectedIndexes[actualSwipe];
@@ -108,7 +108,6 @@ namespace gameVisual
                                         selectQuant++;
                                         VisualMethods.SelectedCards.Remove(SelectCards.Source[i+actualSwipe*VisualMethods.partitionLength]);
                                         selectCards[i].Scale = new Vector2((float)0.170,(float)0.170);
-                                        GD.Print(String.Join(" ", SelectedIndexes[actualSwipe]));
                                     }
                                     // Selecting
                                     else if (selectQuant != 0)
@@ -121,8 +120,6 @@ namespace gameVisual
                                         selectQuant--;
                                         VisualMethods.SelectedCards.Add(SelectCards.Source[i+actualSwipe*VisualMethods.partitionLength]);
                                         selectCards[i].Scale = new Vector2((float)0.185,(float)0.185);
-                                        GD.Print(String.Join(" ", SelectedIndexes[actualSwipe]));
-
                                     }
                                     break;
                                 }
@@ -159,6 +156,7 @@ namespace gameVisual
             SelectLabel = selectLabel;
             selectCards = new List<Sprite>();
             selectQuant = quant;
+            Source = SetSource(Sourse);
         }
 
         public Select(Action<List<Relics>, int> selectDelegate, Label selectLabel, int quant, List<Relics> Sourse)
@@ -169,6 +167,12 @@ namespace gameVisual
             SelectLabel = selectLabel;
             selectCards = new List<Sprite>();
             selectQuant = quant;
+            Source = SetSource(Sourse);
+
+        }
+        public Dictionary<int, List<Relics>> SetSource(List<Relics> Source)
+        {
+            return new Dictionary<int, List<Relics>>();
         }
     }
 }

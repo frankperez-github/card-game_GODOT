@@ -14,7 +14,6 @@ namespace gameVisual
         public Stopwatch watch;
         public bool VirtualPlay = true;
         public static AudioStreamPlayer2D music;
-        public static SelectCards ShowCards;
        
         public override void _Ready()
         {

@@ -8,13 +8,10 @@ namespace gameVisual
     public class VisualMethods
     {
         #region Visual Objects
-
-        public static Sprite Relic = new Sprite();
         public static bool selecting = false;
         public static List<Relics> SelectedCards = new List<Relics>();
         public const int partitionLength = 5;
         #endregion
-
 
         public static Node boardNode;
         public static void selectVisually(string sourceName, List<Relics> Source, int quant, Action<List<Relics>, int> Delegate, List<Relics> target)
@@ -216,8 +213,9 @@ namespace gameVisual
         }
         public static Sprite InstanciateVisualCard(Relics card)
         {
+            
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
-            Relic = (Sprite)relic.Instance();
+            Sprite Relic = (Sprite)relic.Instance();
 
             Label name = (Label)Relic.GetChild(0);
             Label description = (Label)Relic.GetChild(2);
@@ -258,7 +256,7 @@ namespace gameVisual
         public static Sprite InstanciateVisualCharact(gameEngine.CharacterProperties character)
         {
             PackedScene relic = (PackedScene)GD.Load("res://Relic.tscn");
-            Relic = (Sprite)relic.Instance();
+            Sprite Relic = (Sprite)relic.Instance();
             Label name = (Label)Relic.GetChild(0);
 
             Sprite img = (Sprite)Relic.GetChild(1);
@@ -275,7 +273,7 @@ namespace gameVisual
         public static Sprite InstanciateVisualBackCard(Relics card)
         {
             PackedScene relic = (PackedScene)GD.Load("res://Back-relic.tscn");
-            Relic = (Sprite)relic.Instance();
+            Sprite Relic = (Sprite)relic.Instance();
             Label name = (Label)Relic.GetChild(0);
             name.Text = card.name;
 
@@ -331,6 +329,7 @@ namespace gameVisual
             VisualMethods.selecting = false;
             SelectCards.selectCards = null;
             VisualMethods.SelectedCards = new List<Relics>();
+            SelectCards.Source = null;
 
             board.child.GetParent().QueueFree();
             board.child.QueueFree();
@@ -372,7 +371,7 @@ namespace gameVisual
                 if (VisualHand.Hand[i].Owner is VirtualPlayer) relic = VisualMethods.InstanciateVisualBackCard(VisualHand.Hand[i]);
                 else relic = VisualMethods.InstanciateVisualCard(VisualHand.Hand[i]);
 
-                VisualHand.visualHand.Add(VisualMethods.Relic);
+                VisualHand.visualHand.Add(relic);
                 board.child.AddChild(relic);
                 relic.AddToGroup(VisualHand.group);
             }   

@@ -1,0 +1,335 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://board.cs" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/card-placeholder (2).jpg" type="Texture" id=3]
+[ext_resource path="res://Sprites/card-back.png" type="Texture" id=4]
+[ext_resource path="res://excelsiorcomics.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Sprites/zyro-image (1).png" type="Texture" id=6]
+[ext_resource path="res://Relic.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Sprites/Tipografia/BlackOpsOne-Regular.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Sprites/buttonPress grande.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/1671659940098 (1).png" type="Texture" id=10]
+[ext_resource path="res://Sprites/buttonPress pequeño.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/botones grande.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/Bones_Filtered_Instrumental_Imagine_Dragons_ZufcGXdoxKg_140.mp3" type="AudioStream" id=13]
+[ext_resource path="res://Sprites/click.mp3" type="AudioStream" id=14]
+
+[sub_resource type="DynamicFont" id=1]
+size = 77
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 9
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 31
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 31
+font_data = ExtResource( 5 )
+
+[sub_resource type="StyleBoxTexture" id=20]
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="StyleBoxTexture" id=13]
+texture = ExtResource( 10 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="StyleBoxTexture" id=14]
+
+[sub_resource type="StyleBoxTexture" id=15]
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 41
+font_data = ExtResource( 8 )
+
+[sub_resource type="Theme" id=7]
+
+[sub_resource type="StyleBoxTexture" id=16]
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 205, 70 )
+
+[sub_resource type="StyleBoxTexture" id=17]
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="StyleBoxTexture" id=18]
+
+[sub_resource type="StyleBoxTexture" id=19]
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 12 )
+region_rect = Rect2( 0, 0, 315, 100 )
+
+[sub_resource type="DynamicFont" id=11]
+size = 42
+font_data = ExtResource( 8 )
+
+[node name="board" type="Node2D"]
+position = Vector2( 5, 37 )
+script = ExtResource( 1 )
+
+[node name="music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
+autoplay = true
+
+[node name="Board-texture" type="Sprite" parent="."]
+position = Vector2( 1091.01, 575.323 )
+scale = Vector2( 1.33203, 0.495443 )
+z_index = -5
+texture = ExtResource( 6 )
+offset = Vector2( -126.132, -36.9827 )
+
+[node name="TurnLabel" type="Label" parent="."]
+margin_left = 90.0
+margin_top = 102.0
+margin_right = 253.0
+margin_bottom = 157.0
+size_flags_stretch_ratio = 0.82
+custom_fonts/font = SubResource( 1 )
+text = "Turno: 1"
+
+[node name="PlayerInfo" type="Label" parent="."]
+margin_left = 115.0
+margin_top = 838.0
+margin_right = 219.0
+margin_bottom = 965.0
+custom_fonts/font = SubResource( 2 )
+text = "
+"
+
+[node name="Player\'s Icon" type="Sprite" parent="PlayerInfo"]
+position = Vector2( 32, -23 )
+texture = ExtResource( 2 )
+
+[node name="Player\'s Nick" type="Label" parent="PlayerInfo"]
+margin_top = 19.0
+margin_right = 97.0
+margin_bottom = 35.0
+custom_fonts/font = SubResource( 3 )
+text = "Nickname"
+
+[node name="Player\'s Life" type="Label" parent="PlayerInfo"]
+margin_left = 1.0
+margin_top = 46.0
+margin_right = 69.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 3 )
+text = "Life: 100"
+
+[node name="Player\'s Shield" type="Label" parent="PlayerInfo"]
+margin_left = 1.0
+margin_top = 71.0
+margin_right = 65.0
+margin_bottom = 87.0
+custom_fonts/font = SubResource( 3 )
+text = "Shield: 3"
+
+[node name="Player\'s Attack" type="Label" parent="PlayerInfo"]
+margin_top = 97.0
+margin_right = 68.0
+margin_bottom = 115.0
+custom_fonts/font = SubResource( 3 )
+text = "Attack: 5"
+
+[node name="Player\'s State" type="Label" parent="PlayerInfo"]
+margin_top = 121.0
+margin_right = 76.0
+margin_bottom = 141.0
+custom_fonts/font = SubResource( 6 )
+text = "State: Safe"
+
+[node name="Player2Info" type="Label" parent="."]
+margin_left = 1759.0
+margin_top = 118.0
+margin_right = 1863.0
+margin_bottom = 245.0
+text = "
+"
+
+[node name="Player2\'s Icon" type="Sprite" parent="Player2Info"]
+position = Vector2( 34, -23 )
+texture = ExtResource( 2 )
+
+[node name="Player2\'s Nick" type="Label" parent="Player2Info"]
+margin_top = 19.0
+margin_right = 97.0
+margin_bottom = 35.0
+custom_fonts/font = SubResource( 3 )
+text = "Nickname"
+
+[node name="Player2\'s Life" type="Label" parent="Player2Info"]
+margin_left = 1.0
+margin_top = 46.0
+margin_right = 69.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 3 )
+text = "Life: 100"
+
+[node name="Player2\'s Shield" type="Label" parent="Player2Info"]
+margin_left = 1.0
+margin_top = 71.0
+margin_right = 65.0
+margin_bottom = 87.0
+custom_fonts/font = SubResource( 3 )
+text = "Shield: 3"
+
+[node name="Player2\'s Attack" type="Label" parent="Player2Info"]
+margin_top = 97.0
+margin_right = 68.0
+margin_bottom = 115.0
+custom_fonts/font = SubResource( 3 )
+text = "Attack: 10"
+
+[node name="Player2\'s State" type="Label" parent="Player2Info"]
+margin_top = 121.0
+margin_right = 76.0
+margin_bottom = 141.0
+custom_fonts/font = SubResource( 6 )
+text = "State: Safe"
+
+[node name="battleField" type="Tree" parent="."]
+margin_left = 341.0
+margin_top = 39.0
+margin_right = 1657.0
+margin_bottom = 954.0
+
+[node name="Sprite" type="Sprite" parent="battleField"]
+position = Vector2( 693, 575 )
+scale = Vector2( 2.27989, 0.878155 )
+
+[node name="Card-placeholder(2)" type="Sprite" parent="battleField/Sprite"]
+position = Vector2( -199.132, -387.175 )
+scale = Vector2( 0.238518, 0.625944 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)1" type="Sprite" parent="battleField/Sprite/Card-placeholder(2)"]
+position = Vector2( 517.658, 0 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)2" type="Sprite" parent="battleField/Sprite/Card-placeholder(2)"]
+position = Vector2( 1034.4, 0 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)3" type="Sprite" parent="battleField/Sprite/Card-placeholder(2)"]
+position = Vector2( 1557.57, 0 )
+scale = Vector2( 1, 1.00208 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)4" type="Sprite" parent="battleField"]
+position = Vector2( 235, 646 )
+scale = Vector2( 0.543796, 0.549676 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)1" type="Sprite" parent="battleField/Card-placeholder(2)4"]
+position = Vector2( 517.658, 0 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)2" type="Sprite" parent="battleField/Card-placeholder(2)4"]
+position = Vector2( 1034.4, 0 )
+texture = ExtResource( 3 )
+
+[node name="Card-placeholder(2)3" type="Sprite" parent="battleField/Card-placeholder(2)4"]
+position = Vector2( 1557.57, 0 )
+scale = Vector2( 1, 1.01386 )
+texture = ExtResource( 3 )
+
+[node name="endButton" type="Button" parent="."]
+margin_left = 1038.0
+margin_top = 448.0
+margin_right = 1243.0
+margin_bottom = 518.0
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 13 )
+custom_styles/focus = SubResource( 14 )
+custom_styles/disabled = SubResource( 15 )
+custom_styles/normal = SubResource( 9 )
+
+[node name="Label" type="Label" parent="endButton"]
+margin_left = 58.0
+margin_top = 9.0
+margin_right = 143.0
+margin_bottom = 63.0
+custom_colors/font_color = Color( 0.0235294, 0.0352941, 0.101961, 1 )
+custom_fonts/font = SubResource( 10 )
+text = "End"
+
+[node name="click" type="AudioStreamPlayer2D" parent="endButton"]
+position = Vector2( 0, 6.10352e-05 )
+stream = ExtResource( 14 )
+volume_db = 20.0
+attenuation = 0.683021
+
+[node name="Attack" type="Button" parent="."]
+margin_left = 759.0
+margin_top = 447.0
+margin_right = 964.0
+margin_bottom = 517.0
+theme = SubResource( 7 )
+custom_styles/hover = SubResource( 16 )
+custom_styles/pressed = SubResource( 17 )
+custom_styles/focus = SubResource( 18 )
+custom_styles/disabled = SubResource( 19 )
+custom_styles/normal = SubResource( 8 )
+icon_align = 1
+
+[node name="Label" type="Label" parent="Attack"]
+margin_left = 25.0
+margin_top = 8.0
+margin_right = 175.0
+margin_bottom = 62.0
+custom_colors/font_color = Color( 0.0235294, 0.0352941, 0.101961, 1 )
+custom_fonts/font = SubResource( 11 )
+text = "Attack"
+
+[node name="GraveYard" type="Sprite" parent="."]
+position = Vector2( 1789, 499 )
+scale = Vector2( 0.555922, 0.565346 )
+texture = ExtResource( 3 )
+
+[node name="Relic" parent="GraveYard" instance=ExtResource( 7 )]
+position = Vector2( -5.39648, -7.07526 )
+scale = Vector2( 0.330584, 0.350025 )
+
+[node name="Deck" type="Sprite" parent="."]
+position = Vector2( 1773, 867 )
+scale = Vector2( 0.732282, 0.701957 )
+texture = ExtResource( 4 )
+
+[node name="Card-back2" type="Sprite" parent="Deck"]
+position = Vector2( 13.6589, -8.54749 )
+scale = Vector2( 1.01234, 0.985826 )
+texture = ExtResource( 4 )
+
+[node name="Card-back2" type="Sprite" parent="Deck/Card-back2"]
+position = Vector2( 10.7913, -8.67041 )
+scale = Vector2( 0.989109, 0.997377 )
+texture = ExtResource( 4 )
+
+[node name="Card-back2" type="Sprite" parent="Deck/Card-back2/Card-back2"]
+position = Vector2( 12.2744, -10.1422 )
+scale = Vector2( 1.00093, 0.992845 )
+texture = ExtResource( 4 )
+
+[node name="Preview" type="Sprite" parent="."]
+position = Vector2( 160.003, 502 )
+scale = Vector2( 1.01166, 0.930016 )
+z_index = -1
+texture = ExtResource( 4 )
+region_rect = Rect2( 87.206, 232, 23, 0 )
+
+[node name="Relic" parent="Preview" instance=ExtResource( 7 )]
+position = Vector2( -1.97992, -11.5589 )
+scale = Vector2( 0.257311, 0.301877 )
+
+[connection signal="finished" from="endButton/click" to="." method="_on_click_finished"]
