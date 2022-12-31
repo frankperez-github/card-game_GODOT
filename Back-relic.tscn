@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Sprites/card-back.png" type="Texture" id=1]
+
+[node name="Backward-relic" type="Sprite"]
+
+[node name="Name" type="Label" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+
+[node name="Card-back" type="Sprite" parent="."]
+position = Vector2( -8, -41 )
+scale = Vector2( 0.623636, 0.58172 )
+texture = ExtResource( 1 )
