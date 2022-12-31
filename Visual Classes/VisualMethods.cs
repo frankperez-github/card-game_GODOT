@@ -90,7 +90,7 @@ namespace gameVisual
                     // Remembering selected cards
                     if(SelectCards.SelectedIndexes[actualSwipe].Contains(i)) // Selected card
                     {
-                        Card.Scale = new Vector2((float)0.20,(float)0.20);
+                        Card.Scale = new Vector2((float)0.185,(float)0.185);
                     }
                     else // Not selected card
                     {
