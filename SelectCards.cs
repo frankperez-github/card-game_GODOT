@@ -98,11 +98,11 @@ namespace gameVisual
                                 if (selectCards[i].GetRect().HasPoint(selectCards[i].ToLocal(mouseEvent.Position)))
                                 {
                                     // Deselecting
-                                    if (selectCards[i].Scale == new Vector2((float)0.185,(float)0.185))
+                                    if (selectCards[i].Scale == new Vector2((float)0.17,(float)0.17))
                                     {
                                         // Removing selected index from partition
                                         List<int> updatedIndexes = SelectedIndexes[actualSwipe];
-                                        updatedIndexes.Remove(i);
+                                        updatedIndexes.Remove(i+actualSwipe*VisualMethods.partitionLength);
                                         SelectedIndexes[actualSwipe] = updatedIndexes;
 
                                         selectQuant++;
@@ -114,7 +114,7 @@ namespace gameVisual
                                     {
                                         // Adding selected index to partition
                                         List<int> updatedIndexes = SelectedIndexes[actualSwipe];
-                                        updatedIndexes.Add(i);
+                                        updatedIndexes.Add(i+actualSwipe*VisualMethods.partitionLength);
                                         SelectedIndexes[actualSwipe] = updatedIndexes;
 
                                         selectQuant--;
