@@ -93,7 +93,6 @@ namespace gameEngine
         public AlgEx(string expression, Player Owner, Player Enemy, Relics relics) : base(Owner, Enemy, expression, relics){}
         public int Evaluate()
         {
-
             if (IsDigit(this.expressionA))
             {
                 return int.Parse(this.expressionA);

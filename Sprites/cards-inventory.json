@@ -614,7 +614,7 @@
     },
     "type": "defense",
     "isTrap": false,
-    "effect": "if (Owner.Life<85)\n{\n(Owner.Defense.3)\n}",
+    "effect": "if ((Owner.Life)<(85))\n{\n(Owner.Defense.3)\n}",
     "description": "Si tu vida es menor que 25, tu defensa sube en 3 puntos"
   }
 ]
