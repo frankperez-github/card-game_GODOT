@@ -4,7 +4,7 @@
     "Actions": [],
     "id": 0,
     "name": "Espada del destino",
-    "activeDuration": 12,
+    "activeDuration": 3,
     "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 13.46.09 - Sword of destiny.png",
     "Owner": {
@@ -39,6 +39,47 @@
     "isTrap": false,
     "effect": "(Owner.Attack.15)",
     "description": "Te suma 15 de ataque"
+  },
+  {
+    "cardState": 2,
+    "Actions": [],
+    "id": 1,
+    "name": "Token",
+    "activeDuration": 1,
+    "passiveDuration": 0,
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 17.05.15 - the talisman invocation in a ritual digital art.png",
+    "Owner": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "Enemy": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "type": "random",
+    "isTrap": false,
+    "effect": "",
+    "description": "Si tienes 2 de esta carta en la mano puedes activar tu ataque especial, si el efecto de esta carta es activado, esta carta es removida del juego"
   },
   {
     "cardState": 2,
@@ -78,7 +119,7 @@
     },
     "type": "draw",
     "isTrap": false,
-    "effect": "(Owner.Draw.EnemyHand.1)",
+    "effect": "(Owner.Draw.Graveyard.1)",
     "description": "Roba una carta del cementerio"
   },
   {
@@ -121,47 +162,6 @@
     "isTrap": false,
     "effect": "(Owner.Cure.5.OwnerHand)",
     "description": "Ganas 5 de vida por cada carta en tu mano"
-  },
-  {
-    "cardState": 2,
-    "Actions": [],
-    "id": 4,
-    "name": "Escudo de la pobreza",
-    "activeDuration": 1,
-    "passiveDuration": 0,
-    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.27.55 - the cursed shield digital art (4).png",
-    "Owner": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "Enemy": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "type": "defense",
-    "isTrap": true,
-    "effect": "(Owner.Defense.1.0,5)",
-    "description": "Evita el 50% del daño del enemigo"
   },
   {
     "cardState": 2,
@@ -248,6 +248,47 @@
   {
     "cardState": 2,
     "Actions": [],
+    "id": 7,
+    "name": "Bendición celestial",
+    "activeDuration": 1,
+    "passiveDuration": 0,
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.57.10 - chalice of dreams in a cloud digital art.png",
+    "Owner": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "Enemy": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "type": "changeState",
+    "isTrap": false,
+    "effect": "(Owner.ChangeState.Safe)",
+    "description": "Te cura de cualquier estado negativo"
+  },
+  {
+    "cardState": 2,
+    "Actions": [],
     "id": 8,
     "name": "Objetivo Enemigo",
     "activeDuration": 1,
@@ -283,7 +324,7 @@
     },
     "type": "trap",
     "isTrap": false,
-    "effect": "(Enemy.Remove.EnemyBattlefield.Battlefield.random.1)",
+    "effect": "(Enemy.Remove.EnemyBattlefield.Battlefield.1)",
     "description": "Destruye 1 reliquia que tenga activa enemigo"
   },
   {
@@ -291,8 +332,8 @@
     "Actions": [],
     "id": 9,
     "name": "El ojo blanco",
-    "activeDuration": 8,
-    "passiveDuration": 0,
+    "activeDuration": 3,
+    "passiveDuration": 2,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.30.30 - the talisman invocation in a ritual digital art.png",
     "Owner": {
       "character": null,
@@ -326,6 +367,47 @@
     "isTrap": false,
     "effect": "(Enemy.Show.all)",
     "description": "Muestra todas las cartas en la mano del enemigo"
+  },
+  {
+    "cardState": 2,
+    "Actions": [],
+    "id": 10,
+    "name": "El arco del último momento",
+    "activeDuration": 1,
+    "passiveDuration": 0,
+    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.55.31 - revenge crossbow with a lake behind digital art.png",
+    "Owner": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "Enemy": {
+      "character": null,
+      "Enemy": null,
+      "nick": "default",
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "type": "defense",
+    "isTrap": true,
+    "effect": "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)",
+    "description": "Aumenta la defensa en 1 punto y Te cura 5 puntos por cada carta en la mano"
   },
   {
     "cardState": 2,
@@ -371,133 +453,10 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 13,
-    "name": "Espejo de impaciencia",
-    "activeDuration": 1,
-    "passiveDuration": 0,
-    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.47.44 - magic mirror reflecting powerfull attack of sauron.png",
-    "Owner": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "Enemy": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "type": "defense",
-    "isTrap": true,
-    "effect": "(Owner.Defense.1.1)",
-    "description": "Se activa cuando el adversario ataca y evita el ataque"
-  },
-  {
-    "cardState": 2,
-    "Actions": [],
-    "id": 14,
-    "name": "El arco del último momento",
-    "activeDuration": 1,
-    "passiveDuration": 0,
-    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.55.31 - revenge crossbow with a lake behind digital art.png",
-    "Owner": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "Enemy": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "type": "defense",
-    "isTrap": true,
-    "effect": "(Owner.Defense.1.1)\n(Owner.Cure.5.OwnerHand)",
-    "description": "Aumenta la defensa en 1 punto y Te cura 5 puntos por cada carta en la mano"
-  },
-  {
-    "cardState": 2,
-    "Actions": [],
-    "id": 1,
-    "name": "Token",
-    "activeDuration": 1,
-    "passiveDuration": 1,
-    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 17.05.15 - the talisman invocation in a ritual digital art.png",
-    "Owner": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "Enemy": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "type": "random",
-    "isTrap": false,
-    "effect": "",
-    "description": "Si tienes 3 de esta carta en la mano puedes activar tu ataque especial, si el efecto de esta carta es activado, esta carta es removida del juego"
-  },
-  {
-    "cardState": 2,
-    "Actions": [],
-    "id": 11,
+    "id": 12,
     "name": "Resfriado",
-    "activeDuration": 8,
-    "passiveDuration": 2,
+    "activeDuration": 3,
+    "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.30.45 - the cursed shield digital art.png",
     "Owner": {
       "character": null,
@@ -535,7 +494,7 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 12,
+    "id": 13,
     "name": "Ofrenda",
     "activeDuration": 1,
     "passiveDuration": 0,
@@ -576,7 +535,7 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 13,
+    "id": 14,
     "name": "Imapcto",
     "activeDuration": 1,
     "passiveDuration": 0,
@@ -609,51 +568,10 @@
         null
       ]
     },
-    "type": "draw",
+    "type": "damage",
     "isTrap": false,
     "effect": "(Owner.Attack.1.OwnerAttack)",
     "description": "Te duplica el ataque durante 1 turno"
-  },
-  {
-    "cardState": 2,
-    "Actions": [],
-    "id": 14,
-    "name": "Bendición celestial",
-    "activeDuration": 1,
-    "passiveDuration": 0,
-    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.57.10 - chalice of dreams in a cloud digital art.png",
-    "Owner": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "Enemy": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "type": "changeState",
-    "isTrap": false,
-    "effect": "(Owner.ChangeState.Safe)",
-    "description": "Te cura de cualquier estado negativo"
   },
   {
     "cardState": 2,
