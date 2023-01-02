@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Sprites/Tipografia/BlackOpsOne-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://EditDeck.cs" type="Script" id=2]
 [ext_resource path="res://Sprites/1671655712654.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/buttonPress grande.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/botones grande.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 43
@@ -13,8 +15,8 @@ size = 30
 font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxTexture" id=3]
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 205, 70 )
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 315, 100 )
 
 [sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 3 )
@@ -29,8 +31,8 @@ texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 205, 70 )
 
 [sub_resource type="StyleBoxTexture" id=7]
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 205, 70 )
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 315, 100 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
@@ -52,50 +54,46 @@ rect_pivot_offset = Vector2( 1122, 552 )
 autowrap = true
 
 [node name="Select" type="Button" parent="."]
-margin_left = 802.0
-margin_top = 864.0
-margin_right = 1221.0
-margin_bottom = 977.0
+margin_left = 792.0
+margin_top = 882.0
+margin_right = 1042.0
+margin_bottom = 972.0
 custom_fonts/font = SubResource( 2 )
 custom_styles/hover = SubResource( 3 )
 custom_styles/pressed = SubResource( 4 )
 custom_styles/focus = SubResource( 5 )
 custom_styles/disabled = SubResource( 6 )
 custom_styles/normal = SubResource( 7 )
-text = "Select to remove"
+text = "Select"
 
 [node name="Remove" type="Button" parent="Select"]
 visible = false
-margin_left = -38.0
-margin_top = -1.0
-margin_right = 462.0
-margin_bottom = 112.0
+margin_right = 250.0
+margin_bottom = 90.0
 custom_fonts/font = SubResource( 2 )
 custom_styles/hover = SubResource( 3 )
 custom_styles/pressed = SubResource( 4 )
 custom_styles/focus = SubResource( 5 )
 custom_styles/disabled = SubResource( 6 )
 custom_styles/normal = SubResource( 7 )
-text = "Remove selected cards"
+text = "Remove"
 
 [node name="Create" type="Button" parent="Select"]
-margin_left = 636.0
-margin_top = -1.0
-margin_right = 1055.0
-margin_bottom = 112.0
+margin_left = 500.0
+margin_right = 750.0
+margin_bottom = 90.0
 custom_fonts/font = SubResource( 2 )
 custom_styles/hover = SubResource( 3 )
 custom_styles/pressed = SubResource( 4 )
 custom_styles/focus = SubResource( 5 )
 custom_styles/disabled = SubResource( 6 )
 custom_styles/normal = SubResource( 7 )
-text = "Let's create a card"
+text = "Create card"
 
 [node name="Menu" type="Button" parent="Select"]
-margin_left = -682.0
-margin_top = -3.0
-margin_right = -263.0
-margin_bottom = 110.0
+margin_left = -500.0
+margin_right = -250.0
+margin_bottom = 90.0
 custom_fonts/font = SubResource( 2 )
 custom_styles/hover = SubResource( 3 )
 custom_styles/pressed = SubResource( 4 )

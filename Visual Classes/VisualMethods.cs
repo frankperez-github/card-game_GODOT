@@ -16,97 +16,21 @@ namespace gameVisual
         public static Node boardNode;
         public static void selectVisually(string sourceName, List<Relics> Source, int quant, Action<List<Relics>, int> Delegate, List<Relics> target)
         {
-            SelectCards.SelectDelegate = Delegate;
-            int partitions = GetPartitions(Source, partitionLength);
-            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant);
+            SelectCards.select = new Select(Delegate, sourceName, quant, Source);
+            InstanceScene();
         }
         public static void selectVisually(string sourceName, List<Relics> Source, int quant, InterpretAction Delegate, List<Relics> target)
         {
-            SelectCards.action = Delegate;
-            int partitions = GetPartitions(Source, partitionLength);
-            SetSelectCardsProperties(sourceName, partitions, 0, Source, quant);
+            SelectCards.select = new Select(Delegate, sourceName, quant, Source);
+            InstanceScene();
         }
-        private static int GetPartitions(List<Relics> Source, int partitionLength)
+        public static void InstanceScene()
         {
-            int partitions = 1;
-            if (Source.Count > partitionLength)
-            {
-                partitions = Source.Count/partitionLength;
-                if (Source.Count % partitionLength != 0) partitions++;
-            }
-            for(int i = 0; i < partitions; i++)
-            {
-                if (!SelectCards.SelectedIndexes.ContainsKey(i))
-                {
-                    SelectCards.SelectedIndexes.Add(i, new List<int>());
-                }
-            }
-            return partitions;
-        }
-        public static void SetSelectCardsProperties(string tittle, int partitions, int actualSwipe, List<Relics> Source, int quant)
-        {
-            Node SelectMenu = null;
-            if (SelectCards.partitions == 0)
-            {
-                SelectMenu = SelectCards.SelectCardsScene.Instance();
-                board.child.AddChild(SelectMenu);
-                SelectCards.SelectCardInstance = SelectMenu;
-                SelectCards.selectCards = new List<Sprite>();
-            }
-            SelectCards.selectName = tittle;
-            VisualMethods.selecting = true;
-            VisualMethods.SelectedCards = new List<Relics>();
-            RemoveSprites(SelectCards.selectCards);
-            SelectCards.Source = Source;
-            SelectCards.selectQuant = quant;
-            SelectCards.Source = Source;
-            SelectCards.partitions = partitions;
-            SelectCards.actualSwipe = actualSwipe;
-            SelectCards.SelectLabel = SelectCards.SelectCardInstance.GetNode<Label>("Tree/DiscardLabel");
-            SelectCards.SelectLabel.Text = tittle;
+            Node SelectMenu = SelectCards.SelectCardsScene.Instance();
+            board.child.AddChild(SelectMenu);
+            SelectCards.SelectCardInstance = SelectMenu;
             board.child.GetTree().Paused = true;
-
-            int quantCards = Source.Count;
-            if(quantCards > partitionLength) quantCards = partitionLength;
-            
-            float InitialPosition = (1010) - ((200 * (quantCards-1))/2);
-            Vector2 FirstPosition = new Vector2(InitialPosition, 470);
-
-
-            // Showing cards to select
-            int index = 0;
-            SelectCards.selectCards = new List<Sprite>();
-            for (int i = actualSwipe*partitionLength; i < (actualSwipe*partitionLength)+partitionLength; i++)
-            {
-                if (i < Source.Count && Source[i] != null)
-                {
-                    Sprite Card = VisualMethods.InstanciateVisualCard(Source[i]);
-                    Card.ZIndex = 7;
-                    SelectCards.selectCards.Add(Card);
-                    SelectCards.SelectCardInstance.AddChild(Card);
-                    // Remembering selected cards
-                    if(SelectCards.SelectedIndexes[actualSwipe].Contains(i)) // Selected card
-                    {
-                        Card.Scale = new Vector2((float)0.185,(float)0.185);
-                    }
-                    else // Not selected card
-                    {
-                        Card.Scale = new Vector2((float)0.17,(float)0.17);
-                    }
-                    
-                    // Adjusting position of cards to quantity in source
-                    if(index==0)
-                    {
-                        SelectCards.selectCards[index].Position = new Vector2(FirstPosition.x, FirstPosition.y);
-                    }
-                    else
-                    {
-                        SelectCards.selectCards[index].Position = new Vector2(SelectCards.selectCards[index-1].Position.x + 200, FirstPosition.y);
-                    }
-                    
-                    index++;
-                }
-            }
+            SelectCards.select.ShowVisualCards();
         }
         public static void ListenToVisualButtons(Player player)
         {
@@ -327,10 +251,6 @@ namespace gameVisual
         public static void resetVisualGame()
         {
             VisualMethods.selecting = false;
-            SelectCards.selectCards = null;
-            VisualMethods.SelectedCards = new List<Relics>();
-            SelectCards.Source = null;
-
             board.child.GetParent().QueueFree();
             board.child.QueueFree();
         }
@@ -477,6 +397,7 @@ namespace gameVisual
                                 if  (board.VisualBoard.visualHand1.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand1.visualHand[i].ToLocal(mouseEvent.Position)))
                                 {
                                     Effect(board.Game.player1.hand[i], false);
+                                    break;
                                 }
                             }
                         }
@@ -491,7 +412,11 @@ namespace gameVisual
                                 {
                                     if  (board.VisualBoard.visualHand2.visualHand[i].GetRect().HasPoint(board.VisualBoard.visualHand2.visualHand[i].ToLocal(mouseEvent.Position)))
                                     {
+                                        GD.Print(board.Game.player2.hand[i].name);
+                                        GD.Print(board.Game.player2.hand[i].Owner.nick);
+                                        GD.Print(board.Game.player2.hand[i].Enemy.nick);
                                         Effect(board.Game.player2.hand[i], false);
+                                        break;
                                     }
                                 }
                             }

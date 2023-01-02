@@ -9,19 +9,10 @@ namespace gameVisual
         public static Button AcceptButton;
         Button Left;
         Button Right;
-        public static int selectQuant = 1;
-        public static List<Sprite> selectCards;
-        public static Action<List<Relics>, int> SelectDelegate;
-        public static InterpretAction action;
         public static Label SelectLabel;
         public static PackedScene SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
         public static Node SelectCardInstance = SelectCardsScene.Instance(); 
-        public static Dictionary<int, List<int>> SelectedIndexes = new Dictionary<int, List<int>>();
-
-        public static List<Relics> Source;
-        public static int actualSwipe = 0;
-        public static int partitions = 0;
-        public static string selectName;
+        public static Select select;
 
         public override void _Ready()
         {
@@ -39,7 +30,7 @@ namespace gameVisual
         public override void _Process(float delta)
         {
             // SHOW SELECT CARDS SCENE
-            if(selectQuant == 0 || selectCards.Count == 0)
+            if(select.selectQuant == 0)
             {
                 AcceptButton.Visible = true;
             }
@@ -52,35 +43,38 @@ namespace gameVisual
             // Selection Finished
             if(AcceptButton.Pressed)
             {
-                partitions = 0;
                 board.child.GetTree().Paused = false;
-                SelectedIndexes = new Dictionary<int, List<int>>();
-                if(action != null)
+                if(select.action != null)
                 {
-                    action.Effect();
+                    VisualMethods.SelectedCards = select.selectedCards;
+                    select.action.Effect();
                     board.VisualBoard.Update();
-                    action = null;
                 }
                 else
                 {
-                    SelectDelegate(VisualMethods.SelectedCards, -1);
+                    VisualMethods.SelectedCards = select.selectedCards;
+                    select.SelectDelegate(VisualMethods.SelectedCards, -1);
                 }
                 this.QueueFree();
                 SelectCardInstance = null;
             }
 
             Left.Disabled = false;
-            if (actualSwipe == 0) Left.Disabled = true;
+            if (select.actualSwipe == 0) Left.Disabled = true;
             Right.Disabled = false;
-            if (actualSwipe+1 == partitions) Right.Disabled = true;
+            if (select.actualSwipe+1 == select.Source.Count) Right.Disabled = true;
 
             if(Left.Pressed)
             {
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe-1, Source, selectQuant);
+                select.RemoveVisualCards();
+                select.actualSwipe--;
+                SelectCards.select.ShowVisualCards();
             }
             if(Right.Pressed)
             {
-                VisualMethods.SetSelectCardsProperties(selectName, partitions, actualSwipe+1, Source, selectQuant);
+                select.RemoveVisualCards();
+                select.actualSwipe++;
+                SelectCards.select.ShowVisualCards();
             }
 
         }
@@ -92,35 +86,25 @@ namespace gameVisual
                 switch ((ButtonList)mouseEvent.ButtonIndex)
                 {
                     case ButtonList.Left:
-                        if (VisualMethods.selecting && selectQuant >= 0)
+                        if (VisualMethods.selecting && select.selectQuant >= 0)
                         {
-                            for(int i = 0; i < selectCards.Count; i++)
+                            for(int i = 0; i < select.selectCards.Count; i++)
                             {
-                                if (selectCards[i].GetRect().HasPoint(selectCards[i].ToLocal(mouseEvent.Position)))
+                                if (select.selectCards[i].GetRect().HasPoint(select.selectCards[i].ToLocal(mouseEvent.Position)))
                                 {
                                     // Deselecting
-                                    if (selectCards[i].Scale == new Vector2((float)0.185,(float)0.185))
+                                    if (select.selectCards[i].Scale == new Vector2((float)0.185,(float)0.185))
                                     {
-                                        // Removing selected index from partition
-                                        List<int> updatedIndexes = SelectedIndexes[actualSwipe];
-                                        updatedIndexes.Remove(i+actualSwipe*VisualMethods.partitionLength);
-                                        SelectedIndexes[actualSwipe] = updatedIndexes;
-
-                                        selectQuant++;
-                                        VisualMethods.SelectedCards.Remove(SelectCards.Source[i+actualSwipe*VisualMethods.partitionLength]);
-                                        selectCards[i].Scale = new Vector2((float)0.170,(float)0.170);
+                                        select.selectQuant++;
+                                        select.RemoveCard(i);
+                                        select.selectCards[i].Scale = new Vector2((float)0.170,(float)0.170);
                                     }
                                     // Selecting
-                                    else if (selectQuant != 0)
+                                    else if (select.selectQuant != 0)
                                     {
-                                        // Adding selected index to partition
-                                        List<int> updatedIndexes = SelectedIndexes[actualSwipe];
-                                        updatedIndexes.Add(i+actualSwipe*VisualMethods.partitionLength);
-                                        SelectedIndexes[actualSwipe] = updatedIndexes;
-
-                                        selectQuant--;
-                                        VisualMethods.SelectedCards.Add(SelectCards.Source[i+actualSwipe*VisualMethods.partitionLength]);
-                                        selectCards[i].Scale = new Vector2((float)0.185,(float)0.185);
+                                        select.selectQuant--;
+                                        select.AddCard(i);
+                                        select.selectCards[i].Scale = new Vector2((float)0.185,(float)0.185);
                                     }
                                     break;
                                 }
@@ -139,41 +123,106 @@ namespace gameVisual
     }
     public class Select
     {
-        public PackedScene SelectCardsScene;
         public InterpretAction action;
         public Action<List<Relics>, int> SelectDelegate;
-        public Label SelectLabel;
-        public List<Sprite> selectCards;
+        public List<Sprite> selectCards = new List<Sprite>();
+        public List<Relics> selectedCards = new List<Relics>();
         public int selectQuant;
-        public static Node SelectCardInstance;
-        Dictionary<int, List<Relics>> Source; 
+        public Dictionary<int, List<Relics>> Source;
+        public int actualSwipe = 0;
+        public string selectName;
 
 
-        public Select(InterpretAction action, Label selectLabel, int quant, List<Relics> Sourse)
+        public Select(InterpretAction action, string selectLabel, int quant, List<Relics> Sourse)
         {
-            SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
-            SelectCardInstance = SelectCardsScene.Instance();
             this.action = action;
-            SelectLabel = selectLabel;
-            selectCards = new List<Sprite>();
+            selectName = selectLabel;
             selectQuant = quant;
             Source = SetSource(Sourse);
         }
-
-        public Select(Action<List<Relics>, int> selectDelegate, Label selectLabel, int quant, List<Relics> Sourse)
+        public Select(Action<List<Relics>, int> selectDelegate, string selectLabel, int quant, List<Relics> Sourse)
         {
-            SelectCardsScene = (PackedScene)GD.Load("res://SelectCards.tscn");
-            SelectCardInstance = SelectCardsScene.Instance();
             SelectDelegate = selectDelegate;
-            SelectLabel = selectLabel;
-            selectCards = new List<Sprite>();
+            selectName = selectLabel;
             selectQuant = quant;
             Source = SetSource(Sourse);
-
         }
         public Dictionary<int, List<Relics>> SetSource(List<Relics> Source)
         {
-            return new Dictionary<int, List<Relics>>();
+            int Swipe = 0;
+            Dictionary<int, List<Relics>> result = new Dictionary<int, List<Relics>>();
+            if(Source.Count != 0)
+            {
+                int pointer = 0;
+                while(pointer <= Source.Count-1)
+                {
+                    List<Relics> list = new List<Relics>();
+                    for (int i = Swipe*5; i < (Swipe+1)*5; i++)
+                    {
+                        try
+                        {
+                            list.Add(Source[i]);
+                            pointer++;
+                        }
+                        catch{}
+                    }
+                    result.Add(Swipe, list);
+                    Swipe++;
+                }
+            }
+            return result;
+        }
+        public void ShowVisualCards()
+        {
+            int Count = (5*(Source.Count-1))+Source[Source.Count-1].Count; 
+            float InitialPosition = (1010) - ((200 * (Source[actualSwipe].Count-1))/2);
+            Vector2 FirstPosition = new Vector2(InitialPosition, 470);
+            for (int i = 0; i < Source[actualSwipe].Count; i++)
+            {
+                Sprite Card = VisualMethods.InstanciateVisualCard(Source[actualSwipe][i]);
+                Card.ZIndex = 7;
+                selectCards.Add(Card);
+                SelectCards.SelectCardInstance.AddChild(Card);
+                // Remembering selected cards
+                if(selectedCards!=null)
+                {
+                    if(selectedCards.Contains(Source[actualSwipe][i])) // Selected card
+                    {
+                        Card.Scale = new Vector2((float)0.185,(float)0.185);
+                    }
+                    else // Not selected card
+                    {
+                        Card.Scale = new Vector2((float)0.17,(float)0.17);
+                    }
+                }
+                
+                // Adjusting position of cards to quantity in source
+                if(i==0)
+                {
+                    selectCards[i].Position = new Vector2(FirstPosition.x, FirstPosition.y);
+                }
+                else
+                {
+                    selectCards[i].Position = new Vector2(selectCards[i-1].Position.x + 200, FirstPosition.y);
+                }
+            }
+        }
+        public void RemoveVisualCards()
+        {
+            int count = selectCards.Count;
+            for (int i = 0; i < count; i++)
+            {
+                selectCards[0].QueueFree();
+                selectCards.Remove(selectCards[0]);
+            }
+        } 
+        public void RemoveCard(int position)
+        {
+            selectedCards.Remove(Source[actualSwipe][position]);
+        }
+        public void AddCard(int position)
+        {
+            selectedCards.Add(Source[actualSwipe][position]);
         }
     }
 }

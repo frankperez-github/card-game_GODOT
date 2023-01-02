@@ -32,7 +32,7 @@ namespace gameVisual
         public override void _Process(float delta)
         {
             // Checking end of game
-            if (!(Game.player1.life > 0 && Game.player2.life > 0))
+            if (Game.player1.life <= 0 || Game.player2.life <= 0)
             {
                 GetTree().ChangeScene("res://GameOver.tscn");
             }
