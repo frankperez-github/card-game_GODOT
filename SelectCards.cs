@@ -56,6 +56,7 @@ namespace gameVisual
                     select.SelectDelegate(VisualMethods.SelectedCards, -1);
                 }
                 this.QueueFree();
+                SelectCardInstance = null;
             }
 
             Left.Disabled = false;
