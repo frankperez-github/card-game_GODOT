@@ -2,9 +2,6 @@
 
 [ext_resource path="res://Sprites/Tipografia/BlackOpsOne-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://GameOver.cs" type="Script" id=2]
-
-[ext_resource path="res://Sprites/Adobe_20221225_155524.png" type="Texture" id=3]
-
 [ext_resource path="res://Sprites/1671655712654.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/Adobe_20221225_155524.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/MainButton PauseMenu.png" type="Texture" id=5]
@@ -33,11 +30,6 @@ region_rect = Rect2( 0, 0, 346, 149 )
 
 [sub_resource type="StyleBoxTexture" id=6]
 texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 1675, 725 )
-
-[sub_resource type="StyleBoxTexture" id=7]
-texture = ExtResource( 3 )
-texture = ExtResource( 4 )
 region_rect = Rect2( 0, 0, 1675, 725 )
 
 [sub_resource type="StyleBoxTexture" id=7]

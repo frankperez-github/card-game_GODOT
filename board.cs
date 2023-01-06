@@ -34,7 +34,6 @@ namespace gameVisual
             // Checking end of game
             if (Game.player1.life <= 0 || Game.player2.life <= 0)
             {
-                GetTree().Paused = true;
                 GetTree().ChangeScene("res://GameOver.tscn");
             }
             
