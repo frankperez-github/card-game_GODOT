@@ -4,7 +4,7 @@
     "Actions": [],
     "id": 0,
     "name": "Espada del destino",
-    "activeDuration": 3,
+    "activeDuration": 5,
     "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 13.46.09 - Sword of destiny.png",
     "Owner": {
@@ -166,47 +166,6 @@
   {
     "cardState": 2,
     "Actions": [],
-    "id": 5,
-    "name": "Libro de los secretos",
-    "activeDuration": 1,
-    "passiveDuration": 0,
-    "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.39.14 - The Book of the Dead in a temple digital art.png",
-    "Owner": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "Enemy": {
-      "character": null,
-      "Enemy": null,
-      "nick": "default",
-      "life": 100.0,
-      "hand": [],
-      "state": 0,
-      "BattleField": [
-        null,
-        null,
-        null,
-        null
-      ]
-    },
-    "type": "draw",
-    "isTrap": false,
-    "effect": "(Owner.Draw.Deck.random.2)",
-    "description": "Robas 2 cartas del deck"
-  },
-  {
-    "cardState": 2,
-    "Actions": [],
     "id": 6,
     "name": "Caliz de la Venganza",
     "activeDuration": 1,
@@ -332,8 +291,8 @@
     "Actions": [],
     "id": 9,
     "name": "El ojo blanco",
-    "activeDuration": 3,
-    "passiveDuration": 2,
+    "activeDuration": 5,
+    "passiveDuration": 4,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-23 16.30.30 - the talisman invocation in a ritual digital art.png",
     "Owner": {
       "character": null,
@@ -455,7 +414,7 @@
     "Actions": [],
     "id": 12,
     "name": "Resfriado",
-    "activeDuration": 3,
+    "activeDuration": 5,
     "passiveDuration": 0,
     "imgAddress": "res://Sprites/Cards-images/DALL·E 2022-10-10 14.30.45 - the cursed shield digital art.png",
     "Owner": {
@@ -611,7 +570,48 @@
     },
     "type": "defense",
     "isTrap": false,
-    "effect": "if (Owner.Life<85)\n{\n(Owner.Defense.3)\n}",
+    "effect": "if ((Owner.Life)<(85))\n{\n(Owner.Defense.3)\n}",
     "description": "Si tu vida es menor que 25, tu defensa sube en 3 puntos"
+  },
+  {
+    "cardState": 2,
+    "Actions": [],
+    "id": 15,
+    "name": "d",
+    "activeDuration": -3,
+    "passiveDuration": 0,
+    "imgAddress": "",
+    "Owner": {
+      "character": null,
+      "Enemy": null,
+      "nick": null,
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "Enemy": {
+      "character": null,
+      "Enemy": null,
+      "nick": null,
+      "life": 100.0,
+      "hand": [],
+      "state": 0,
+      "BattleField": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "type": "",
+    "isTrap": true,
+    "effect": "if ( Owner.Life >  50 )\n{\n   Owner.Attack + = 50\n}\n",
+    "description": "d"
   }
 ]

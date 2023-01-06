@@ -31,13 +31,7 @@ namespace gameEngine
         {
             CardsInventory.Add(card);
             string jsonContent = JsonConvert.SerializeObject(CardsInventory, Formatting.Indented);
-            System.IO.File.AppendAllText(JSONcardsPath, jsonContent);
-        }
-        public void addToJson(CharacterProperties character)
-        {
-            CharactersInventory.Add(character);
-            string jsonContent = JsonConvert.SerializeObject(CharactersInventory, Formatting.Indented);
-            System.IO.File.AppendAllText(JSONcharactersPath, jsonContent);
+            OverrideJson();
         }
         public void OverrideJson()
         {
